@@ -1,4 +1,6 @@
 IcfOnRails::Application.routes.draw do
+  resources :orders
+
   root :to => "home#index"
   resources :users, :only => [:index, :show, :edit, :update ]
   get '/auth/:provider/callback' => 'sessions#create'
