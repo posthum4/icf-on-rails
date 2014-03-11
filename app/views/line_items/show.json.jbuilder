@@ -1,0 +1,1 @@
+json.extract! @line_item, :id, :add_on, :amount, :bonus_impressions, :cost, :flight_instructions, :goal, :impressions, :io_line_item, :media_channel, :pricing_term, :product, :secondary_optimization_goal, :created_at, :updated_at

@@ -1,0 +1,19 @@
+= simple_form_for(@line_item) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :add_on
+    = f.input :amount
+    = f.input :bonus_impressions
+    = f.input :cost
+    = f.input :flight_instructions
+    = f.input :goal
+    = f.input :impressions
+    = f.input :io_line_item
+    = f.input :media_channel
+    = f.input :pricing_term
+    = f.input :product
+    = f.input :secondary_optimization_goal
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,41 @@
+h1 Listing line_items
+
+table
+  tr
+    th Add on
+    th Amount
+    th Bonus impressions
+    th Cost
+    th Flight instructions
+    th Goal
+    th Impressions
+    th Io line item
+    th Media channel
+    th Pricing term
+    th Product
+    th Secondary optimization goal
+    th
+    th
+    th
+
+  - @line_items.each do |line_item|
+    tr
+      td = line_item.add_on
+      td = line_item.amount
+      td = line_item.bonus_impressions
+      td = line_item.cost
+      td = line_item.flight_instructions
+      td = line_item.goal
+      td = line_item.impressions
+      td = line_item.io_line_item
+      td = line_item.media_channel
+      td = line_item.pricing_term
+      td = line_item.product
+      td = line_item.secondary_optimization_goal
+      td = link_to 'Show', line_item
+      td = link_to 'Edit', edit_line_item_path(line_item)
+      td = link_to 'Destroy', line_item, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Line item', new_line_item_path

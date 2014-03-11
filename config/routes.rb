@@ -1,4 +1,6 @@
 IcfOnRails::Application.routes.draw do
+  resources :line_items
+
   resources :orders
 
   root :to => "home#index"
