@@ -1,0 +1,120 @@
+p#notice = notice
+
+p
+  strong Sfdcid:
+  = @order.sfdcid
+p
+  strong Name:
+  = @order.name
+p
+  strong Close date:
+  = @order.close_date
+p
+  strong Amount:
+  = @order.amount
+p
+  strong Campaign start date:
+  = @order.campaign_start_date
+p
+  strong Vertical:
+  = @order.vertical
+p
+  strong Account:
+  = @order.account
+p
+  strong Agency:
+  = @order.agency
+p
+  strong Advertiser:
+  = @order.advertiser
+p
+  strong Stage name:
+  = @order.stage_name
+p
+  strong Opportunity owner:
+  = @order.opportunity_owner
+p
+  strong Opp type new:
+  = @order.opp_type_new
+p
+  strong Account manager:
+  = @order.account_manager
+p
+  strong Sales region:
+  = @order.sales_region
+p
+  strong Last modified date:
+  = @order.last_modified_date
+p
+  strong Brand:
+  = @order.brand
+p
+  strong Campaign end date:
+  = @order.campaign_end_date
+p
+  strong Campaign objectives:
+  = @order.campaign_objectives
+p
+  strong Primary audience am:
+  = @order.primary_audience_am
+p
+  strong Secondary audience am:
+  = @order.secondary_audience_am
+p
+  strong Hard constraints am:
+  = @order.hard_constraints_am
+p
+  strong Is secondary audience a hard constraint:
+  = @order.is_secondary_audience_a_hard_constraint
+p
+  strong Rfp special client requests:
+  = @order.rfp_special_client_requests
+p
+  strong Special client requirements:
+  = @order.special_client_requirements
+p
+  strong Special notes:
+  = @order.special_notes
+p
+  strong Brand safety vendor:
+  = @order.brand_safety_vendor
+p
+  strong Type of service:
+  = @order.type_of_service
+p
+  strong Brand safety restrictions:
+  = @order.brand_safety_restrictions
+p
+  strong Who is paying for brand safety:
+  = @order.who_is_paying_for_brand_safety
+p
+  strong Client vendor pre existing relations:
+  = @order.client_vendor_pre_existing_relations
+p
+  strong Who will implement adchoices icon:
+  = @order.who_will_implement_adchoices_icon
+p
+  strong Brand safety notes:
+  = @order.brand_safety_notes
+p
+  strong Who will wrap the tags:
+  = @order.who_will_wrap_the_tags
+p
+  strong Io case:
+  = @order.io_case
+p
+  strong Viewability:
+  = @order.viewability
+p
+  strong Viewability metrics:
+  = @order.viewability_metrics
+p
+  strong Who is paying for viewability:
+  = @order.who_is_paying_for_viewability
+p
+  strong Parent order:
+  = @order.parent_order
+
+= link_to 'Edit', edit_order_path(@order)
+'|
+= link_to 'Back', orders_path
