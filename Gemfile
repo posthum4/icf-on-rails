@@ -15,7 +15,8 @@ gem 'simple_form'
 gem 'slim-rails'
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
+  #gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
+  gem 'binding_of_caller'
   gem 'guard-bundler'
   gem 'guard-cucumber'
   gem 'guard-rails'
@@ -42,3 +43,4 @@ group :test do
   gem 'email_spec'
   gem 'launchy'
 end
+gem 'figaro'
