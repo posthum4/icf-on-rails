@@ -42,5 +42,6 @@ group :test do
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
   gem 'launchy'
+  gem 'fuubar'
 end
 gem 'figaro'
