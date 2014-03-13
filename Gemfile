@@ -18,6 +18,7 @@ gem 'slim-rails'
 gem 'figaro'
 gem 'restforce'
 gem 'jiralicious'
+gem 'annotate', ">=2.6.0"
 
 group :development do
   gem 'better_errors'
