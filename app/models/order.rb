@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
     client_secret:  ENV['SFDC_CLIENT_SECRET']
   # rubocop:enable all
 
-  FIELDS = CSV.read("#{Padrino.root}/models/fields.csv", headers: true)
+  FIELDS = CSV.read("#{Rails.root.to_s}/app/models/fields.csv", headers: true)
 
   Jiralicious.configure do |config|
     config.username =     ENV['JIRA_USER']

@@ -55,6 +55,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    crack (0.1.8)
     cucumber (1.3.11)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.3)
@@ -114,11 +115,19 @@ GEM
       rspec (>= 2.14, < 4.0)
     hashie (2.0.5)
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     hub (1.12.0)
     i18n (0.6.9)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
+    jiralicious (0.4.0)
+      crack (~> 0.1.8)
+      hashie (>= 1.1)
+      httparty (>= 0.10, < 0.12.0)
+      json (>= 1.6, < 1.9.0)
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -292,6 +301,7 @@ DEPENDENCIES
   guard-rspec
   hub
   jbuilder (~> 1.2)
+  jiralicious
   jquery-rails
   launchy
   omniauth

@@ -13,7 +13,12 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'simple_form'
 gem 'slim-rails'
+
+# Added by Roland
+gem 'figaro'
 gem 'restforce'
+gem 'jiralicious'
+
 group :development do
   gem 'better_errors'
   #gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
@@ -45,4 +50,3 @@ group :test do
   gem 'launchy'
   gem 'fuubar'
 end
-gem 'figaro'
