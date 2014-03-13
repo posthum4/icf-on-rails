@@ -8,6 +8,10 @@ class NoAttachmentsError < StandardError ; end
 # a JIRA Integrated Campaign Flow case
 class Order < ActiveRecord::Base
 
+  set_primary_key :sfdcid
+  # validates :sfdcid, presence: true
+  #  validates :sfdcid, format: { with: /(0068000000\w{5,})/ }
+
   # rubocop:disable AlignHash
   SFDC = Restforce.new username: ENV['SFDC_USERNAME'],
     password:       ENV['SFDC_PASSWORD'],
@@ -26,41 +30,43 @@ class Order < ActiveRecord::Base
     config.auth_type =   :basic
   end
 
-  def self.new(o)
-    # TODO: this needs to become a factory method of the inhereting classes
-    # @sfdcid     = o['Id']
-    # @name     = o['Name']
-    object =  case o['Opp_Type_New__c']
-    when 'Media: Renewal'
-      Renewal.allocate
-      # when 'Media: Budget Change'
-      #   Incremental.allocate
-    else
-      NewBusiness.allocate
-    end
-    object.send :initialize, o
-    object
-  end
+  # def self.new_by_sfdcid(o)
+  #   # TODO: this needs to become a factory method of the inhereting classes
+  #   # @sfdcid     = o['Id']
+  #   # @name     = o['Name']
+  #   object =  case o['Opp_Type_New__c']
+  #   when 'Media: Renewal'
+  #     Renewal.allocate
+  #     # when 'Media: Budget Change'
+  #     #   Incremental.allocate
+  #   else
+  #     NewBusiness.allocate
+  #   end
+  #   object.send :initialize, o
+  #   object
+  # end
 
-  def initialize(o)
-    # logger.level = Logger::DEBUG
-    # logger.debug "\n\n #{o}\n o = #{o.class}\n#{__FILE__}:#{__LINE__}"
-    # TODO: check in SFDC documentation if the first 15 chars is reliable
-    FIELDS.select { |f| f['Object'] == 'Order' }.each do |f|
-      if f['SalesForce'].include? '.'
-        var = import_complex(f['SalesForce'], o)
-      else
-        var = o[f['SalesForce']]
-      end
-      # if ( f['Type'] == 'Date' || f['Type'] == 'DateTime' )
-      #   instance_variable_set("@#{f['Internal']}", Chronic::parse(var))
-      # else
-      instance_variable_set("@#{f['Internal']}", var)
-      # end
-    end
-    @sfdcid         = o['Id'][0..14]
-    save!
-  end
+  # def initialize(o=nil)
+  #   unless o.nil?
+  #     # logger.level = Logger::DEBUG
+  #     # logger.debug "\n\n #{o}\n o = #{o.class}\n#{__FILE__}:#{__LINE__}"
+  #     # TODO: check in SFDC documentation if the first 15 chars is reliable
+  #     FIELDS.select { |f| f['Object'] == 'Order' }.each do |f|
+  #       if f['SalesForce'].include? '.'
+  #         var = import_complex(f['SalesForce'], o)
+  #       else
+  #         var = o[f['SalesForce']]
+  #       end
+  #       # if ( f['Type'] == 'Date' || f['Type'] == 'DateTime' )
+  #       #   instance_variable_set("@#{f['Internal']}", Chronic::parse(var))
+  #       # else
+  #       instance_variable_set("@#{f['Internal']}", var)
+  #       # end
+  #     end
+  #     @sfdcid         = o['Id'][0..14]
+  #   end
+  #   save!
+  # end
 
   def to_jira
     ## investgigate if exists already
@@ -110,7 +116,7 @@ class Order < ActiveRecord::Base
     # logger.devel "soql = #{soql.class} #{soql.inspect}"
     o = SFDC.query(soql).first
     # logger.devel "o = #{o.class} #{o.inspect}"
-    new(o) unless o.nil?
+    new_by_sfdcid(o) unless o.nil?
   end
 
   def in_jira?

@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 20140311013308) do
     t.datetime "updated_at"
   end
 
-  create_table "orders", force: true do |t|
-    t.string   "sfdcid"
+  create_table "orders", id: false, force: true do |t|
+    t.string   "sfdcid",                                  limit: 15
     t.string   "name"
     t.date     "close_date"
     t.decimal  "amount"
