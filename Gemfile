@@ -19,6 +19,8 @@ gem 'figaro'
 gem 'restforce'
 gem 'jiralicious'
 gem 'annotate', ">=2.6.0"
+gem 'RedCloth'
+gem 'redcarpet', '~> 2.1.1'
 
 group :development do
   gem 'better_errors'
@@ -34,7 +36,7 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
-  gem 'pry-rails', :group => :development
+  gem 'pry-rails'
 end
 group :development, :test do
   gem 'factory_girl_rails'

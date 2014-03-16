@@ -44,7 +44,7 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
-  
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
   end
@@ -53,5 +53,10 @@ RSpec.configure do |config|
   end
   config.after(:each) do
     DatabaseCleaner.clean
+  end
+
+  # Automigrate if needs migration
+  if ActiveRecord::Migrator.needs_migration?
+    ActiveRecord::Migrator.migrate(File.join(Rails.root, 'db/migrate'))
   end
 end

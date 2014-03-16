@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140311013308) do
+ActiveRecord::Schema.define(version: 20140316205344) do
 
   create_table "line_items", force: true do |t|
     t.string   "add_on"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140311013308) do
     t.string   "pricing_term"
     t.string   "product"
     t.string   "secondary_optimization_goal"
+    t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

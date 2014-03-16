@@ -54,6 +54,7 @@ class NoAttachmentsError < StandardError ; end
 # a JIRA Integrated Campaign Flow case
 class Order < ActiveRecord::Base
   validates_uniqueness_of :sfdcid
+  has_many :line_items
 
   def self.new(params=nil)
     if ( params.nil? || params['opp_type_new'].nil? )
