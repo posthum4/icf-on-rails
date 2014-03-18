@@ -10,7 +10,7 @@ When(/^my AE pushes a new order thru dealdesk$/) do
 end
 
 Then(/^I will get a jira assigned to me$/) do
-  @o = Order.find(@msg.sfdcid)
+  @o = Order.find_by_sfdcid(@msg.sfdcid)
   @o.find_or_create_jira.jira_key.should match(/ICF-\d{4,}/)
 end
 
@@ -20,5 +20,5 @@ When(/^dealdesk has approved an order in the past$/) do
 end
 
 Then(/^there is an associated JIRA$/) do
-  Order.find(@msg2.sfdcid).jira_key.should match('ICF-3214')
+  Order.find_by_sfdcid(@msg2.sfdcid).jira_key.should match('ICF-3214')
 end

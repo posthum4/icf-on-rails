@@ -73,6 +73,11 @@ class Order < ActiveRecord::Base
     object
   end
 
+  def find_by_sfdcid
+  end
+
+
+
 end
 
 class InsertionOrderChange < Order ; end
