@@ -21,6 +21,7 @@ gem 'jiralicious'
 gem 'annotate', ">=2.6.0"
 gem 'RedCloth'
 gem 'redcarpet', '~> 2.1.1'
+gem 'databasedotcom'
 
 group :development do
   gem 'better_errors'
