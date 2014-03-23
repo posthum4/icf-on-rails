@@ -1,4 +1,6 @@
 IcfOnRails::Application.routes.draw do
+  resources :employees
+
   resources :line_items
 
   resources :orders

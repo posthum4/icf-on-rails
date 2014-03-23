@@ -46,14 +46,19 @@
 #
 
 require 'csv'
-class CreatingDuplicateError < StandardError ; end
-class NonExistingOpportunityError < StandardError ; end
-class NoAttachmentsError < StandardError ; end
+# class CreatingDuplicateError < StandardError ; end
+# class NonExistingOpportunityError < StandardError ; end
+# class NoAttachmentsError < StandardError ; end
+class NotYetImplementedError < StandardError ; end
+class CreateTestingError < StandardError ; end
 
 # Class representing both a SalesForce Opportunity and
 # a JIRA Integrated Campaign Flow case
 class Order < ActiveRecord::Base
+  validates_presence_of :sfdcid
   validates_uniqueness_of :sfdcid
+
+  before_save :import
   has_many :line_items
 
   def self.new(params=nil)
@@ -73,10 +78,17 @@ class Order < ActiveRecord::Base
     object
   end
 
-  def find_by_sfdcid
+  def create
+    fail CreateTestingError
+    self.new
+    self.save
   end
 
+  private
 
+  def import
+    fail NotYetImplementedError
+  end
 
 end
 

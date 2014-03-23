@@ -57,7 +57,7 @@ describe Order do
       '0068000000nO334', # 4 @s Media: Budget Change
       '239872349872349'  # 5 Non-existant
     ]
-    oppts.each { |o| @o << Order.find_by_sfdcid(o) }
+    oppts.each { |o| @o << Order.find_or_create_by(sfdcid: o) }
   end
 
   context 'when opportunity exists' do
@@ -136,7 +136,7 @@ describe Order do
 
     # end
 
-    describe '::find_by_sfdcid' do
+    describe '::find_or_create_by_(sfdcid)' do
       it 'is valid' do
         expect(@o[0].name).to match('Bloomingdale')
       end

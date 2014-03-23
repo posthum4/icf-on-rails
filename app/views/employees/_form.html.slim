@@ -1,0 +1,12 @@
+= simple_form_for(@employee) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :username
+    = f.input :function
+    = f.input :salesforce_user
+    = f.input :jira_user
+
+  .form-actions
+    = f.button :submit
