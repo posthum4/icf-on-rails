@@ -58,37 +58,24 @@ class Order < ActiveRecord::Base
   validates_presence_of :sfdcid
   validates_uniqueness_of :sfdcid
 
-  before_save :import
   has_many :line_items
 
-  def self.new(params=nil)
-    if ( params.nil? || params['opp_type_new'].nil? )
-      object=Order.allocate
-    else
-      object =  case params['opp_type_new'].partition(': ').last
-      when 'Renewal', 'Budget Change', 'Cancellation'
-        InsertionOrderChange.allocate
-        # when 'Media: Budget Change'
-        #   Incremental.allocate
-      else
-        NewBusiness.allocate
-      end
-    end
-    object.send :initialize, params
-    object
-  end
-
-  def create
-    fail CreateTestingError
-    self.new
-    self.save
-  end
-
-  private
-
-  def import
-    fail NotYetImplementedError
-  end
+  # def self.initialize(params=nil)
+  #   if ( params.nil? || params['opp_type_new'].nil? )
+  #     object=Order.allocate
+  #   else
+  #     object =  case params['opp_type_new'].partition(': ').last
+  #     when 'Renewal', 'Budget Change', 'Cancellation'
+  #       InsertionOrderChange.allocate
+  #       # when 'Media: Budget Change'
+  #       #   Incremental.allocate
+  #     else
+  #       NewBusiness.allocate
+  #     end
+  #   end
+  #   object.send :initialize, params
+  #   object
+  # end
 
 end
 

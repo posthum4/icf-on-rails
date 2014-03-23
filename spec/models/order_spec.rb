@@ -136,14 +136,14 @@ describe Order do
 
     # end
 
-    describe '::find_or_create_by_(sfdcid)' do
-      it 'is valid' do
-        expect(@o[0].name).to match('Bloomingdale')
-      end
-      it 'is an Order type' do
-        expect(@o[0]).to be_kind_of(Order)
-      end
-    end
+    # describe '::find_or_create_by_(sfdcid)' do
+    #   it 'it finds an existing opportunity' do
+    #     expect(@o[0].name).to match('Bloomingdale')
+    #   end
+    #   it 'is an Order type' do
+    #     expect(@o[0]).to be_kind_of(Order)
+    #   end
+    # end
 
     # describe '#sfdcid' do
     #   it 'matches an opportunity ID syntax' do
@@ -155,11 +155,11 @@ describe Order do
     # end
   end
 
-  context 'when opportunity does not exist' do
-    describe '::find' do
-      it 'is nil' do
-        expect(@o[5]).to be_nil
-      end
-    end
-  end
+  # context 'when opportunity does not exist' do
+  #   describe '::find_or_create_by_(sfdcid)' do
+  #     it 'is nil' do
+  #       expect(@o[5]).to be_nil
+  #     end
+  #   end
+  # end
 end
