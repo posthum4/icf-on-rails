@@ -60,6 +60,8 @@ class Order < ActiveRecord::Base
 
   has_many :line_items
 
+  before_validation :import_existing
+
   # def self.initialize(params=nil)
   #   if ( params.nil? || params['opp_type_new'].nil? )
   #     object=Order.allocate
@@ -76,6 +78,11 @@ class Order < ActiveRecord::Base
   #   object.send :initialize, params
   #   object
   # end
+
+  private
+  def import_existing
+    importer = Service::OrderImporter.new(self,@sfdcid)
+  end
 
 end
 

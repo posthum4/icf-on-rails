@@ -145,21 +145,21 @@ describe Order do
     #   end
     # end
 
-    # describe '#sfdcid' do
-    #   it 'matches an opportunity ID syntax' do
-    #     expect(@o[0].sfdcid).to match(/(0068000000\w{5,})/)
-    #   end
-    #   it 'returns the same opportunity ID' do
-    #     expect(@o[0].sfdcid).to eql('0068000000oAoSg')
-    #   end
-    # end
+    describe '#sfdcid' do
+      it 'matches an opportunity ID syntax' do
+        expect(@o[0].sfdcid).to match(/(0068000000\w{5,})/)
+      end
+      it 'returns the same opportunity ID' do
+        expect(@o[0].sfdcid).to eql('0068000000oAoSg')
+      end
+    end
   end
 
-  # context 'when opportunity does not exist' do
-  #   describe '::find_or_create_by_(sfdcid)' do
-  #     it 'is nil' do
-  #       expect(@o[5]).to be_nil
-  #     end
-  #   end
-  # end
+  context 'when opportunity does not exist' do
+    describe '::find_or_create_by_(sfdcid)' do
+      it 'is nil' do
+        expect(@o[5]).to be_nil
+      end
+    end
+  end
 end
