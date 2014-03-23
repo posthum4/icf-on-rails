@@ -47,42 +47,42 @@
 require 'spec_helper'
 
 describe Order do
-  #   before do
-  #     @o = Array[]
-  #     oppts = [
-  #       '0068000000oAoSg', # 0 @o Enterprise: DSP
-  #       '0068000000iVbIV', # 1 @p Channel: Booking
-  #       '0068000000m9tPS', # 2 @q Media: Renewal
-  #       '0068000000lOV8c', # 3 @r Media: New Business
-  #       '0068000000nO334', # 4 @s Media: Budget Change
-  #       '239872349872349'  # 5 Non-existant
-  #     ]
-  #     oppts.each { |o| @o << Order.find(o) }
-  #   end
+  before do
+    @o = Array[]
+    oppts = [
+      '0068000000oAoSg', # 0 @o Enterprise: DSP
+      '0068000000iVbIV', # 1 @p Channel: Booking
+      '0068000000m9tPS', # 2 @q Media: Renewal
+      '0068000000lOV8c', # 3 @r Media: New Business
+      '0068000000nO334', # 4 @s Media: Budget Change
+      '239872349872349'  # 5 Non-existant
+    ]
+    oppts.each { |o| @o << Order.find_or_create_by(sfdcid: o) }
+  end
 
-  # context 'when opportunity exists' do
+  context 'when opportunity exists' do
 
-  #   context 'when New Business' do
-  #     describe '#type' do
-  #       it 'is a NewBusiness instance' do
-  #         expect(@o[3]).to be_an_instance_of(NewBusiness)
-  #       end
-  #       it 'is not an Order instance' do
-  #         expect(@o[3]).not_to be_an_instance_of(Order)
-  #       end
-  #     end
-  #   end
+    #   context 'when New Business' do
+    #     describe '#type' do
+    #       it 'is a NewBusiness instance' do
+    #         expect(@o[3]).to be_an_instance_of(NewBusiness)
+    #       end
+    #       it 'is not an Order instance' do
+    #         expect(@o[3]).not_to be_an_instance_of(Order)
+    #       end
+    #     end
+    #   end
 
-  #   context 'when Renewal' do
-  #     describe '#type' do
-  #       it 'is a Renewal instance' do
-  #         expect(@o[2]).to be_an_instance_of(Renewal)
-  #       end
-  #       it 'is not an Order instance' do
-  #         expect(@o[2]).not_to be_an_instance_of(Order)
-  #       end
-  #     end
-  #   end
+    #   context 'when Renewal' do
+    #     describe '#type' do
+    #       it 'is a Renewal instance' do
+    #         expect(@o[2]).to be_an_instance_of(Renewal)
+    #       end
+    #       it 'is not an Order instance' do
+    #         expect(@o[2]).not_to be_an_instance_of(Order)
+    #       end
+    #     end
+    #   end
 
     # context 'when JIRA exists' do
     #   describe '#jira_key' do
@@ -136,30 +136,30 @@ describe Order do
 
     # end
 
-  #   describe '::find' do
-  #     it 'is valid' do
-  #       expect(@o[0].name).to match('Bloomingdale')
-  #     end
-  #     it 'is an Order type' do
-  #       expect(@o[0]).to be_kind_of(Order)
-  #     end
-  #   end
+    describe '::find_or_create_by_(sfdcid)' do
+      it 'is valid' do
+        expect(@o[0].name).to match('Bloomingdale')
+      end
+      it 'is an Order type' do
+        expect(@o[0]).to be_kind_of(Order)
+      end
+    end
 
-  #   describe '#sfdcid' do
-  #     it 'matches an opportunity ID syntax' do
-  #       expect(@o[0].sfdcid).to match(/(0068000000\w{5,})/)
-  #     end
-  #     it 'returns the same opportunity ID' do
-  #       expect(@o[0].sfdcid).to eql('0068000000oAoSg')
-  #     end
-  #   end
-  # end
+    # describe '#sfdcid' do
+    #   it 'matches an opportunity ID syntax' do
+    #     expect(@o[0].sfdcid).to match(/(0068000000\w{5,})/)
+    #   end
+    #   it 'returns the same opportunity ID' do
+    #     expect(@o[0].sfdcid).to eql('0068000000oAoSg')
+    #   end
+    # end
+  end
 
-  # context 'when opportunity does not exist' do
-  #   describe '::find' do
-  #     it 'is nil' do
-  #       expect(@o[5]).to be_nil
-  #     end
-  #   end
-  # end
+  context 'when opportunity does not exist' do
+    describe '::find' do
+      it 'is nil' do
+        expect(@o[5]).to be_nil
+      end
+    end
+  end
 end

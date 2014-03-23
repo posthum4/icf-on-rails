@@ -1,0 +1,27 @@
+h1 Listing employees
+
+table
+  tr
+    th Name
+    th Username
+    th Function
+    th Salesforce user
+    th Jira user
+    th
+    th
+    th
+
+  - @employees.each do |employee|
+    tr
+      td = employee.name
+      td = employee.username
+      td = employee.function
+      td = employee.salesforce_user
+      td = employee.jira_user
+      td = link_to 'Show', employee
+      td = link_to 'Edit', edit_employee_path(employee)
+      td = link_to 'Destroy', employee, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Employee', new_employee_path

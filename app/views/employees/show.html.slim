@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @employee.name
+p
+  strong Username:
+  = @employee.username
+p
+  strong Function:
+  = @employee.function
+p
+  strong Salesforce user:
+  = @employee.salesforce_user
+p
+  strong Jira user:
+  = @employee.jira_user
+
+= link_to 'Edit', edit_employee_path(@employee)
+'|
+= link_to 'Back', employees_path
