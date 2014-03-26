@@ -59,6 +59,8 @@ class Order < ActiveRecord::Base
   validates_uniqueness_of :sfdcid
 
   has_many :line_items
+  references :opportunities
+
 
   before_save :exists_in_salesforce?
 
@@ -83,6 +85,10 @@ class Order < ActiveRecord::Base
   #   object
   # end
 
+  def opportunity_name
+    SalesForce::Opportunity.find(self.sfdcid).Name
+  end
+
   private
 
   def exists_in_salesforce?
@@ -97,6 +103,8 @@ class Order < ActiveRecord::Base
   def import_existing
     importer = Service::OrderImporter.new(self,@sfdcid)
   end
+
+
 
 end
 

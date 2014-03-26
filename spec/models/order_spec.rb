@@ -137,7 +137,7 @@ describe Order do
 
     describe '::find_or_create_by_(sfdcid)' do
       it 'it finds an existing opportunity' do
-        expect(@o[0].name).to match('Bloomingdale')
+        expect(@o[0].opportunity_name).to match('Bloomingdale')
       end
       it 'is an Order type' do
         expect(@o[0]).to be_kind_of(Order)
