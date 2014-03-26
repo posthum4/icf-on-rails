@@ -29,9 +29,9 @@ module SalesForce
 
     def materialize_all
       @@client.sobject_module = 'SalesForce'
-      SalesForce::Account.materialize(@@client)
-      SalesForce::User.materialize(@@client)
-      SalesForce::Opportunity.materialize(@@client)
+      @@client.materialize("User")
+      @@client.materialize("Account")
+      @@client.materialize("Opportunity")
     end
 
     def client_id

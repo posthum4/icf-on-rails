@@ -60,7 +60,11 @@ class Order < ActiveRecord::Base
 
   has_many :line_items
 
-  before_validation :import_existing
+  before_save :exists_in_salesforce?
+
+  # def self.initialize(sfdcid)
+
+  # end
 
   # def self.initialize(params=nil)
   #   if ( params.nil? || params['opp_type_new'].nil? )
@@ -80,6 +84,16 @@ class Order < ActiveRecord::Base
   # end
 
   private
+
+  def exists_in_salesforce?
+    logger.debug "\n\n #{self.to_yaml}\n self = #{self.class}\n#{__FILE__}:#{__LINE__}"
+    logger.debug "\n\n #{self.sfdcid.to_yaml}\n self.sfdcid = #{self.sfdcid.class}\n#{__FILE__}:#{__LINE__}"
+    SalesForce::Opportunity.find(self.sfdcid)
+  #   true
+  # rescue Databasedotcom::SalesForceError
+  #   false
+  end
+
   def import_existing
     importer = Service::OrderImporter.new(self,@sfdcid)
   end

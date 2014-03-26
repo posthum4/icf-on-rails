@@ -47,44 +47,12 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :order do
-    sfdcid "MyString"
-    name "MyString"
-    close_date "2014-03-10"
-    amount "9.99"
-    campaign_start_date "2014-03-10"
-    vertical "MyString"
-    account "MyString"
-    agency "MyString"
-    advertiser "MyString"
-    stage_name "MyString"
-    opportunity_owner "MyString"
-    opp_type_new "MyString"
-    account_manager "MyString"
-    sales_region "MyString"
-    last_modified_date "2014-03-10 18:30:23"
-    brand "MyString"
-    campaign_end_date "2014-03-10"
-    campaign_objectives "MyText"
-    primary_audience_am "MyString"
-    secondary_audience_am "MyString"
-    hard_constraints_am "MyString"
-    is_secondary_audience_a_hard_constraint "MyString"
-    rfp_special_client_requests "MyString"
-    special_client_requirements "MyString"
-    special_notes "MyText"
-    brand_safety_vendor "MyString"
-    type_of_service "MyString"
-    brand_safety_restrictions "MyString"
-    who_is_paying_for_brand_safety "MyString"
-    client_vendor_pre_existing_relations "MyString"
-    who_will_implement_adchoices_icon "MyString"
-    brand_safety_notes "MyString"
-    who_will_wrap_the_tags "MyString"
-    io_case "MyString"
-    viewability "MyString"
-    viewability_metrics "MyString"
-    who_is_paying_for_viewability "MyString"
-    parent_order "MyString"
+  factory :enterprise_dsp do
+    sfdcid "0068000000oAoSg"
+    name "Enterprise: DSP"
+  end
+  factory :channel_booking do
+    sfdcid "0068000000iVbIV"
+    name "Channel: Booking"
   end
 end

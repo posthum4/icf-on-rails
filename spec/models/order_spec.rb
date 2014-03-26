@@ -54,8 +54,7 @@ describe Order do
       '0068000000iVbIV', # 1 @p Channel: Booking
       '0068000000m9tPS', # 2 @q Media: Renewal
       '0068000000lOV8c', # 3 @r Media: New Business
-      '0068000000nO334', # 4 @s Media: Budget Change
-      '239872349872349'  # 5 Non-existant
+      '0068000000nO334'  # 4 @s Media: Budget Change
     ]
     oppts.each { |o| @o << Order.find_or_create_by(sfdcid: o) }
   end
@@ -136,14 +135,14 @@ describe Order do
 
     # end
 
-    # describe '::find_or_create_by_(sfdcid)' do
-    #   it 'it finds an existing opportunity' do
-    #     expect(@o[0].name).to match('Bloomingdale')
-    #   end
-    #   it 'is an Order type' do
-    #     expect(@o[0]).to be_kind_of(Order)
-    #   end
-    # end
+    describe '::find_or_create_by_(sfdcid)' do
+      it 'it finds an existing opportunity' do
+        expect(@o[0].name).to match('Bloomingdale')
+      end
+      it 'is an Order type' do
+        expect(@o[0]).to be_kind_of(Order)
+      end
+    end
 
     describe '#sfdcid' do
       it 'matches an opportunity ID syntax' do
@@ -157,8 +156,8 @@ describe Order do
 
   context 'when opportunity does not exist' do
     describe '::find_or_create_by_(sfdcid)' do
-      it 'is nil' do
-        expect(@o[5]).to be_nil
+      it 'raises a non existant error' do
+        expect { Order.find_or_create_by(sfdcid: '239872349872349') }.to raise_error(Databasedotcom::SalesForceError, 'Provided external ID field does not exist or is not accessible: 239872349872349')
       end
     end
   end
