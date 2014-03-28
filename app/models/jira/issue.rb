@@ -29,15 +29,22 @@ module Jira
       result
     end
 
+
+    private
+
     def self.find_or_create_by_sfdcid(sfdcid)
-      j = find_by_sfdcid(sfdcid).first
+      #logger.debug "\n\n #{sfdcid.to_yaml}\n sfdcid = #{sfdcid.class}\n#{__FILE__}:#{__LINE__}"
+      jarray = find_by_sfdcid(sfdcid)
+      #logger.debug "\n\n #{jarray.to_yaml}\n jarray = #{jarray.class}\n#{__FILE__}:#{__LINE__}"
+      j = jarray.first
+      #logger.debug "\n\n #{j.to_yaml}\n j = #{j.class}\n#{__FILE__}:#{__LINE__}"
       if j.nil?
-        j = create!(sfdcid)
+        j = self.create!(sfdcid)
+        #logger.debug "\n\n #{j.to_yaml}\n j = #{j.class}\n#{__FILE__}:#{__LINE__}"
       end
       j
     end
 
-    private
     def self.create!(sfdcid,type='launch', summary = "Test created #{Time.now.utc.to_s} by #{__FILE__}", parent_key = nil)
       j = Jiralicious::Issue.new
       j.fields.set_id("project", "11490") # this is the ICF project. Hardcoded :)
@@ -46,6 +53,7 @@ module Jira
       j.save
       j.fields.set("customfield_11862", sfdcid )
       j.save
+      j
     end
 
   end

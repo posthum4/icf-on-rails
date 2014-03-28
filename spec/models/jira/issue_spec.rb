@@ -1,12 +1,19 @@
 require 'spec_helper'
 
 
-describe Jira::Issue, :integration => true do
+describe Jira::Issue do
 
   before do
     @j = Jira::Issue.find_by_key('ICF-3214')
     @k = Jira::Issue.find_by_sfdcid('0068000000oAoSg')
+    #@l = Jira::Issue.find_or_create_by_sfdcid('0068000000iVbIV')
   end
+
+  # describe 'find_or_create_by_sfdcid', :focus => true do
+  #   it 'returns a jira issue' do
+  #     expect(@l).to be_a_kind_of(Jira::Issue)
+  #   end
+  # end
 
   context 'When JIRA exists' do
 

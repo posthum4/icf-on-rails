@@ -1,28 +1,32 @@
 module Service
   class IssueCreator
 
+    attr_accessor :sfdcid, :order, :jira
+
     def initialize(sfdcid)
       @sfdcid = sfdcid
       @order = Order.find_or_create_by(sfdcid: sfdcid)
-      @order.jira_key = find_or_create_jira_by_sfdcid
+      @jira = find_or_create_jira_by_sfdcid
+      binding.pry
     end
 
     def find_or_create_jira_by_sfdcid
       return false unless @order
       return false unless @sfdcid
-#      if existing_key.nil?
-#        t = Value::IssueType.jira_id(@order.opportunity_type)
-#        jira_key = Jira::Issue.create!(t)
-#      else
-#        jira_key = existing_key
-#      end
-      Jira::Issue.find_or_create_by_sfdcid(@sfdcid)
+      j = Jira::Issue.find_or_create_by_sfdcid(@sfdcid)
+      @order.jira_key = j.key
+      @order.save
+      j
     end
 
-    def existing_key
-      i = Jira::Issue.find_by_sfdcid(@sfdcid)
-      i.size > 0 ? i.first.key : nil
+    def jira_key
+      @jira.key
     end
+
+    # def existing_key
+    #   i = Jira::Issue.find_by_sfdcid(@sfdcid)
+    #   i.size > 0 ? i.first.key : nil
+    # end
 
   end
 
