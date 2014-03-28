@@ -1,33 +1,27 @@
 module Service
   class IssueCreator
 
-    class JiraAlreadyExistsError < StandardError ; end
-
-    def initialize(order)
-      @order = order
-      @sfdcid = order.sfdcid
+    def initialize(sfdcid)
+      @sfdcid = sfdcid
+      @order = Order.find_or_create_by(sfdcid: sfdcid)
+      @order.jira_key = find_or_create_jira_by_sfdcid
     end
 
-    def import
+    def find_or_create_jira_by_sfdcid
       return false unless @order
       return false unless @sfdcid
       if existing_key.nil?
         t = Value::IssueType.jira_id(Order.type)
-        Jira::Issue.create!(t)
+        jira_key = Jira::Issue.create!(t)
       else
-        fail JiraAlreadyExistsError, "A Jira with this Opportunity ID already exists: #{existing_key}"
+        jira_key = existing_key
       end
     end
 
     def existing_key
       i = Jira::Issue.find_by_sfdcid(@sfdcid)
-      i.size > 0 : i.first.key : nil
+      i.size > 0 ? i.first.key : nil
     end
-
-    def order_type
-      "New Business"
-    end
-
 
   end
 

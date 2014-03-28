@@ -11,12 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328015137) do
+ActiveRecord::Schema.define(version: 20140328201152) do
 
   create_table "employees", force: true do |t|
     t.string   "name"
     t.string   "username"
     t.string   "function"
+    t.integer  "salesforce_user_id"
+    t.integer  "jira_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,12 +42,12 @@ ActiveRecord::Schema.define(version: 20140328015137) do
   end
 
   create_table "orders", force: true do |t|
-    t.string   "sfdcid"
+    t.string   "sfdcid",       limit: 15
     t.string   "name"
     t.string   "parent_order"
-    t.string   "jira_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "jira_key"
   end
 
   create_table "users", force: true do |t|
