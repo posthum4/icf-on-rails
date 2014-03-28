@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "Too slow for comfort", :slow => true do
 
-  describe SalesForce::Client do
+  describe SalesForce::Client, :integration => true do
 
     before do
       @c = SalesForce::Client.new()
