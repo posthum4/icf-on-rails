@@ -42,8 +42,9 @@ module Jira
       j = Jiralicious::Issue.new
       j.fields.set_id("project", "11490") # this is the ICF project. Hardcoded :)
       j.fields.set_id("issuetype", Value::IssueType.jira_id(type)) # this is a campaign launch
+      j.fields.set("summary", ENV['CALLOUT']+summary )
+      j.save
       j.fields.set("customfield_11862", sfdcid )
-      j.fields.set("summary", summary )
       j.save
     end
 

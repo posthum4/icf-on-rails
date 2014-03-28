@@ -10,12 +10,13 @@ module Service
     def find_or_create_jira_by_sfdcid
       return false unless @order
       return false unless @sfdcid
-      if existing_key.nil?
-        t = Value::IssueType.jira_id(@order.opportunity_type)
-        jira_key = Jira::Issue.create!(t)
-      else
-        jira_key = existing_key
-      end
+#      if existing_key.nil?
+#        t = Value::IssueType.jira_id(@order.opportunity_type)
+#        jira_key = Jira::Issue.create!(t)
+#      else
+#        jira_key = existing_key
+#      end
+      Jira::Issue.find_or_create_by_sfdcid(@sfdcid)
     end
 
     def existing_key
