@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Value::IssueType do
   before do
-    @t = Value::IssueType.jira_id(:launch)
-    @s = Value::IssueType.symbol_for(19)
+    @t = Value::IssueType.jira_id('Media: New Business')
+    @random = ('a'..'z').to_a.shuffle[0,8].join
+    @s = Value::IssueType.jira_id(@random)
   end
 
 
@@ -11,8 +12,8 @@ describe Value::IssueType do
     it 'returns 19 for a launch' do
       expect(@t).to eql(19)
     end
-    it 'returns a :launch symbol for 19' do
-      expect(@s).to eql(:launch)
+    it 'returns 19 for a random string' do
+      expect(@s).to eql(19)
     end
 
   end

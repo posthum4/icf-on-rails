@@ -3,25 +3,14 @@ module Value
 
   class IssueType
 
-    def self.jira_id(symbol)
-      case symbol
-      when :launch
+    def self.jira_id(opp_type_new__c)
+      case opp_type_new__c
+      when 'Media: New Business'
         19
-      when :io_change
-        nil #tbd
       else
-        nil
+        19
       end
 
-    end
-
-    def self.symbol_for(jira_id)
-      case jira_id
-      when 19
-        :launch
-      else
-        nil
-      end
     end
 
   end
