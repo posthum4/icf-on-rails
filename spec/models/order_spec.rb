@@ -57,6 +57,7 @@ describe Order do
       '0068000000nO334'  # 4 @s Media: Budget Change
     ]
     oppts.each { |o| @o << Order.find_or_create_by(sfdcid: o) }
+    @p = Order.find_by(jira_key: 'ICF-3214')
   end
 
   context 'when opportunity exists' do
@@ -83,7 +84,7 @@ describe Order do
     #     end
     #   end
 
-    # context 'when JIRA exists' do
+    context 'when JIRA exists' do
     #   describe '#jira_key' do
     #     it 'returns the JIRA key' do
     #       expect(@o[0].jira_key).to match('ICF-3214')
@@ -112,7 +113,11 @@ describe Order do
     #     end
     #   end
 
-    # end
+    describe '.find_or_create_by_(jira_key)' do
+      it 'finds an existing JIRA linkage' do
+        expect (@p.sfdcid).to eql('0068000000oAoSg')
+      end
+    end
 
     # context 'when simple Line Items' do
     #   describe '#line_items' do
@@ -135,8 +140,8 @@ describe Order do
 
     # end
 
-    describe '::find_or_create_by_(sfdcid)' do
-      it 'it finds an existing opportunity' do
+    describe '.find_or_create_by_(sfdcid)' do
+      it 'finds an existing opportunity' do
         expect(@o[0].opportunity_name).to match('Bloomingdale')
       end
       it 'is an Order type' do
@@ -152,6 +157,7 @@ describe Order do
         expect(@o[0].sfdcid).to eql('0068000000oAoSg')
       end
     end
+
   end
 
   context 'when opportunity does not exist' do

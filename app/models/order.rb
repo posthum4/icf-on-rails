@@ -61,6 +61,7 @@ class Order < ActiveRecord::Base
   has_many :line_items
   references :opportunities
 
+  before_validation :sfdcid_from_jira 
 
   before_save :exists_in_salesforce?
 
@@ -95,9 +96,9 @@ class Order < ActiveRecord::Base
     logger.debug "\n\n #{self.to_yaml}\n self = #{self.class}\n#{__FILE__}:#{__LINE__}"
     logger.debug "\n\n #{self.sfdcid.to_yaml}\n self.sfdcid = #{self.sfdcid.class}\n#{__FILE__}:#{__LINE__}"
     SalesForce::Opportunity.find(self.sfdcid)
-  #   true
-  # rescue Databasedotcom::SalesForceError
-  #   false
+  end
+
+  def sfdcid_from_jira
   end
 
   def import_existing
