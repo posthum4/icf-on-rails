@@ -4,85 +4,12 @@ table
   tr
     th Sfdcid
     th Name
-    th Close date
-    th Amount
-    th Campaign start date
-    th Vertical
-    th Account
-    th Agency
-    th Advertiser
-    th Stage name
-    th Opportunity owner
-    th Opp type new
-    th Account manager
-    th Sales region
-    th Last modified date
-    th Brand
-    th Campaign end date
-    th Campaign objectives
-    th Primary audience am
-    th Secondary audience am
-    th Hard constraints am
-    th Is secondary audience a hard constraint
-    th Rfp special client requests
-    th Special client requirements
-    th Special notes
-    th Brand safety vendor
-    th Type of service
-    th Brand safety restrictions
-    th Who is paying for brand safety
-    th Client vendor pre existing relations
-    th Who will implement adchoices icon
-    th Brand safety notes
-    th Who will wrap the tags
-    th Io case
-    th Viewability
-    th Viewability metrics
-    th Who is paying for viewability
     th Parent order
-    th
-    th
-    th
 
   - @orders.each do |order|
     tr
       td = order.sfdcid
       td = order.name
-      td = order.close_date
-      td = order.amount
-      td = order.campaign_start_date
-      td = order.vertical
-      td = order.account
-      td = order.agency
-      td = order.advertiser
-      td = order.stage_name
-      td = order.opportunity_owner
-      td = order.opp_type_new
-      td = order.account_manager
-      td = order.sales_region
-      td = order.last_modified_date
-      td = order.brand
-      td = order.campaign_end_date
-      td = order.campaign_objectives
-      td = order.primary_audience_am
-      td = order.secondary_audience_am
-      td = order.hard_constraints_am
-      td = order.is_secondary_audience_a_hard_constraint
-      td = order.rfp_special_client_requests
-      td = order.special_client_requirements
-      td = order.special_notes
-      td = order.brand_safety_vendor
-      td = order.type_of_service
-      td = order.brand_safety_restrictions
-      td = order.who_is_paying_for_brand_safety
-      td = order.client_vendor_pre_existing_relations
-      td = order.who_will_implement_adchoices_icon
-      td = order.brand_safety_notes
-      td = order.who_will_wrap_the_tags
-      td = order.io_case
-      td = order.viewability
-      td = order.viewability_metrics
-      td = order.who_is_paying_for_viewability
       td = order.parent_order
       td = link_to 'Show', order
       td = link_to 'Edit', edit_order_path(order)

@@ -69,6 +69,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:sfdcid, :name, :close_date, :amount, :campaign_start_date, :vertical, :account, :agency, :advertiser, :stage_name, :opportunity_owner, :opp_type_new, :account_manager, :sales_region, :last_modified_date, :brand, :campaign_end_date, :campaign_objectives, :primary_audience_am, :secondary_audience_am, :hard_constraints_am, :is_secondary_audience_a_hard_constraint, :rfp_special_client_requests, :special_client_requirements, :special_notes, :brand_safety_vendor, :type_of_service, :brand_safety_restrictions, :who_is_paying_for_brand_safety, :client_vendor_pre_existing_relations, :who_will_implement_adchoices_icon, :brand_safety_notes, :who_will_wrap_the_tags, :io_case, :viewability, :viewability_metrics, :who_is_paying_for_viewability, :parent_order)
+      params.require(:order).permit(:sfdcid, :name, :parent_order)
     end
 end

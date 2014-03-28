@@ -4,8 +4,6 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :name
       t.string :username
       t.string :function
-      t.references :salesforce_user
-      t.references :jira_user
 
       t.timestamps
     end
