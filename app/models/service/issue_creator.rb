@@ -11,7 +11,7 @@ module Service
       return false unless @order
       return false unless @sfdcid
       if existing_key.nil?
-        t = Value::IssueType.jira_id(Order.type)
+        t = Value::IssueType.jira_id(@order.opportunity_type)
         jira_key = Jira::Issue.create!(t)
       else
         jira_key = existing_key
