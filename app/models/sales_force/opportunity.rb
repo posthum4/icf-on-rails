@@ -1,3 +1,4 @@
+SalesForce::Client.new()
 module SalesForce
 
   class Opportunity

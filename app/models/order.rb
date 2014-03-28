@@ -104,8 +104,6 @@ class Order < ActiveRecord::Base
     importer = Service::OrderImporter.new(self,@sfdcid)
   end
 
-
-
 end
 
 class InsertionOrderChange < Order ; end

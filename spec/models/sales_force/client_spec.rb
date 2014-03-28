@@ -3,7 +3,9 @@ require 'spec_helper'
 describe SalesForce::Client do
 
   before do
-    @c = SalesForce::Client.new()
+    # @c = SalesForce::Client.new()
+    @c = mock('SalesForce::Client')
+    @c.stub!(:materialize_all)
     # @o = SalesForce::Opportunity.all.sample
     # @a = SalesForce::Account.all.sample
     # @e = SalesForce::User.all.sample
@@ -11,7 +13,7 @@ describe SalesForce::Client do
 
   describe 'new' do
     it 'returns a SalesForce::Client object' do
-      expect(@c).to be_an_instance_of(SalesForce::Client)
+      expect(@c).to respond_to(:materialize_all)
     end
   end
 

@@ -20,6 +20,25 @@ require 'spec_helper'
 
 describe OrdersController do
 
+  # RS this is just an example from StackOverflow
+  # before(:each) do
+  #   @page = mock_model(Page)
+  #   @page.stub!(:path)
+  #   @page.stub!(:find_by_id)
+  #   @page_type = mock_model(PageType)
+  #   @page_type.stub!(:name)
+  #   @page.stub!(:page_type).and_return(@page_type)
+  # end
+
+  before(:each) do
+    order = double(Order)
+    order.stub(:path)
+    order.stub(:find_by_id)
+    # order_type = mock_model(PageType)
+    # order_type.stub!(:name)
+    # order.stub!(:page_type).and_return(@page_type)
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Order. As you add validations to Order, be sure to
   # adjust the attributes here as well.
@@ -32,7 +51,7 @@ describe OrdersController do
 
   describe "GET index" do
     it "assigns all orders as @orders" do
-      order = Order.create! valid_attributes
+      order ||= Order.create! valid_attributes
       get :index, {}, valid_session
       assigns(:orders).should eq([order])
     end
@@ -40,7 +59,7 @@ describe OrdersController do
 
   describe "GET show" do
     it "assigns the requested order as @order" do
-      order = Order.create! valid_attributes
+      order ||= Order.create! valid_attributes
       get :show, {:id => order.to_param}, valid_session
       assigns(:order).should eq(order)
     end
