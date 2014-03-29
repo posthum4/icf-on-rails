@@ -8,6 +8,9 @@ class CreateTestingError < StandardError ; end
 # Class representing both a SalesForce Opportunity and
 # a JIRA Integrated Campaign Flow case
 class Order < ActiveRecord::Base
+
+  attr_accessor :sfdcid, :name, :jira_key, :parent_order, :created_at, :updated_at
+  
   validates_presence_of :sfdcid
   validates_uniqueness_of :sfdcid
 
@@ -15,7 +18,7 @@ class Order < ActiveRecord::Base
   references :opportunities
 
   before_save :exists_in_salesforce?
-  after_save :find_or_create_linked_issue
+  #before_save :find_or_create_linked_issue
 
   def opportunity_name
     SalesForce::Opportunity.find(self.sfdcid).Name
@@ -46,13 +49,14 @@ class Order < ActiveRecord::Base
 
   def self.find_by(*args)
     records = super
-    if args[0].keys.include?(:jira_key) && records.nil?
+    if records.nil? && args[0].keys.include?(:jira_key) 
       # TODO: 2014-03-29 make values[0] more robust in case of 2+ argument queries
       jira_key = args[0].values[0]
       k = Jira::Issue.find_by_key(jira_key).first.sfdcid
       o = Service::IssueCreator.new(k).order
+      records = super
     end
-    records = super
+    records
   end
 
 

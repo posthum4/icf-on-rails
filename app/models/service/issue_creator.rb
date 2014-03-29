@@ -7,7 +7,6 @@ module Service
       @sfdcid = sfdcid
       @order = Order.find_or_create_by(sfdcid: sfdcid)
       @jira = find_or_create_jira_by_sfdcid
-      binding.pry
     end
 
     def find_or_create_jira_by_sfdcid
