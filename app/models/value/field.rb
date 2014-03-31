@@ -13,7 +13,7 @@ module Value
     end
 
     def for_campaign_order
-      @@table.select { |f| f['Object'] == 'Order' }.to_a
+      @@table.select { |f| f['Object'] == 'CampaignOrder' }.to_a
     end
 
   end
