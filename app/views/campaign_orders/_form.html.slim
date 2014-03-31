@@ -1,0 +1,10 @@
+= simple_form_for(@campaign_order) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :sfdcid
+    = f.input :name
+    = f.input :jira_key
+
+  .form-actions
+    = f.button :submit

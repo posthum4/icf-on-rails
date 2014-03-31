@@ -43,4 +43,6 @@ IcfOnRails::Application.configure do
   # Send email in development mode?
   config.action_mailer.perform_deliveries = true
 
+  WebMock.allow_net_connect!
+
 end

@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328201152) do
+ActiveRecord::Schema.define(version: 20140331045854) do
+
+  create_table "campaign_orders", force: true do |t|
+    t.string   "sfdcid"
+    t.string   "name"
+    t.string   "jira_key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "employees", force: true do |t|
     t.string   "name"

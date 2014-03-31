@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Sfdcid:
+  = @campaign_order.sfdcid
+p
+  strong Name:
+  = @campaign_order.name
+p
+  strong Jira key:
+  = @campaign_order.jira_key
+
+= link_to 'Edit', edit_campaign_order_path(@campaign_order)
+'|
+= link_to 'Back', campaign_orders_path
