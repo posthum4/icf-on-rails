@@ -19,19 +19,19 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe OrdersController do
+  VCR.use_cassette('controller/orders/general',  :match_requests_on => [:host]) do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Order. As you add validations to Order, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) { { "sfdcid" => "0068000000lcGQx" } }
+    # This should return the minimal set of attributes required to create a valid
+    # Order. As you add validations to Order, be sure to
+    # adjust the attributes here as well.
+    let(:valid_attributes) { { "sfdcid" => "0068000000lcGQx" } }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # OrdersController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+    # This should return the minimal set of values that should be in the session
+    # in order to pass any filters (e.g. authentication) defined in
+    # OrdersController. Be sure to keep this updated too.
+    let(:valid_session) { {} }
 
-  describe "GET index" do
-    VCR.use_cassette 'controller/orders/get/index' do
+    describe "GET index" do
 
       it "assigns all orders as @orders" do
         order ||= Order.create! valid_attributes
@@ -39,39 +39,31 @@ describe OrdersController do
         assigns(:orders).should eq([order])
       end
     end
-  end
 
-  describe "GET show" do
-    VCR.use_cassette 'controller/orders/get/show' do
+    describe "GET show" do
       it "assigns the requested order as @order" do
         order ||= Order.create! valid_attributes
         get :show, {:id => order.to_param}, valid_session
         assigns(:order).should eq(order)
       end
     end
-  end
 
-  describe "GET new" do
-    VCR.use_cassette 'controller/orders/get/new' do
+    describe "GET new" do
       it "assigns a new order as @order" do
         get :new, {}, valid_session
         assigns(:order).should be_a_new(Order)
       end
     end
-  end
 
-  describe "GET edit" do
-    VCR.use_cassette 'controller/orders/get/edit' do
+    describe "GET edit" do
       it "assigns the requested order as @order" do
         order = Order.create! valid_attributes
         get :edit, {:id => order.to_param}, valid_session
         assigns(:order).should eq(order)
       end
     end
-  end
 
-  describe "POST create" do
-    VCR.use_cassette 'controller/orders/post/create' do
+    describe "POST create" do
       describe "with valid params" do
         it "creates a new Order" do
           expect {
@@ -107,10 +99,8 @@ describe OrdersController do
         end
       end
     end
-  end
 
-  describe "PUT update" do
-    VCR.use_cassette 'controller/orders/put/update' do
+    describe "PUT update" do
       describe "with valid params" do
         it "updates the requested order" do
           order = Order.create! valid_attributes
@@ -153,10 +143,8 @@ describe OrdersController do
         end
       end
     end
-  end
 
-  describe "DELETE destroy" do
-    VCR.use_cassette 'controller/orders/delete/destroy' do
+    describe "DELETE destroy" do
       it "destroys the requested order" do
         order = Order.create! valid_attributes
         expect {

@@ -20,6 +20,7 @@ gem 'restforce'
 gem 'jiralicious'
 gem 'RedCloth'
 gem 'redcarpet', '~> 2.1.1'
+gem 'fakeweb'
 gem 'databasedotcom'
 
 group :development do

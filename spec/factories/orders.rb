@@ -50,6 +50,7 @@ FactoryGirl.define do
   factory :enterprise_dsp do
     sfdcid "0068000000oAoSg"
     name "Enterprise: DSP"
+    jira_key 'ICF-3214'
   end
   factory :channel_booking do
     sfdcid "0068000000iVbIV"
