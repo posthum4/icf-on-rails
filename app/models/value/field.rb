@@ -12,7 +12,7 @@ module Value
       self
     end
 
-    def self.fields_for_order
+    def self.for_order
       @@table.select { |f| f['Object'] == 'Order' }
     end
 

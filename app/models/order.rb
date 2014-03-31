@@ -28,6 +28,10 @@ class Order < ActiveRecord::Base
     SalesForce::Opportunity.find(self.sfdcid).Opp_Type_New__c
   end
 
+  def overview
+    Value::Field.for_order
+  end
+
   private
 
   def exists_in_salesforce?

@@ -45,6 +45,12 @@ describe Order do
         end
       end
 
+      describe '#overview', focus: true do
+        it 'contains a currency field' do
+          expect @o[0].overview.to match(/(.*Currency.*)/)
+        end
+      end
+
     end
   end
 

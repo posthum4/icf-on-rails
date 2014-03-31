@@ -6,7 +6,7 @@ describe Value::Field do
   end
 
 
-  describe '#fields_for_order' do
+  describe '#for_order' do
     it 'is enumerable' do
       expect(@f).to respond_to(:each)
     end
