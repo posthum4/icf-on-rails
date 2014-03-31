@@ -19,142 +19,143 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe CampaignOrdersController do
+  #VCR.use_cassette('controller/campaign_order/general',  :match_requests_on => [:host]) do
 
-  # This should return the minimal set of attributes required to create a valid
-  # CampaignOrder. As you add validations to CampaignOrder, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) { { "sfdcid" => "MyString" } }
+    # This should return the minimal set of attributes required to create a valid
+    # CampaignOrder. As you add validations to CampaignOrder, be sure to
+    # adjust the attributes here as well.
+    let(:valid_attributes) { { "sfdcid" => "0068000000lcGQx" } }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # CampaignOrdersController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+    # This should return the minimal set of values that should be in the session
+    # in order to pass any filters (e.g. authentication) defined in
+    # CampaignOrdersController. Be sure to keep this updated too.
+    let(:valid_session) { {} }
 
-  describe "GET index" do
-    it "assigns all campaign_orders as @campaign_orders" do
-      campaign_order = CampaignOrder.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:campaign_orders).should eq([campaign_order])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested campaign_order as @campaign_order" do
-      campaign_order = CampaignOrder.create! valid_attributes
-      get :show, {:id => campaign_order.to_param}, valid_session
-      assigns(:campaign_order).should eq(campaign_order)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new campaign_order as @campaign_order" do
-      get :new, {}, valid_session
-      assigns(:campaign_order).should be_a_new(CampaignOrder)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested campaign_order as @campaign_order" do
-      campaign_order = CampaignOrder.create! valid_attributes
-      get :edit, {:id => campaign_order.to_param}, valid_session
-      assigns(:campaign_order).should eq(campaign_order)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new CampaignOrder" do
-        expect {
-          post :create, {:campaign_order => valid_attributes}, valid_session
-        }.to change(CampaignOrder, :count).by(1)
-      end
-
-      it "assigns a newly created campaign_order as @campaign_order" do
-        post :create, {:campaign_order => valid_attributes}, valid_session
-        assigns(:campaign_order).should be_a(CampaignOrder)
-        assigns(:campaign_order).should be_persisted
-      end
-
-      it "redirects to the created campaign_order" do
-        post :create, {:campaign_order => valid_attributes}, valid_session
-        response.should redirect_to(CampaignOrder.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved campaign_order as @campaign_order" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        CampaignOrder.any_instance.stub(:save).and_return(false)
-        post :create, {:campaign_order => { "sfdcid" => "invalid value" }}, valid_session
-        assigns(:campaign_order).should be_a_new(CampaignOrder)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        CampaignOrder.any_instance.stub(:save).and_return(false)
-        post :create, {:campaign_order => { "sfdcid" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested campaign_order" do
+    describe "GET index" do
+      it "assigns all campaign_orders as @campaign_orders" do
         campaign_order = CampaignOrder.create! valid_attributes
-        # Assuming there are no other campaign_orders in the database, this
-        # specifies that the CampaignOrder created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        CampaignOrder.any_instance.should_receive(:update).with({ "sfdcid" => "MyString" })
-        put :update, {:id => campaign_order.to_param, :campaign_order => { "sfdcid" => "MyString" }}, valid_session
+        get :index, {}, valid_session
+        assigns(:campaign_orders).should eq([campaign_order])
       end
+    end
 
+    describe "GET show" do
       it "assigns the requested campaign_order as @campaign_order" do
         campaign_order = CampaignOrder.create! valid_attributes
-        put :update, {:id => campaign_order.to_param, :campaign_order => valid_attributes}, valid_session
+        get :show, {:id => campaign_order.to_param}, valid_session
         assigns(:campaign_order).should eq(campaign_order)
-      end
-
-      it "redirects to the campaign_order" do
-        campaign_order = CampaignOrder.create! valid_attributes
-        put :update, {:id => campaign_order.to_param, :campaign_order => valid_attributes}, valid_session
-        response.should redirect_to(campaign_order)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the campaign_order as @campaign_order" do
-        campaign_order = CampaignOrder.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        CampaignOrder.any_instance.stub(:save).and_return(false)
-        put :update, {:id => campaign_order.to_param, :campaign_order => { "sfdcid" => "invalid value" }}, valid_session
-        assigns(:campaign_order).should eq(campaign_order)
-      end
-
-      it "re-renders the 'edit' template" do
-        campaign_order = CampaignOrder.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        CampaignOrder.any_instance.stub(:save).and_return(false)
-        put :update, {:id => campaign_order.to_param, :campaign_order => { "sfdcid" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+    describe "GET new" do
+      it "assigns a new campaign_order as @campaign_order" do
+        get :new, {}, valid_session
+        assigns(:campaign_order).should be_a_new(CampaignOrder)
       end
     end
-  end
 
-  describe "DELETE destroy" do
-    it "destroys the requested campaign_order" do
-      campaign_order = CampaignOrder.create! valid_attributes
-      expect {
+    describe "GET edit" do
+      it "assigns the requested campaign_order as @campaign_order" do
+        campaign_order = CampaignOrder.create! valid_attributes
+        get :edit, {:id => campaign_order.to_param}, valid_session
+        assigns(:campaign_order).should eq(campaign_order)
+      end
+    end
+
+    describe "POST create" do
+      describe "with valid params" do
+        it "creates a new CampaignOrder" do
+          expect {
+            post :create, {:campaign_order => valid_attributes}, valid_session
+          }.to change(CampaignOrder, :count).by(1)
+        end
+
+        it "assigns a newly created campaign_order as @campaign_order" do
+          post :create, {:campaign_order => valid_attributes}, valid_session
+          assigns(:campaign_order).should be_a(CampaignOrder)
+          assigns(:campaign_order).should be_persisted
+        end
+
+        it "redirects to the created campaign_order" do
+          post :create, {:campaign_order => valid_attributes}, valid_session
+          response.should redirect_to(CampaignOrder.last)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved campaign_order as @campaign_order" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          CampaignOrder.any_instance.stub(:save).and_return(false)
+          post :create, {:campaign_order => { "sfdcid" => "invalid value" }}, valid_session
+          assigns(:campaign_order).should be_a_new(CampaignOrder)
+        end
+
+        it "re-renders the 'new' template" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          CampaignOrder.any_instance.stub(:save).and_return(false)
+          post :create, {:campaign_order => { "sfdcid" => "invalid value" }}, valid_session
+          response.should render_template("new")
+        end
+      end
+    end
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "updates the requested campaign_order" do
+          campaign_order = CampaignOrder.create! valid_attributes
+          # Assuming there are no other campaign_orders in the database, this
+          # specifies that the CampaignOrder created on the previous line
+          # receives the :update_attributes message with whatever params are
+          # submitted in the request.
+          CampaignOrder.any_instance.should_receive(:update).with({ "sfdcid" => "MyString" })
+          put :update, {:id => campaign_order.to_param, :campaign_order => { "sfdcid" => "MyString" }}, valid_session
+        end
+
+        it "assigns the requested campaign_order as @campaign_order" do
+          campaign_order = CampaignOrder.create! valid_attributes
+          put :update, {:id => campaign_order.to_param, :campaign_order => valid_attributes}, valid_session
+          assigns(:campaign_order).should eq(campaign_order)
+        end
+
+        it "redirects to the campaign_order" do
+          campaign_order = CampaignOrder.create! valid_attributes
+          put :update, {:id => campaign_order.to_param, :campaign_order => valid_attributes}, valid_session
+          response.should redirect_to(campaign_order)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the campaign_order as @campaign_order" do
+          campaign_order = CampaignOrder.create! valid_attributes
+          # Trigger the behavior that occurs when invalid params are submitted
+          CampaignOrder.any_instance.stub(:save).and_return(false)
+          put :update, {:id => campaign_order.to_param, :campaign_order => { "sfdcid" => "invalid value" }}, valid_session
+          assigns(:campaign_order).should eq(campaign_order)
+        end
+
+        it "re-renders the 'edit' template" do
+          campaign_order = CampaignOrder.create! valid_attributes
+          # Trigger the behavior that occurs when invalid params are submitted
+          CampaignOrder.any_instance.stub(:save).and_return(false)
+          put :update, {:id => campaign_order.to_param, :campaign_order => { "sfdcid" => "invalid value" }}, valid_session
+          response.should render_template("edit")
+        end
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "destroys the requested campaign_order" do
+        campaign_order = CampaignOrder.create! valid_attributes
+        expect {
+          delete :destroy, {:id => campaign_order.to_param}, valid_session
+        }.to change(CampaignOrder, :count).by(-1)
+      end
+
+      it "redirects to the campaign_orders list" do
+        campaign_order = CampaignOrder.create! valid_attributes
         delete :destroy, {:id => campaign_order.to_param}, valid_session
-      }.to change(CampaignOrder, :count).by(-1)
+        response.should redirect_to(campaign_orders_url)
+      end
     end
-
-    it "redirects to the campaign_orders list" do
-      campaign_order = CampaignOrder.create! valid_attributes
-      delete :destroy, {:id => campaign_order.to_param}, valid_session
-      response.should redirect_to(campaign_orders_url)
-    end
-  end
-
+  #end
 end

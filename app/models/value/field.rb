@@ -3,17 +3,17 @@ module Value
 
   class Field < CSV::Table
 
+    @@instance = nil
     @@table = nil
 
     def initialize
-      if @@table.nil?
-        @@table = CSV::read("#{Rails.root}/db/fields.csv", headers: true)
-      end
-      self
+      @@table = CSV::read("#{Rails.root}/db/fields.csv", headers: true)
+      @@instance = self
+      @@instance
     end
 
-    def self.for_order
-      @@table.select { |f| f['Object'] == 'Order' }
+    def for_campaign_order
+      @@table.select { |f| f['Object'] == 'Order' }.to_a
     end
 
   end

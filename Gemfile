@@ -20,7 +20,6 @@ gem 'restforce'
 gem 'jiralicious'
 gem 'RedCloth'
 gem 'redcarpet', '~> 2.1.1'
-gem 'fakeweb'
 gem 'databasedotcom'
 
 group :development do
@@ -40,11 +39,11 @@ group :development do
   gem 'pry-rails'
 end
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails' , "~> 4.0"
   gem 'rspec-rails'
   gem 'thin'
-  gem 'webmock'
-  gem 'vcr'
+  # gem 'webmock'
+  # gem 'vcr'
 end
 group :production do
   gem 'unicorn'

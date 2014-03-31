@@ -1,20 +1,20 @@
 module Service
   class IssueCreator
 
-    attr_accessor :sfdcid, :order, :jira
+    attr_accessor :sfdcid, :campaign_order, :jira
 
     def initialize(sfdcid)
       @sfdcid = sfdcid
-      @order = Order.find_or_create_by(sfdcid: sfdcid)
+      @co = CampaignOrder.find_or_create_by(sfdcid: sfdcid)
       @jira = find_or_create_jira_by_sfdcid
     end
 
     def find_or_create_jira_by_sfdcid
-      return false unless @order
+      return false unless @co
       return false unless @sfdcid
       j = Jira::Issue.find_or_create_by_sfdcid(@sfdcid)
-      @order.jira_key = j.key
-      @order.save
+      @co.jira_key = j.key
+      @co.save
       j
     end
 

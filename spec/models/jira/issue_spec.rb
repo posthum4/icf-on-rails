@@ -4,10 +4,10 @@ require 'spec_helper'
 describe Jira::Issue do
 
   before do
-    VCR.use_cassette 'model/jira/issue' do
+    #VCR.use_cassette 'model/jira/issue' do
       @j = Jira::Issue.find_by_key('ICF-3214')
       @k = Jira::Issue.find_by_sfdcid('0068000000oAoSg')
-    end
+    #end
   end
 
   context 'When JIRA exists' do
