@@ -23,14 +23,14 @@ class CampaignOrder < ActiveRecord::Base
     SalesForce::Opportunity.find(sfdcid).Opp_Type_New__c
   end
 
-  def overview
-    result = []
-    Field.initialize
-    Value::Field.for_campaign_order.each do |f|
-      result << { f: opportunity[f] }
-    end
-    result
-  end
+  # def overview
+  #   result = []
+  #   Field.initialize
+  #   Value::Field.for_campaign_order.each do |f|
+  #     result << { f: opportunity[f] }
+  #   end
+  #   result
+  # end
 
   private
 

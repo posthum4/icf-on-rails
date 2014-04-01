@@ -22,15 +22,6 @@ module Service
       @jira.key
     end
 
-    # def existing_key
-    #   i = Jira::Issue.find_by_sfdcid(@sfdcid)
-    #   i.size > 0 ? i.first.key : nil
-    # end
-
   end
 
 end
-
-# Value::Field.present_in_order.each do |f|
-#   @order[f.name_in_order] = @opportunity[f.name_in_oppt]
-# end
