@@ -14,14 +14,14 @@ module Value
 
     def jira_direct
       r = @@table.select do |f|
-        f['JIRA_direct'] && f['Object'] == 'CampaignOrder'
+        f['JIRA_direct']
       end
       CSV::Table.new(r).values_at('SalesForce','JIRA_field')
     end
 
     def description
       r = @@table.select do |f|
-        f['JIRA_description'] && f['Object'] == 'CampaignOrder'
+        f['JIRA_description']
       end
       CSV::Table.new(r).values_at('Label','SalesForce')
     end

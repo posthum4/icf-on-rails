@@ -13,14 +13,13 @@ module ViewModel
       @fields.description.each do |a|
         label = a[0]
         sflabel = a[1]
-        v = @opportunity[sflabel]
-        unless v.nil?
-          if v.respond_to?(:to_str)
-            if v.include? "\n"
-              description << "\n #{label.upcase}\n#{[v]}\n\n"
-            else
-              description << "#{label}: #{v}\n"
-            end
+        # TODO: 2014-04-01 write a nicer formatter for non-string fields
+        v = @opportunity[sflabel].to_s
+        unless v.blank?
+          if v.include? "\n"
+            description << "\n #{label.upcase}\n#{[v]}\n\n"
+          else
+            description << "#{label}: #{v}\n"
           end
         end
       end
