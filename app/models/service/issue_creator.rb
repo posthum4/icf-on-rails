@@ -1,20 +1,25 @@
 module Service
   class IssueCreator
 
-    attr_accessor :sfdcid, :order, :jira
+    attr_accessor :sfdcid, :campaign_order, :jira, :fields, :description
 
     def initialize(sfdcid)
       @sfdcid = sfdcid
-      @order = Order.find_or_create_by(sfdcid: sfdcid)
+      @co = CampaignOrder.find_or_create_by(sfdcid: sfdcid)
+      @opportunity = SalesForce::Opportunity.find(@sfdcid)
       @jira = find_or_create_jira_by_sfdcid
+      @fields = Value::Field.new
+      @description = ViewModel::Description.new(@sfdcid).to_s
+      import_from_sfdc
+      @jira
     end
 
     def find_or_create_jira_by_sfdcid
-      return false unless @order
+      return false unless @co
       return false unless @sfdcid
       j = Jira::Issue.find_or_create_by_sfdcid(@sfdcid)
-      @order.jira_key = j.key
-      @order.save
+      @co.jira_key = j.key
+      @co.save
       j
     end
 
@@ -22,15 +27,20 @@ module Service
       @jira.key
     end
 
-    # def existing_key
-    #   i = Jira::Issue.find_by_sfdcid(@sfdcid)
-    #   i.size > 0 ? i.first.key : nil
-    # end
+    def import_from_sfdc
+      matched_fields
+    end
+
+    def matched_fields
+      @fields.jira_direct.each do |a|
+        sfdc_field, jira_field = a
+        @jira.set_field(jira_field, @opportunity[sfdc_field].to_s)
+      end
+      @jira.set_field("description", @description)
+      @jira.save
+    end
+
 
   end
 
 end
-
-# Value::Field.present_in_order.each do |f|
-#   @order[f.name_in_order] = @opportunity[f.name_in_oppt]
-# end

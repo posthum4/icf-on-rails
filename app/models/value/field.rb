@@ -3,18 +3,32 @@ module Value
 
   class Field < CSV::Table
 
+    @@instance = nil
     @@table = nil
 
     def initialize
-      if @@table.nil?
-        @@table = CSV::read("#{Rails.root}/db/fields.csv", headers: true)
-      end
-      self
+      @@table = CSV::read("#{Rails.root}/db/fields.csv", headers: true)
+      @@instance = self
+      @@instance
     end
 
-    def self.fields_for_order
-      @@table.select { |f| f['Object'] == 'Order' }
+    def jira_direct
+      r = @@table.select { |f| f['JIRA_direct'] }
+      CSV::Table.new(r).values_at('SalesForce','JIRA_field')
     end
+
+    def jira_set_type(jira_field)
+      # get the row with the right JIRA field
+      r = @@table.select { |f| f['JIRA_field'] == jira_field }
+      # return the JIRA_set_special column
+      CSV::Table.new(r).values_at('JIRA_set_special').join
+    end
+
+    def description
+      r = @@table.select { |f| f['JIRA_description'] }
+      CSV::Table.new(r).values_at('Label','SalesForce')
+    end
+
 
   end
 end

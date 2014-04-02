@@ -1,0 +1,25 @@
+h1 Listing campaign_orders
+
+table
+  thead
+    tr
+      th Sfdcid
+      th Name
+      th Jira key
+      th
+      th
+      th
+
+  tbody
+    - @campaign_orders.each do |campaign_order|
+      tr
+        td = campaign_order.sfdcid
+        td = campaign_order.name
+        td = campaign_order.jira_key
+        td = link_to 'Show', campaign_order
+        td = link_to 'Edit', edit_campaign_order_path(campaign_order)
+        td = link_to 'Destroy', campaign_order, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Campaign order', new_campaign_order_path

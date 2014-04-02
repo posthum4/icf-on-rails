@@ -57,3 +57,7 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+# Adding FactoryGirl support as per http://collectiveidea.com/blog/archives/2010/09/09/practical-cucumber-factory-girl-steps/
+World(FactoryGirl::Syntax::Methods)
+#require "factory_girl/step_definitions"
+
