@@ -11,8 +11,7 @@ module ViewModel
     def general_info
       data_string = ""
       @fields.description.each do |a|
-        label = a[0]
-        sflabel = a[1]
+        label,sflabel = a
         # TODO: 2014-04-01 write a nicer formatter for non-string fields
         v = @opportunity[sflabel].to_s
         unless v.blank?

@@ -6,25 +6,18 @@ module Service
     def initialize(sfdcid,jira=nil)
       @sfdcid = sfdcid
       @opportunity = SalesForce::Opportunity.find(@sfdcid)
-      @fields = Value::Field.new
       @description = ViewModel::Description.new(@sfdcid).to_s
+      @fields = Value::Field.new
       @jira = jira
+      self
     end
 
     def import
       return false unless @opportunity
       return false unless @sfdcid
-
+      # TODO: 2014-04-01 add full import flow here
     end
 
-    def matched_fields
-      @fields.jira_direct.each do |a|
-        sfdc_field, jira_field = a
-        @jira.set(jira_field, @opportunity[sfdc_field].to_s)
-      end
-      @jira.set("description", @description)
-      @jira.save
-    end
 
   end
 end

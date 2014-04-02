@@ -13,7 +13,6 @@ class CreateLineItems < ActiveRecord::Migration
       t.string :pricing_term
       t.string :product
       t.string :secondary_optimization_goal
-      t.belongs_to :order
       t.timestamps
 
     end

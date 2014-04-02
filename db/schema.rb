@@ -44,18 +44,8 @@ ActiveRecord::Schema.define(version: 20140331045854) do
     t.string   "pricing_term"
     t.string   "product"
     t.string   "secondary_optimization_goal"
-    t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "orders", force: true do |t|
-    t.string   "sfdcid",       limit: 15
-    t.string   "name"
-    t.string   "parent_order"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "jira_key"
   end
 
   create_table "users", force: true do |t|

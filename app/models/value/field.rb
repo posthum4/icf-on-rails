@@ -13,16 +13,19 @@ module Value
     end
 
     def jira_direct
-      r = @@table.select do |f|
-        f['JIRA_direct']
-      end
+      r = @@table.select { |f| f['JIRA_direct'] }
       CSV::Table.new(r).values_at('SalesForce','JIRA_field')
     end
 
+    def jira_set_type(jira_field)
+      # get the row with the right JIRA field
+      r = @@table.select { |f| f['JIRA_field'] == jira_field }
+      # return the JIRA_set_special column
+      CSV::Table.new(r).values_at('JIRA_set_special').join
+    end
+
     def description
-      r = @@table.select do |f|
-        f['JIRA_description']
-      end
+      r = @@table.select { |f| f['JIRA_description'] }
       CSV::Table.new(r).values_at('Label','SalesForce')
     end
 
