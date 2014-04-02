@@ -36,11 +36,5 @@ describe CampaignOrder do
       expect(@campaign_order.sfdcid).to eql('0068000000oAoSg')
     end
   end
-
-  describe '#overview' do
-    it 'contains a currency field' do
-      expect(@campaign_order.overview).to include('Currency')
-    end
-  end
-
+  
 end

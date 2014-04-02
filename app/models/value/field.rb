@@ -12,8 +12,8 @@ module Value
       @@instance
     end
 
-    def for_campaign_order
-      @@table.select { |f| f['Object'] == 'CampaignOrder' }.to_a
+    def jira_direct
+      @@table.select { |f| f['JIRA_description'] == 'direct' }.to_a
     end
 
     def for_description

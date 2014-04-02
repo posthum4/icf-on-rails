@@ -2,8 +2,8 @@ class CampaignOrder < ActiveRecord::Base
   
   attr_accessor :sfdcid, :name, :jira_key, :parent_order
 
-  validates_presence_of :sfdcid
-  validates_uniqueness_of :sfdcid
+  #validates_presence_of :sfdcid
+  #validates_uniqueness_of :sfdcid
 
   #has_many :line_items
   #references :opportunities
