@@ -8,8 +8,8 @@ module ViewModel
       i = description
     end
 
-    def description
-      description = ""
+    def general_info
+      data_string = ""
       @fields.description.each do |a|
         label = a[0]
         sflabel = a[1]
@@ -17,13 +17,22 @@ module ViewModel
         v = @opportunity[sflabel].to_s
         unless v.blank?
           if v.include? "\n"
-            description << "\n #{label.upcase}\n#{[v]}\n\n"
+            data_string << "\n #{label.upcase}\n#{[v]}\n\n"
           else
-            description << "#{label}: #{v}\n"
+            data_string << "#{label}: #{v}\n"
           end
         end
       end
-      description
+      data_string
+    end
+
+    def description
+      descr = ''
+      descr << ENV['DESCR_PREFIX'] || ''
+      descr << "\n\n"
+      descr << general_info
+      descr << "\n"
+      descr << ENV['DESCR_SUFFIX'] || ''
     end
 
     def to_s
