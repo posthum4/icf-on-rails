@@ -10,9 +10,9 @@ module ViewModel
 
     def description
       description = ""
-      @fields.for_description.each do |h|
-        label = h.keys[0]
-        sflabel = h.values[0]
+      @fields.description.each do |a|
+        label = a[0]
+        sflabel = a[1]
         v = @opportunity[sflabel]
         unless v.nil?
           if v.respond_to?(:to_str)

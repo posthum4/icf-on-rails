@@ -13,19 +13,17 @@ module Value
     end
 
     def jira_direct
-      @@table.select { |f| f['JIRA_description'] == 'direct' }.to_a
+      r = @@table.select do |f|
+        f['JIRA_direct'] && f['Object'] == 'CampaignOrder'
+      end
+      CSV::Table.new(r).values_at('SalesForce','JIRA_field')
     end
 
-    def for_description
-      r = []
-      list = @@table.select do|f|
-#        (f['Object'] == 'CampaignOrder' && f['JIRA'] == 'description' )
-        (f['Object'] == 'CampaignOrder' )
+    def description
+      r = @@table.select do |f|
+        f['JIRA_description'] && f['Object'] == 'CampaignOrder'
       end
-      list.each do |i|
-        r << { i['Label'] => i['SalesForce'] }
-      end
-      r
+      CSV::Table.new(r).values_at('Label','SalesForce')
     end
 
 

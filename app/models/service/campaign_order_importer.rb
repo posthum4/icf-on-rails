@@ -1,7 +1,7 @@
 module Service
   class CampaignOrderImporter
 
-    attr_accessor :sfdcid, :opportunity, :jira, :description
+    attr_accessor :sfdcid, :opportunity, :jira, :description, :fields
 
     def initialize(sfdcid)
       @sfdcid = sfdcid
@@ -13,13 +13,8 @@ module Service
     def import
       return false unless @opportunity
       return false unless @sfdcid
-      description(f)
+      @fields.each
     end
-
-    private
-
-
-
 
   end
 end
