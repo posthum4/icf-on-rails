@@ -22,6 +22,7 @@ gem 'RedCloth'
 gem 'redcarpet', '~> 2.1.1'
 gem 'databasedotcom'
 gem 'chronic'
+gem 'paperclip'
 
 group :development do
   gem 'better_errors'

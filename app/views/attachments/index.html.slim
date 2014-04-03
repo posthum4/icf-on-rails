@@ -1,0 +1,27 @@
+h1 Listing attachments
+
+table
+  thead
+    tr
+      th Sfdcid
+      th Name
+      th Content type
+      th Body
+      th
+      th
+      th
+
+  tbody
+    - @attachments.each do |attachment|
+      tr
+        td = attachment.sfdcid
+        td = attachment.name
+        td = attachment.content_type
+        td = attachment.body
+        td = link_to 'Show', attachment
+        td = link_to 'Edit', edit_attachment_path(attachment)
+        td = link_to 'Destroy', attachment, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Attachment', new_attachment_path

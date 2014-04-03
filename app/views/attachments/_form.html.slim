@@ -1,0 +1,11 @@
+= simple_form_for(@attachment) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :sfdcid
+    = f.input :name
+    = f.input :content_type
+    = f.input :body
+
+  .form-actions
+    = f.button :submit

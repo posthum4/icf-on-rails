@@ -7,6 +7,7 @@ class Importer
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: sfdcid)
     @campaign_order.import_from_salesforce
     @campaign_order.import_line_items
+    @campaign_order.import_attachments
     # @opportunity = SalesForce::Opportunity.find(@sfdcid)
     # @description = ViewModel::Description.new(@sfdcid).to_s
     # @fields = Value::Field.new

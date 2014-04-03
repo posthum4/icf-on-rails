@@ -52,6 +52,11 @@ class CampaignOrder < ActiveRecord::Base
     self.save!
   end
 
+  def import_attachments
+    io_case = self.io_case
+    logger.debug "\n\n #{io_case.to_yaml}\n io_case = #{io_case.class}\n#{__FILE__}:#{__LINE__}"
+  end
+
   def import_line_items
     oppt = SalesForce::Opportunity.find(self.sfdcid)
     # this looks extremely hacky but it's because SalesForce is inconsistent with fields

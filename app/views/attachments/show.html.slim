@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Sfdcid:
+  = @attachment.sfdcid
+p
+  strong Name:
+  = @attachment.name
+p
+  strong Content type:
+  = @attachment.content_type
+p
+  strong Body:
+  = @attachment.body
+
+= link_to 'Edit', edit_attachment_path(@attachment)
+'|
+= link_to 'Back', attachments_path
