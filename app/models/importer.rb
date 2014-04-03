@@ -5,6 +5,7 @@ class Importer
   def initialize(sfdcid)
     @sfdcid         = sfdcid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: sfdcid)
+    @campaign_order.import_from_salesforce
     # @opportunity = SalesForce::Opportunity.find(@sfdcid)
     # @description = ViewModel::Description.new(@sfdcid).to_s
     # @fields = Value::Field.new
