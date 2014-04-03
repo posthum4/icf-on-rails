@@ -1,0 +1,41 @@
+class AddManyToCampaignOrder < ActiveRecord::Migration
+  def change
+    add_column :campaign_orders, :amount, :decimal
+    add_column :campaign_orders, :currencyisocode, :string
+    add_column :campaign_orders, :campaign_start_date, :date
+    add_column :campaign_orders, :campaign_end_date, :date
+    add_column :campaign_orders, :opp_type_new, :string
+    add_column :campaign_orders, :original_opportunity, :string
+    add_column :campaign_orders, :stagename, :string
+    add_column :campaign_orders, :closedate, :date
+    add_column :campaign_orders, :io_case, :string
+    add_column :campaign_orders, :lastmodifieddate, :datetime
+    add_column :campaign_orders, :brand, :string
+    add_column :campaign_orders, :vertical, :string
+    add_column :campaign_orders, :advertiser, :string
+    add_column :campaign_orders, :account, :string
+    add_column :campaign_orders, :agency, :string
+    add_column :campaign_orders, :sales_region, :string
+    add_column :campaign_orders, :account_executive, :string
+    add_column :campaign_orders, :account_manager, :string
+    add_column :campaign_orders, :campaign_objectives, :string
+    add_column :campaign_orders, :primary_audience_am, :string
+    add_column :campaign_orders, :secondary_audience_am, :string
+    add_column :campaign_orders, :hard_constraints_am, :string
+    add_column :campaign_orders, :is_secondary_audience_a_hard_constraint, :string
+    add_column :campaign_orders, :rfp_special_client_requests, :string
+    add_column :campaign_orders, :special_client_requirements, :string
+    add_column :campaign_orders, :special_notes, :string
+    add_column :campaign_orders, :brand_safety_vendor, :string
+    add_column :campaign_orders, :type_of_service, :string
+    add_column :campaign_orders, :brand_safety_restrictions, :string
+    add_column :campaign_orders, :who_is_paying_for_brand_safety, :string
+    add_column :campaign_orders, :client_vendor_pre_existing_relations, :string
+    add_column :campaign_orders, :who_will_implement_adchoices_icon, :string
+    add_column :campaign_orders, :brand_safety_notes, :string
+    add_column :campaign_orders, :who_will_wrap_the_tags, :string
+    add_column :campaign_orders, :viewability, :string
+    add_column :campaign_orders, :viewability_metrics, :string
+    add_column :campaign_orders, :who_is_paying_for_viewability, :string
+  end
+end

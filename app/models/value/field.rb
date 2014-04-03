@@ -29,6 +29,11 @@ module Value
       CSV::Table.new(r).values_at('Label','SalesForce')
     end
 
+    def from_oppt_to_co
+      r = @@table.select { |f| f['CampaignOrder'] }
+      CSV::Table.new(r).values_at('SalesForce','Internal')
+    end
+
 
   end
 end

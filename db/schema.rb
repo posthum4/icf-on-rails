@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140331045854) do
+ActiveRecord::Schema.define(version: 20140403041347) do
 
   create_table "campaign_orders", force: true do |t|
     t.string   "sfdcid"
@@ -19,6 +19,43 @@ ActiveRecord::Schema.define(version: 20140331045854) do
     t.string   "jira_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "amount"
+    t.string   "currencyisocode"
+    t.date     "campaign_start_date"
+    t.date     "campaign_end_date"
+    t.string   "opp_type_new"
+    t.string   "original_opportunity"
+    t.string   "stagename"
+    t.date     "closedate"
+    t.string   "io_case"
+    t.datetime "lastmodifieddate"
+    t.string   "brand"
+    t.string   "vertical"
+    t.string   "advertiser"
+    t.string   "account"
+    t.string   "agency"
+    t.string   "sales_region"
+    t.string   "account_executive"
+    t.string   "account_manager"
+    t.string   "campaign_objectives"
+    t.string   "primary_audience_am"
+    t.string   "secondary_audience_am"
+    t.string   "hard_constraints_am"
+    t.string   "is_secondary_audience_a_hard_constraint"
+    t.string   "rfp_special_client_requests"
+    t.string   "special_client_requirements"
+    t.string   "special_notes"
+    t.string   "brand_safety_vendor"
+    t.string   "type_of_service"
+    t.string   "brand_safety_restrictions"
+    t.string   "who_is_paying_for_brand_safety"
+    t.string   "client_vendor_pre_existing_relations"
+    t.string   "who_will_implement_adchoices_icon"
+    t.string   "brand_safety_notes"
+    t.string   "who_will_wrap_the_tags"
+    t.string   "viewability"
+    t.string   "viewability_metrics"
+    t.string   "who_is_paying_for_viewability"
   end
 
   create_table "employees", force: true do |t|
