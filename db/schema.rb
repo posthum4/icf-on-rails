@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403041347) do
+ActiveRecord::Schema.define(version: 20140403070923) do
 
   create_table "campaign_orders", force: true do |t|
     t.string   "sfdcid"
@@ -83,7 +83,11 @@ ActiveRecord::Schema.define(version: 20140403041347) do
     t.string   "secondary_optimization_goal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "campaign_order_id"
+    t.integer  "ordinal"
   end
+
+  add_index "line_items", ["campaign_order_id"], name: "index_line_items_on_campaign_order_id"
 
   create_table "users", force: true do |t|
     t.string   "name"
