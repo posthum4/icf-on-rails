@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403230113) do
+ActiveRecord::Schema.define(version: 20140403234301) do
 
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
@@ -20,7 +20,10 @@ ActiveRecord::Schema.define(version: 20140403230113) do
     t.binary   "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "campaign_order_id"
   end
+
+  add_index "attachments", ["campaign_order_id"], name: "index_attachments_on_campaign_order_id"
 
   create_table "campaign_orders", force: true do |t|
     t.string   "sfdcid"

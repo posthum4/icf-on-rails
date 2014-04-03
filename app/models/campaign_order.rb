@@ -4,6 +4,7 @@ class CampaignOrder < ActiveRecord::Base
   validates_uniqueness_of :sfdcid
 
   has_many :line_items
+  has_many :attachments
   # #references :opportunities
 
   #before_save :import_from_salesforce
@@ -52,9 +53,16 @@ class CampaignOrder < ActiveRecord::Base
     self.save!
   end
 
-  def import_attachments
-    io_case = self.io_case
-    logger.debug "\n\n #{io_case.to_yaml}\n io_case = #{io_case.class}\n#{__FILE__}:#{__LINE__}"
+  def reference_attachments
+    SalesForce::Attachment.find_all_by_ParentId(self.io_case).each do |f|
+      logger.debug "\n\n #{f.to_yaml}\n f = #{f.class}\n#{__FILE__}:#{__LINE__}"
+      a = self.attachments.find_or_create_by(sfdcid: f.Id)
+      a.name           = f.Name
+      a.content_type   = f.ContentType
+      a.body           = f.Body
+      a.created_at     = f.CreatedDate
+      a.save!
+    end
   end
 
   def import_line_items
@@ -138,8 +146,8 @@ class CampaignOrder < ActiveRecord::Base
       li[l].save!
       logger.debug "#{li[l].impressions} #{li[l].bonus_impressions}"
       if (
-        ( li[l].impressions.nil? || li[l].impressions == 0 ) && 
-        ( li[l].bonus_impressions.nil? || li[l].bonus_impressions == 0 )
+          ( li[l].impressions.nil? || li[l].impressions == 0 ) &&
+          ( li[l].bonus_impressions.nil? || li[l].bonus_impressions == 0 )
         )
         logger.warn "Destroying Line Item #{l}"
         li[l].destroy
