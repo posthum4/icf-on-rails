@@ -24,13 +24,12 @@ class CampaignOrder < ActiveRecord::Base
     self.lastmodifieddate = Chronic::parse(oppt['LastModifiedDate'].to_s)
     self.brand = oppt['Brand__c']
     self.vertical = oppt['Vertical__c']
-    binding.pry
-    self.advertiser = oppt['Advertiser__r.Name']
-    self.account = oppt['Account.Name']
-    self.agency = oppt['Agency__r.Name']
+    self.advertiser = SalesForce::Account.find(oppt.Advertiser__c).Name
+    self.account = SalesForce::Account.find(oppt.AccountId).Name
+    self.agency = SalesForce::Account.find(oppt.Agency__c).Name
     self.sales_region = oppt['Sales_Region__c']
-    self.account_executive = oppt['Opportunity_Owner_User__r.Email']
-    self.account_manager = oppt['Account_Manager__r.Email']
+    self.account_executive = SalesForce::User.find(oppt.Opportunity_Owner_User__c).Email.split('@').first
+    self.account_manager = SalesForce::User.find(oppt.Account_Manager__c).Email.split('@').first
     self.campaign_objectives = oppt['Campaign_Objectives__c']
     self.primary_audience_am = oppt['Primary_Audience_AM__c']
     self.secondary_audience_am = oppt['Secondary_Audience_AM__c']
