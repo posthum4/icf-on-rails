@@ -8,7 +8,23 @@ class CampaignOrder < ActiveRecord::Base
 
   before_save :import_from_salesforce
   # #before_save :find_or_create_linked_issue
-  
+
+  def import_from_salesforce
+    opportunity    = SalesForce::Opportunity.find(self.sfdcid)
+    fields         = Value::Field.new.from_oppt_to_co
+    fields.each do |a|
+      oppt_field, co_field = a
+      v = opportunity[oppt_field]
+      unless v.nil?
+        logger.debug "#{co_field} #{oppt_field} #{opportunity[oppt_field]}"
+        eval ("@#{co_field} = v")
+        #instance_variable_set '@'+co_field, opportunity[oppt_field]
+        logger.debug "#{self}"
+      end
+    end
+    self
+  end
+
   # def opportunity_name
   #   SalesForce::Opportunity.find(sfdcid).Name
   # end
@@ -37,10 +53,6 @@ class CampaignOrder < ActiveRecord::Base
   #   logger.debug "\n\n #{self.sfdcid.to_yaml}\n self.sfdcid = #{self.sfdcid.class}\n#{__FILE__}:#{__LINE__}"
   #   SalesForce::Opportunity.find(self.sfdcid)
   # end
-
-  def import_from_salesforce
-    importer = Service::OpportunityImporter.new(self)
-  end
 
   # def find_or_create_linked_issue
   #   logger.level = Logger::DEBUG

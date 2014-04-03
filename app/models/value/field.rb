@@ -30,7 +30,7 @@ module Value
     end
 
     def from_oppt_to_co
-      r = @@table.select { |f| f['CampaignOrder'] }
+      r = @@table.select { |f| f['Object'] == 'CampaignOrder' }
       CSV::Table.new(r).values_at('SalesForce','Internal')
     end
 
