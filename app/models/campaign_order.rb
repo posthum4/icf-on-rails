@@ -11,6 +11,7 @@ class CampaignOrder < ActiveRecord::Base
   # #before_save :find_or_create_linked_issue
 
   def import_from_salesforce
+    Rails.logger.info "Importing Opportunity..."
     oppt = SalesForce::Opportunity.find(self.sfdcid)
     self.name = oppt['Name']
     self.amount = oppt['Amount'].to_f
@@ -54,25 +55,36 @@ class CampaignOrder < ActiveRecord::Base
   end
 
   def reference_attachments
-    SalesForce::Attachment.find_all_by_ParentId(self.io_case).each do |f|
-      logger.debug "\n\n #{f.to_yaml}\n f = #{f.class}\n#{__FILE__}:#{__LINE__}"
-      a = self.attachments.find_or_create_by(sfdcid: f.Id)
-      a.name           = f.Name
-      a.content_type   = f.ContentType
-      a.body           = f.Body
-      a.created_at     = f.CreatedDate
-      a.save!
+    Rails.logger.info "Importing Attachments..."
+    unless self.io_case.nil?
+      SalesForce::Attachment.find_all_by_ParentId(self.io_case).each do |f|
+        logger.debug "\n\n #{f.to_yaml}\n f = #{f.class}\n#{__FILE__}:#{__LINE__}"
+        a = self.attachments.find_or_create_by(sfdcid: f.Id)
+        a.name           = f.Name
+        a.content_type   = f.ContentType
+        a.body           = f.Body
+        a.created_at     = f.CreatedDate
+        a.save!
+      end
     end
   end
 
-  def parent_sfdcid
-    self.io_case || SalesForce::Case.find(opportunity__c: self.sfdcid)
+  def update_io_case
+    if self.io_case.nil?
+      guesscase = SalesForce::Case.find_by_Opportunity__c(sfdcid)
+      unless guesscase.nil?
+        self.io_case = guesscase
+        self.save!
+      end
+    end
+    self.io_case
   end
 
   def parent_id
   end
 
   def import_line_items
+    Rails.logger.info "Importing LineItems..."
     oppt = SalesForce::Opportunity.find(self.sfdcid)
     # this looks extremely hacky but it's because SalesForce is inconsistent with fields
     li = []

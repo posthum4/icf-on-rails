@@ -3,6 +3,7 @@ class Importer
   attr_accessor :sfdcid, :campaign_order, :issue_importer
 
   def initialize(sfdcid)
+    Rails.logger.level = Logger::DEBUG
     @sfdcid         = sfdcid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: sfdcid)
     @campaign_order.import_from_salesforce
