@@ -65,6 +65,13 @@ class CampaignOrder < ActiveRecord::Base
     end
   end
 
+  def parent_sfdcid
+    self.io_case || SalesForce::Case.find(opportunity__c: self.sfdcid)
+  end
+
+  def parent_id
+  end
+
   def import_line_items
     oppt = SalesForce::Opportunity.find(self.sfdcid)
     # this looks extremely hacky but it's because SalesForce is inconsistent with fields
