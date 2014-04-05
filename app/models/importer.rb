@@ -3,7 +3,7 @@ class Importer
   attr_accessor :sfdcid, :campaign_order, :issue_importer
 
   def initialize(sfdcid)
-    Rails.logger.level = Logger::DEBUG
+    Rails.logger.level = Logger::INFO
     @sfdcid         = sfdcid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: sfdcid)
     import
@@ -21,9 +21,9 @@ class Importer
     oppt = SalesForce::Opportunity.find(@sfdcid)
     # TODO: 2014-04-01 add full import flow here
     #@campaign_order.import_from_salesforce
-    i1 = Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
-    @campaign_order.import_line_items
-    @campaign_order.reference_attachments
+    Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
+    Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
+    Service::Importer::Attachments.new(oppt, @campaign_order)
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403234301) do
+ActiveRecord::Schema.define(version: 20140405220613) do
 
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20140403234301) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "amount"
-    t.string   "currencyisocode"
+    t.string   "amount_currency"
     t.date     "campaign_start_date"
     t.date     "campaign_end_date"
     t.string   "opp_type_new"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 20140403234301) do
     t.string   "viewability"
     t.string   "viewability_metrics"
     t.string   "who_is_paying_for_viewability"
+    t.integer  "budget_cents"
+    t.string   "budget_currency",                         default: "USD", null: false
   end
 
   create_table "employees", force: true do |t|
@@ -97,6 +99,9 @@ ActiveRecord::Schema.define(version: 20140403234301) do
     t.datetime "updated_at"
     t.integer  "campaign_order_id"
     t.integer  "ordinal"
+    t.integer  "budget_cents"
+    t.string   "budget_currency",             default: "USD", null: false
+    t.integer  "price_cents"
   end
 
   add_index "line_items", ["campaign_order_id"], name: "index_line_items_on_campaign_order_id"

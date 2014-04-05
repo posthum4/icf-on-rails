@@ -2,19 +2,22 @@ module Service
   module Importer
     class OpportunityToCampaignOrder
 
+      attr_accessor :sfdcid
+
       def initialize(opportunity,campaign_order)
         Rails.logger.info "Initializing Opportunity-to-CampaignOrder import..."
         @oppt = opportunity
         @co   = campaign_order
         import
         update_io_case
-        return @co.save
+        Rails.logger.info "Imported Order #{@co.sfdcid} #{@co.name}"
       end
 
       def import
         @co.name                                    = @oppt['Name']
+        @co.budget_currency                         = @oppt['CurrencyIsoCode']
         @co.amount                                  = @oppt['Amount'].to_f
-        @co.currencyisocode                         = @oppt['CurrencyIsoCode']
+        @co.budget_cents                            = @co.amount * Money::Currency.find(@co.budget_currency).subunit_to_unit
         @co.campaign_start_date                     = Chronic::parse(@oppt['Campaign_Start_Date__c'])
         @co.campaign_end_date                       = Chronic::parse(@oppt['Campaign_End_Date__c'])
         @co.opp_type_new                            = @oppt['Opp_Type_New__c']
