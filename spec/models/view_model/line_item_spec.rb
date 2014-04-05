@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ViewModel::LineItem' do
+describe ViewModel::LineItem do
   before do
     @livm = ViewModel::LineItem.new(LineItem.find(80))
   end

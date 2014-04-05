@@ -23,6 +23,7 @@ gem 'redcarpet', '~> 2.1.1'
 gem 'databasedotcom'
 gem 'chronic'
 gem 'paperclip'
+gem 'money'
 
 group :development do
   gem 'better_errors'

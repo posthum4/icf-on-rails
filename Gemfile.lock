@@ -160,6 +160,8 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.3)
     minitest (4.7.5)
+    money (6.1.1)
+      i18n (~> 0.6.4)
     multi_json (1.9.2)
     multi_test (0.1.1)
     multi_xml (0.5.5)
@@ -326,6 +328,7 @@ DEPENDENCIES
   jiralicious
   jquery-rails
   launchy
+  money
   omniauth
   omniauth-google-oauth2
   paperclip

@@ -1,23 +1,24 @@
 module ViewModel
   class LineItem
+    include ActionView::Helpers::NumberHelper
 
     attr_accessor :goal, :product, :media_channel
 
     def initialize(line_item)
       #@currency                    = CampaignOrder(line_item.campaign_order_id)
       @ordinal                     = line_item.ordinal.to_s
-      @add_on                      = line_item.add_on
+      @io_line_item                = line_item.io_line_item
       # TODO: 2014-04-05 add currency view on amount and pricing term
       @amount                      = line_item.amount.to_s
-      @bonus_impressions           = line_item.bonus_impressions.to_s
-      @cost                        = line_item.cost.to_s
-      @flight_instructions         = line_item.flight_instructions
-      @goal                        = line_item.goal
-      @impressions                 = line_item.impressions.to_s
-      @io_line_item                = line_item.io_line_item
-      @media_channel               = line_item.media_channel
-      @pricing_term                = line_item.pricing_term
       @product                     = line_item.product
+      @media_channel               = line_item.media_channel
+      @impressions                 = number_with_delimiter(line_item.impressions, delimiter: "\u{2009}")
+      @bonus_impressions           = number_with_delimiter(line_item.bonus_impressions, delimiter: "\u{2009}")
+      @cost                        = line_item.cost.to_s
+      @pricing_term                = line_item.pricing_term
+      @flight_instructions         = line_item.flight_instructions
+      @add_on                      = line_item.add_on
+      @goal                        = line_item.goal
       @secondary_optimization_goal = line_item.secondary_optimization_goal
     end
 
