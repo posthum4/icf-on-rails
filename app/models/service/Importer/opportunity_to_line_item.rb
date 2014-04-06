@@ -28,9 +28,9 @@ module Service
             _line_item.save!
           else
             Rails.logger.info "Line item #{n} (ex-#{nn}) is nil."
-
           end
         end
+        generate_shortnames
       end
 
       def import_individual_fields(li, n, nn)
@@ -52,6 +52,15 @@ module Service
         li.budget_cents                = li.amount.to_f * factor
         li.price_cents                 = li.cost.to_f * factor
       end
+
+      def generate_shortnames
+        substring = Value::CommonLineItemSubstring.new(@co).to_s
+        @co.line_items.each do |li|
+          li.shortname = li.io_line_item.sub substring,'..'
+          li.save!
+        end
+      end
+
 
       def nonzero?(oppt,nn)
         Rails.logger.level = Logger::DEBUG

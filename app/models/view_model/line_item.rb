@@ -7,7 +7,7 @@ module ViewModel
     def initialize(line_item)
       #@currency                    = CampaignOrder(line_item.campaign_order_id)
       @ordinal                     = line_item.ordinal.to_s
-      @io_line_item                = line_item.io_line_item
+      @shortname                   = line_item.shortname
       # TODO: 2014-04-05 add currency view on amount and pricing term
       @amount                      = ViewModel::Amount.new(line_item.budget).to_s
       @product                     = line_item.product
@@ -20,11 +20,12 @@ module ViewModel
       @add_on                      = line_item.add_on
       @goal                        = line_item.goal
       @secondary_optimization_goal = line_item.secondary_optimization_goal
+      self
     end
 
     def to_s
       s ||= "|" + ( @ordinal           or "\u{2009}" )
-      s <<  "|" + ( @io_line_item      or "\u{2009}" )
+      s <<  "|" + ( @shortname         or "\u{2009}" )
       s <<  "|" + ( @amount            or "\u{2009}" )
       s <<  "|" + ( @product           or "\u{2009}" )
       s <<  "|" + ( @media_channel     or "\u{2009}" )
@@ -32,21 +33,34 @@ module ViewModel
       s <<  "|" + ( @bonus_impressions or "\u{2009}" )
       s <<  "|" + ( @cost              or "\u{2009}" )
       s <<  "|" + ( @pricing_term      or "\u{2009}" )
-      s <<  "|"
+      s <<  "|\n"
       s
     end
 
-=begin
-{panel:title=Line Items from SalesForce. Please verify with IO for consistency.|titleBGColor=#99CC66|bgColor=#CCFF99}
-||#||Line Item||Budget||Product||Channel||Imp||Imp bonus||Price||Term||
-|1|Audience Booster|£8 500
-$13 600|Audience Booster|Display Banner|6 666 667|666 667|£1.50
-$2.40|CPM|
-|+| __ | __ | __ | __ | __ | __ | __ | __ |
-{panel}
-=end
+    def paid
+      s ||= "|" + ( @ordinal + "/paid" or "\u{2009}" )
+      s <<  "|" + ( @shortname         or "\u{2009}" )
+      s <<  "|" + ( @amount            or "\u{2009}" )
+      s <<  "|" + ( @product           or "\u{2009}" )
+      s <<  "|" + ( @media_channel     or "\u{2009}" )
+      s <<  "|" + ( @impressions       or "\u{2009}" )
+      s <<  "|" + ( @cost              or "\u{2009}" )
+      s <<  "|" + ( @pricing_term      or "\u{2009}" )
+      s <<  "|\n"
+      s
+    end
 
-    def header_s
+    def bonus
+      s ||= "|" + ( @ordinal + "/bonus" or "\u{2009}" )
+      s <<  "|" + ( @shortname         or "\u{2009}" )
+      s <<  "|" + "\u{2009}"
+      s <<  "|" + ( @product           or "\u{2009}" )
+      s <<  "|" + ( @media_channel     or "\u{2009}" )
+      s <<  "|" + ( @bonus_impressions or "\u{2014}" )
+      s <<  "|" + "\u{2009}"
+      s <<  "|" + "\u{2009}"
+      s <<  "|\n"
+      s
     end
   end
 end

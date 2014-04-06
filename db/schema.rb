@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140405220613) do
+ActiveRecord::Schema.define(version: 20140406035450) do
 
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20140405220613) do
     t.integer  "budget_cents"
     t.string   "budget_currency",             default: "USD", null: false
     t.integer  "price_cents"
+    t.string   "shortname"
   end
 
   add_index "line_items", ["campaign_order_id"], name: "index_line_items_on_campaign_order_id"
