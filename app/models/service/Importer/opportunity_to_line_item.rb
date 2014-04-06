@@ -35,22 +35,22 @@ module Service
 
       def import_individual_fields(li, n, nn)
         li.add_on                      = @oppt["Line_Item_#{n}_Add_on__c"].join("\n") unless n == '5' # missing from SFDC for li[5]
-        li.amount                      = @oppt["LineItem#{n}Amount__c"]
+        li.amount                      = @oppt["LineItem#{n}Amount__c"].to_f
         li.pricing_term                = @oppt["Line_Item_#{n}_Pricing_Term__c"]
         li.product                     = @oppt["Line_Item_#{n}_Product__c"]
         li.secondary_optimization_goal = @oppt["Line_Item_#{n}_Secondary_Optimization_Goal__c"] unless n == '6' # missing from SFDC for li[6]
         li.media_channel               = @oppt["LineItem#{n}MediaChannel__c"]
-        li.bonus_impressions           = @oppt["Bonus_Impressions_#{nn}__c"]
-        li.cost                        = @oppt["Cost_#{nn}__c"]
+        li.bonus_impressions           = ( @oppt["Bonus_Impressions_#{nn}__c"].to_i || 0 )
+        li.cost                        = @oppt["Cost_#{nn}__c"].to_f
         li.flight_instructions         = @oppt["Flight_Instructions_#{nn}__c"]
         li.goal                        = @oppt["Goal_#{nn}__c"]
-        li.impressions                 = @oppt["Impressions_#{nn}__c"]
+        li.impressions                 = ( @oppt["Impressions_#{nn}__c"].to_i || 0 )
         li.io_line_item                = @oppt["IO_Line_Item_#{nn}__c"]
 
         li.budget_currency             = @co.budget_currency
         factor                         = Money::Currency.find(@co.budget_currency).subunit_to_unit
-        li.budget_cents                = li.amount.to_f * factor
-        li.price_cents                 = li.cost.to_f * factor
+        li.budget_cents                = li.amount * factor
+        li.price_cents                 = li.cost * factor
       end
 
       def generate_shortnames
