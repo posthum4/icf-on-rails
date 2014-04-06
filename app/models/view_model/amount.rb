@@ -6,6 +6,7 @@ module ViewModel
       @obj          = money_obj
       @currency     = @obj.currency_as_string
       @local_amt    = @obj.amount
+      self.to_s
     end
 
     def to_s
@@ -16,10 +17,14 @@ module ViewModel
         case @currency
         when 'CAD', 'AUD'
           s = @obj.format(:symbol => false, :with_currency => true, :thousands_separator => "\u{2009}") + "\n"
+          s << "("
           s << @usd_obj.format(:symbol => false, :with_currency => true, :thousands_separator => "\u{2009}")
+          s << ")"
         else
           s = @obj.format(:thousands_separator => "\u{2009}") + "\n"
+          s << "("
           s << @usd_obj.format(:thousands_separator => "\u{2009}")
+          s << ")"
         end
       end
     end

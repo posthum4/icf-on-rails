@@ -9,12 +9,12 @@ module ViewModel
       @ordinal                     = line_item.ordinal.to_s
       @io_line_item                = line_item.io_line_item
       # TODO: 2014-04-05 add currency view on amount and pricing term
-      @amount                      = ViewModel::Amount(line_item.budget)
+      @amount                      = ViewModel::Amount.new(line_item.budget).to_s
       @product                     = line_item.product
       @media_channel               = line_item.media_channel
       @impressions                 = number_with_delimiter(line_item.impressions, delimiter: "\u{2009}")
       @bonus_impressions           = number_with_delimiter(line_item.bonus_impressions, delimiter: "\u{2009}")
-      @cost                        = line_item.cost.to_s
+      @cost                        = ViewModel::Amount.new(line_item.price).to_s
       @pricing_term                = line_item.pricing_term
       @flight_instructions         = line_item.flight_instructions
       @add_on                      = line_item.add_on
