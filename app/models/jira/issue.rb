@@ -10,7 +10,7 @@ module Jira
       @reporter       = j['fields']['reporter']['name'] || nil
       @updated_at     = j.updated.to_datetime
       @created_at     = j.created.to_datetime
-      @sfdcid         = j.customfield_11862
+      @sfdcid         = ( j.customfield_11862 || nil )
       @campaign_order = CampaignOrder.find_by(sfdcid: sfdcid)
       @fields         = Value::Field.new
       @jira_ref       = j
@@ -43,8 +43,9 @@ module Jira
         @jira_ref.fields.set_name(jirafield, value)
       when 'decimal'
         @jira_ref.fields.set(jirafield, value.to_f)
-      when 'money'
-        @jira_ref.fields.set(jirafield, value.as_us_dollar.amount)
+      when 'amount'
+        v=ViewModel::Amount.new(value)
+        @jira_ref.fields.set(jirafield, v.to_usd_f)
       else
         @jira_ref.fields.set(jirafield, value)
       end
@@ -60,30 +61,26 @@ module Jira
       result = %x(command)
     end
 
-  end
-
-
-  private
-
-  def self.find_or_create_by_sfdcid(sfdcid,subject=nil)
-    jarray = find_by_sfdcid(sfdcid)
-    j = jarray.first
-    if j.nil?
-      j = self.create!(sfdcid,type='Media: New Business',subject )
+    def self.find_or_create_by_campaign_order(campaign_order,subject=nil)
+      jarray = find_by_sfdcid(campaign_order.sfdcid)
+      j = jarray.first
+      if j.nil?
+        j = self.create!(sfdcid,type='Media: New Business',subject )
+      end
+      j
     end
-    j
-  end
 
-  def self.create!(sfdcid,type='Media: New Business',subject = "Test created #{Time.now.utc.to_s} by #{__FILE__}", parent_key = nil)
-    jlc = Jiralicious::Issue.new
-    jlc.fields.set_id("project", "11490") # this is the ICF project. Hardcoded :)
-    jlc.fields.set_id("issuetype", Value::IssueType.jira_id(type)) # this is a campaign launch
-    jlc.fields.set("summary", ENV['CALLOUT']+"#{subject}" )
-    jlc.save
-    jlc.fields.set("customfield_11862", sfdcid )
-    jlc.save
-    j = self.new(jlc)
-    j
-  end
+    def self.create!(sfdcid,type='Media: New Business',subject = "Test created #{Time.now.utc.to_s} by #{__FILE__}", parent_key = nil)
+      jlc = Jiralicious::Issue.new
+      jlc.fields.set_id("project", "11490") # this is the ICF project. Hardcoded :)
+      jlc.fields.set_id("issuetype", Value::IssueType.jira_id(type)) # this is a campaign launch
+      jlc.fields.set("summary", ENV['CALLOUT']+"#{subject}" )
+      jlc.save
+      jlc.fields.set("customfield_11862", sfdcid )
+      jlc.save
+      j = self.new(jlc)
+      j
+    end
 
+  end
 end

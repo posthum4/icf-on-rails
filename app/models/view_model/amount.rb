@@ -29,5 +29,9 @@ module ViewModel
       end
     end
 
+    def to_usd_f
+      @currency == 'USD' ? @obj.amount : @obj.as_us_dollar.amount
+    end
+
   end
 end

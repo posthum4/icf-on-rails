@@ -5,25 +5,26 @@ module Service
 
     def initialize(campaign_order)
       @co     = campaign_order
-      @sfdcid = campaign_order.sfdcid
-      @jira   = find_or_create_jira_by_sfdcid
+      @sfdcid = @co.sfdcid
+      @jira   = find_or_create_jira_by_campaign_order
       @fields = Value::Field.new
       import_from_sfdc
       @jira
     end
 
-    def find_or_create_jira_by_sfdcid
-      return false unless @co
-      return false unless @sfdcid
-      j = Jira::Issue.find_or_create_by_sfdcid(@sfdcid)
-      @co.jira_key = j.key
-      @co.save
-      j
-    end
+    # def find_or_create_jira_by_sfdcid
+    #   return false unless @co
+    #   return false unless @sfdcid
+    #   binding.pry
+    #   j = Jira::Issue.find_or_create_by_sfdcid(@sfdcid,self.subject)
+    #   @co.jira_key = j.key
+    #   @co.save
+    #   j
+    # end
 
     def find_or_create_jira_by_campaign_order
       return false unless @co
-      j = Jira::Issue.find_or_create_by_sfdcid(@co.sfdcid,self.subject)
+      j = Jira::Issue.find_or_create_by_campaign_order(@co,self.subject)
       @co.jira_key = j.key
       @co.save
       j
@@ -42,7 +43,7 @@ module Service
     def import_matched_fields
       @fields.jira_direct.each do |a|
         internal_field, jira_field = a
-        @jira.set_field(jira_field, eval("@co.#{internal_field}").to_s)
+        @jira.set_field(jira_field, eval("@co.#{internal_field}"))
       end
       @jira.save
     end
