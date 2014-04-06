@@ -7,11 +7,6 @@ class Importer
     @sfdcid         = sfdcid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: sfdcid)
     import
-    # @opportunity = SalesForce::Opportunity.find(@sfdcid)
-    # @description = ViewModel::Description.new(@sfdcid).to_s
-    # @fields = Value::Field.new
-    # @jira = jira
-    # self
   end
 
   def import
@@ -24,6 +19,11 @@ class Importer
     Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
     Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
     Service::Importer::Attachments.new(oppt, @campaign_order)
+  end
+
+  def import_with_export
+    import
+    jex = Service::IssueCreator.new(@campaign_order)
   end
 
 end

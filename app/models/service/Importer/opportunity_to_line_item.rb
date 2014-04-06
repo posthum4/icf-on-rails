@@ -56,14 +56,13 @@ module Service
       def generate_shortnames
         substring = Value::CommonLineItemSubstring.new(@co).to_s
         @co.line_items.each do |li|
-          li.shortname = li.io_line_item.sub substring,'..'
+          li.shortname = li.io_line_item
+          li.shortname.sub!(substring,'..') if substring.size > 3
           li.save!
         end
       end
 
-
       def nonzero?(oppt,nn)
-        Rails.logger.level = Logger::DEBUG
         begin
           paid = oppt["Impressions_#{nn}__c"].to_i
         rescue
@@ -76,7 +75,6 @@ module Service
         end
         active = paid + bonus
         Rails.logger.debug "Line Item #{nn}: paid = #{paid}, bonus = #{bonus} active #{active}"
-        Rails.logger.level = Logger::INFO
         active > 0 ? true : false
       end
 

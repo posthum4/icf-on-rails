@@ -13,13 +13,13 @@ module ViewModel
     def set_reliability
       case @stagename
       when 'Closed Won'
-        @warning    = "Imported when #{@stagename}: Low chance of inconsistency with IO. In case of doubt, IO is king."
+        @warning    = "Imported @#{@stagename}: Low chance of inconsistency with IO. In case of doubt, IO is king."
         @colors     = %w/ #99CC66 #CCFF99 /
       when 'Pending IO Review'
-        @warning    = "Imported when #{@stagename}: Medium chance inconsistency with IO. Please double check."
+        @warning    = "Imported @#{@stagename}: Medium chance inconsistency with IO. Please double check."
         @colors     = %w/ #FFFF00 #FFFF99 /
       else
-        @warning    = "Imported when #{@stagename}: HIGH CHANCE of inconsistency with IO - Please TRIPLE CHECK."
+        @warning    = "Imported @#{@stagename}: HIGH CHANCE of inconsistency with IO - Please TRIPLE CHECK."
         @colors     = %w/ #FF6600 #FF9966 /
       end
     end

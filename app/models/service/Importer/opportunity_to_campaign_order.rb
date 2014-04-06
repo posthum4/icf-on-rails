@@ -32,8 +32,8 @@ module Service
         @co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
         @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name
         @co.sales_region                            = @oppt['Sales_Region__c']
-        @co.account_executive                       = SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first
-        @co.account_manager                         = SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first
+        @co.account_executive                       = ( SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first || 'robbie' ).sub('ewu','edithwu')
+        @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first || 'dwong' )
         @co.campaign_objectives                     = @oppt['Campaign_Objectives__c']
         @co.primary_audience_am                     = @oppt['Primary_Audience_AM__c']
         @co.secondary_audience_am                   = @oppt['Secondary_Audience_AM__c']

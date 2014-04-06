@@ -14,7 +14,7 @@ module Value
 
     def jira_direct
       r = @@table.select { |f| f['JIRA_direct'] }
-      CSV::Table.new(r).values_at('SalesForce','JIRA_field')
+      CSV::Table.new(r).values_at('Internal','JIRA_field')
     end
 
     def jira_set_type(jira_field)

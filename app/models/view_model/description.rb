@@ -1,5 +1,6 @@
 module ViewModel
   class Description
+    # TODO: 2014-04-05 redo this on the basis of campaign_order
 
     def initialize(sfdcid)
       @sfdcid = sfdcid
