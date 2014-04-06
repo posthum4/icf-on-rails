@@ -9,7 +9,7 @@ module ViewModel
       @ordinal                     = line_item.ordinal.to_s
       @io_line_item                = line_item.io_line_item
       # TODO: 2014-04-05 add currency view on amount and pricing term
-      @amount                      = line_item.amount.to_s
+      @amount                      = ViewModel::Amount(line_item.budget)
       @product                     = line_item.product
       @media_channel               = line_item.media_channel
       @impressions                 = number_with_delimiter(line_item.impressions, delimiter: "\u{2009}")
@@ -23,15 +23,15 @@ module ViewModel
     end
 
     def to_s
-      s ||= "|" + ( @ordinal           or ' ' )
-      s <<  "|" + ( @io_line_item      or ' ' )
-      s <<  "|" + ( @amount            or ' ' )
-      s <<  "|" + ( @product           or ' ' )
-      s <<  "|" + ( @media_channel     or ' ' )
-      s <<  "|" + ( @impressions       or ' ' )
-      s <<  "|" + ( @bonus_impressions or ' ' )
-      s <<  "|" + ( @cost              or ' ' )
-      s <<  "|" + ( @pricing_term      or ' ' )
+      s ||= "|" + ( @ordinal           or "\u{2009}" )
+      s <<  "|" + ( @io_line_item      or "\u{2009}" )
+      s <<  "|" + ( @amount            or "\u{2009}" )
+      s <<  "|" + ( @product           or "\u{2009}" )
+      s <<  "|" + ( @media_channel     or "\u{2009}" )
+      s <<  "|" + ( @impressions       or "\u{2009}" )
+      s <<  "|" + ( @bonus_impressions or "\u{2009}" )
+      s <<  "|" + ( @cost              or "\u{2009}" )
+      s <<  "|" + ( @pricing_term      or "\u{2009}" )
       s <<  "|"
       s
     end
