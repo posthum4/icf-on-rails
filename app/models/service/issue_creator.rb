@@ -1,40 +1,34 @@
 module Service
   class IssueCreator
 
+    class JiraUnknownIssueNumberError < StandardError ; end
+    class JiraAlreadyExistsError < StandardError ; end
+
     attr_accessor :sfdcid, :campaign_order, :jira, :fields, :description
 
     def initialize(campaign_order)
-      @co     = campaign_order
-      @sfdcid = @co.sfdcid
-      @jira   = find_or_create_jira_by_campaign_order
-      @fields = Value::Field.new
-      import_from_sfdc
-      @jira
+      @co       = campaign_order
+      @sfdcid   = @co.sfdcid
+      @fields   = Value::Field.new
+      @jira_key = @co.jira_key
+      @jira     = Jira::Issue.find_by_key(@jira_key) unless @jira_key.nil?
     end
-
-    # def find_or_create_jira_by_sfdcid
-    #   return false unless @co
-    #   return false unless @sfdcid
-    #   binding.pry
-    #   j = Jira::Issue.find_or_create_by_sfdcid(@sfdcid,self.subject)
-    #   @co.jira_key = j.key
-    #   @co.save
-    #   j
-    # end
 
     def find_or_create_jira_by_campaign_order
       return false unless @co
-      j = Jira::Issue.find_or_create_by_campaign_order(@co,self.subject)
-      @co.jira_key = j.key
+      @jira = Jira::Issue.find_or_create_by_campaign_order(@co,self.subject)
+      @jira_key = @jira.key
+      @co.jira_key = @jira_key
       @co.save
-      j
+      @jira
     end
 
-    def jira_key
-      @jira.key
-    end
+    def import_from_campaign_order
+      @jira = find_or_create_jira_by_campaign_order if @jira.nil?
+      # second test: if still no JIRA then fail
+      fail JiraUnknownIssueNumberError, @sfdcid.to_s if @jira.nil?
+      fail JiraAlreadyExistsError, @jira_key if @jira.pre_imported?
 
-    def import_from_sfdc
       Rails.logger.level=Logger::INFO
       import_matched_fields
       Rails.logger.info 'Imported matched fields'
@@ -61,8 +55,7 @@ module Service
 
     def import_attachments
       Rails.logger.level=Logger::DEBUG
-      #attmts = @co.attachments.select { |a| a.created_at > 7.days.ago }
-      attmts = @co.attachments
+      attmts = @co.attachments.select { |a| a.created_at > 7.days.ago }
       attmts.each do |a|
         @jira.attach_file(a)
       end

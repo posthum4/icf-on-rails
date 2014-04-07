@@ -21,19 +21,20 @@ module Jira
       Jiralicious.search("key = #{jira_key}").issues.each do |i|
         result << self.new(i)
       end
-      result
+      result.first
     end
 
-    def self.find_by_sfdcid(sfdcid)
+    def self.find_by_campaign_order(co)
+      sfdcid = co.sfdcid
       result = []
       Jiralicious.search("\"SalesForce Opportunity ID\" ~ \"#{sfdcid}\"").issues.each do |i|
         result << self.new(i)
       end
-      result
+      result.first
     end
 
-    def save
-      @jira_ref.save!
+    def pre_imported?
+      !@jira_ref.description.blank?
     end
 
     def set_field(jirafield,value)
@@ -52,6 +53,10 @@ module Jira
       @jira_ref.save
     end
 
+    def pre_imported?
+      binding.pry      
+    end
+
     def attach_file(rfattmt)
       fileloc="/tmp/#{rfattmt.name}"
       File.open(fileloc, 'wb') { |f| f.write(rfattmt.body) }
@@ -63,8 +68,7 @@ module Jira
     end
 
     def self.find_or_create_by_campaign_order(campaign_order,subject=nil)
-      @sfdcid = campaign_order.sfdcid
-      jarray = find_by_sfdcid(@sfdcid)
+      jarray = find_by_campaign_order(campaign_order)
       j = jarray.first
       if j.nil?
         j = self.create!(@sfdcid,type='Media: New Business',subject )

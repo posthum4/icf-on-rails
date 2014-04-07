@@ -7,12 +7,15 @@ class Importer
     @sfdcid         = sfdcid
     check_sfdcid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: @sfdcid)
-    import
+  end
+
+  def import_and_export
+    import and export
   end
 
   def import
     fail Exceptions::InvalidSalesForceOpportunityError if @sfdcid.nil?
-    Rails.logger.info "Starting on General Import Script"
+    Rails.logger.info "Starting on General Import Script for #{@sfdcid}"
     #return false unless @campaign_order
     #return false unless @sfdcid
     oppt = SalesForce::Opportunity.find(@sfdcid)
@@ -23,16 +26,14 @@ class Importer
     Service::Importer::Attachments.new(oppt, @campaign_order)
   end
 
-  def import_with_export
-    import
+  def export
     jex = Service::IssueCreator.new(@campaign_order)
+    jex.import_from_campaign_order
   end
 
   def check_sfdcid
     # TODO: 2014-04-06 this may have to be a policy object
-    Rails.logger.debug "\n\n #{@sfdcid.to_yaml}\n @sfdcid = #{@sfdcid.class}\n#{__FILE__}:#{__LINE__}"
     matcher = @sfdcid.match(/0068000000\w{5}/)
-    Rails.logger.debug "\n\n #{matcher.to_yaml}\n matcher = #{matcher.class}\n#{__FILE__}:#{__LINE__}"
     if matcher.nil?
       fail InvalidSalesForceOpportunityError, @sfdcid.to_s
     else

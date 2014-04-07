@@ -12,6 +12,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'pg'
 
 # Added by Roland
 gem 'figaro'
@@ -24,6 +25,7 @@ gem 'chronic'
 gem 'paperclip'
 gem 'money', '= 5.1.0' #added by Roland to get out of deprecation warning
 gem 'money-rails', '= 0.8.1'
+gem 'gmail'
 
 group :development do
   gem 'better_errors'
@@ -42,7 +44,6 @@ group :development do
   gem 'pry-rails'
 end
 group :development, :test do
-  gem 'sqlite3'
   gem 'factory_girl_rails' , "~> 4.0"
   gem 'rspec-rails'
   gem 'thin'

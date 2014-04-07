@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140406035450) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
     t.string   "name"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 20140406035450) do
     t.integer  "campaign_order_id"
   end
 
-  add_index "attachments", ["campaign_order_id"], name: "index_attachments_on_campaign_order_id"
+  add_index "attachments", ["campaign_order_id"], name: "index_attachments_on_campaign_order_id", using: :btree
 
   create_table "campaign_orders", force: true do |t|
     t.string   "sfdcid"
@@ -105,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140406035450) do
     t.string   "shortname"
   end
 
-  add_index "line_items", ["campaign_order_id"], name: "index_line_items_on_campaign_order_id"
+  add_index "line_items", ["campaign_order_id"], name: "index_line_items_on_campaign_order_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

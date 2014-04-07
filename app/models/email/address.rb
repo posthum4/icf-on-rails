@@ -1,4 +1,4 @@
-module Gmail
+module Email
   class Address
   end
 end

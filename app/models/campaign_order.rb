@@ -35,7 +35,6 @@ class CampaignOrder < ActiveRecord::Base
 
 
 
-
 end
 
 # def oppt_name

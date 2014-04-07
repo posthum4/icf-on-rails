@@ -13,13 +13,13 @@ module ViewModel
     def set_reliability
       case @stagename
       when 'Closed Won'
-        @warning    = "Imported @#{@stagename}: Low chance of inconsistency with IO. In case of doubt, IO is king."
+        @warning    = "Imported @#{@stagename}: Checked against IO. In case of doubt, IO is king."
         @colors     = %w/ #99CC66 #CCFF99 /
       when 'Pending IO Review'
-        @warning    = "Imported @#{@stagename}: Medium chance inconsistency with IO. Please double check."
+        @warning    = "Imported @#{@stagename}: May be inconsistent with IO. Please double check."
         @colors     = %w/ #FFFF00 #FFFF99 /
       else
-        @warning    = "Imported @#{@stagename}: HIGH CHANCE of inconsistency with IO - Please TRIPLE CHECK."
+        @warning    = "Imported @#{@stagename}: LIKELY inconsistent with IO - Please TRIPLE CHECK."
         @colors     = %w/ #FF6600 #FF9966 /
       end
     end
@@ -37,7 +37,7 @@ module ViewModel
       Rails.logger.level = Logger::DEBUG
       s ||= @header
       s << "\n"
-      @line_items.each do |li|
+      @line_items.order("ordinal").each do |li|
         s << ViewModel::LineItem.new(li).paid
         s << ViewModel::LineItem.new(li).bonus
       end
