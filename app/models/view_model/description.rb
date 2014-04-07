@@ -10,17 +10,17 @@ module ViewModel
     end
 
     def general_info
-      data_string = ""
+      data_string = ''
       @fields.description.each do |a|
         label,sflabel = a
         # TODO: 2014-04-01 write a nicer formatter for non-string fields
-        v = @opportunity[sflabel].to_s
-        unless v.blank?
-          if v.include? "\n"
-            data_string << "\n #{label.upcase}\n#{[v]}\n\n"
-          else
-            data_string << "#{label}: #{v}\n"
-          end
+        v = @opportunity[sflabel]
+        unless v.blank? or v == 'No' or v == 'NO BRAND SAFETY PRODUCT'
+          # if v.include? "\n"
+          #   data_string << "\n\n #{label.upcase}\n#{[v]}\n\n"
+          # else
+            data_string << "|#{label} |#{v} |\n"
+          # end
         end
       end
       data_string

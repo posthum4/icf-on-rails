@@ -57,15 +57,17 @@ module Jira
       File.open(fileloc, 'wb') { |f| f.write(rfattmt.body) }
       # curl -D- -u {username}:{password} -X POST -H "X-Atlassian-Token: nocheck" -F "file=@{path/to/image}" http://{base-url}/rest/api/2/issue/{issue-key}/attachments
       Rails.logger.debug "Wrote file #{fileloc}"
-      command = %q[curl -D- -v -u #{ENV['JIRA_USER']}:#{ENV['JIRA_PASS']} -X POST -H "X-Atlassian-Token: nocheck" -F "file=@#{fileloc}" #{ENV['JIRA_API']}/rest/api/2/issue/#{self.jira_key}/attachments]
-      result = %x(command)
+      result = %x! curl -D- -v -u #{ENV['JIRA_USER']}:#{ENV['JIRA_PASS']} -X POST -H "X-Atlassian-Token: nocheck" -F "file=@#{fileloc}" #{ENV['JIRA_API']}/rest/api/2/issue/#{@key}/attachments !
+      Rails.logger.debug "Uploading attachments resulted in #{result.inspect}"
+      result
     end
 
     def self.find_or_create_by_campaign_order(campaign_order,subject=nil)
-      jarray = find_by_sfdcid(campaign_order.sfdcid)
+      @sfdcid = campaign_order.sfdcid
+      jarray = find_by_sfdcid(@sfdcid)
       j = jarray.first
       if j.nil?
-        j = self.create!(sfdcid,type='Media: New Business',subject )
+        j = self.create!(@sfdcid,type='Media: New Business',subject )
       end
       j
     end

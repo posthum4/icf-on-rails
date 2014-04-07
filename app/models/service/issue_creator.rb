@@ -35,9 +35,13 @@ module Service
     end
 
     def import_from_sfdc
+      Rails.logger.level=Logger::INFO
       import_matched_fields
+      Rails.logger.info 'Imported matched fields'
       import_tables
+      Rails.logger.info 'Imported tables'
       import_attachments
+      Rails.logger.info 'Imported attachments'
     end
 
     def import_matched_fields
@@ -56,10 +60,13 @@ module Service
     end
 
     def import_attachments
-      amends = @co.attachments.select { |a| a.created_at > 7.days.ago }
-      amends.each do |a|
+      Rails.logger.level=Logger::DEBUG
+      #attmts = @co.attachments.select { |a| a.created_at > 7.days.ago }
+      attmts = @co.attachments
+      attmts.each do |a|
         @jira.attach_file(a)
       end
+      Rails.logger.level=Logger::INFO
     end
 
     def subject

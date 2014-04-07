@@ -44,6 +44,10 @@ module SalesForce
       @@client.client_secret
     end
 
+    def http_get(request)
+      @@client.http_get(request)
+    end
+
     def authenticate
       password_concat = "#{ENV['DATABASEDOTCOM_PASSWORD']}#{ENV['DATABASEDOTCOM_SECURITY_TOKEN']}"
       result = @@client.authenticate :username => ENV['DATABASEDOTCOM_USERNAME'], :password => password_concat
