@@ -17,6 +17,7 @@ module Service
     def find_or_create_jira_by_campaign_order
       return false unless @co
       @jira = Jira::Issue.find_or_create_by_campaign_order(@co,self.subject)
+      binding.pry
       @jira_key = @jira.key
       @co.jira_key = @jira_key
       @co.save

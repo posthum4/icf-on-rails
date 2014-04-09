@@ -1,6 +1,8 @@
 module Jira
   class Issue
 
+    class MissingSalesForceOpportunityIDError < StandardError ; end
+
     attr_accessor :key, :summary, :assignee, :reporter, :sfdcid
 
     def initialize(j)
@@ -54,7 +56,7 @@ module Jira
     end
 
     def pre_imported?
-      binding.pry      
+      binding.pry
     end
 
     def attach_file(rfattmt)
@@ -68,25 +70,26 @@ module Jira
     end
 
     def self.find_or_create_by_campaign_order(campaign_order,subject=nil)
-      jarray = find_by_campaign_order(campaign_order)
-      j = jarray.first
-      if j.nil?
-        j = self.create!(@sfdcid,type='Media: New Business',subject )
-      end
-      j
+      j = find_by_campaign_order(campaign_order)
+      j = self.create!(campaign_order.sfdcid,type='Media: New Business',subject ) if j.nil?
     end
 
     def self.create!(sfdcid,type='Media: New Business',subject = "Test created #{Time.now.utc.to_s} by #{__FILE__}", parent_key = nil)
-      jlc = Jiralicious::Issue.new
+      Rails.logger.level = Logger::DEBUG
+      fail MissingSalesForceOpportunityIDError, @subject if sfdcid.nil?
+      jlc = Jiralicious::Issue.new()
+      Rails.logger.debug "setting #{jlc} to project 11490"
       jlc.fields.set_id("project", "11490") # this is the ICF project. Hardcoded :)
+      Rails.logger.debug "setting #{jlc} issue type to 19"
       jlc.fields.set_id("issuetype", Value::IssueType.jira_id(type)) # this is a campaign launch
+      Rails.logger.debug "setting #{jlc} summary to " + ENV['CALLOUT']+"#{subject}"
       jlc.fields.set("summary", ENV['CALLOUT']+"#{subject}" )
-      jlc.save
+      # no point in saving before sfdcid gets put in, or it creates duplicates
+      Rails.logger.debug "setting #{jlc} sfdcid to #{sfdcid}"
       jlc.fields.set("customfield_11862", sfdcid )
+      Rails.logger.debug "Trying to save #{jlc}"
       jlc.save
-      j = self.new(jlc)
-      j
+      j=Jira::Issue.new(jlc)
     end
-
   end
 end
