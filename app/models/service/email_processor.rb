@@ -15,8 +15,13 @@ module Service
 
     def process_message(m)
       sfdcid = m.sfdcid
-      result = ::Importer.new(sfdcid).import_and_export
-      Rails.logger.level "result = #{result}"
+      begin
+        result = ::Importer.new(sfdcid).import_and_export
+      rescue ::Importer::JiraForThisOpportunityAlreadyCreatedError => e
+        result = "A JIRA for this opportunity already exists #{e.message}"
+      ensure
+        Rails.logger.info "result = #{result}"
+      end
     end
   end
 end

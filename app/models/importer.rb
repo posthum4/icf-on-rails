@@ -2,6 +2,7 @@ class Importer
   attr_accessor :sfdcid, :campaign_order, :issue_importer
 
   class InvalidSalesForceOpportunityError < StandardError ; end
+  class JiraForThisOpportunityAlreadyCreatedError < StandardError ; end
 
   def initialize(sfdcid)
     @sfdcid         = sfdcid
@@ -13,8 +14,10 @@ class Importer
     import and export
   end
 
-  def import
-    fail Exceptions::InvalidSalesForceOpportunityError if @sfdcid.nil?
+  def import(force=false)
+    fail InvalidSalesForceOpportunityError, @sfdcid if @sfdcid.nil?
+    fail JiraForThisOpportunityAlreadyCreatedError, @campaign_order.jira_key if (force && !@campaign_order.jira_key.nil?)
+    return @campaign_order if !force &&  ( !@campaign_order.name.nil? || !@campaign_order.line_items.nil? || !@campaign_order.attachments.nil? )
     Rails.logger.info "Starting on General Import Script for #{@sfdcid}"
     #return false unless @campaign_order
     #return false unless @sfdcid

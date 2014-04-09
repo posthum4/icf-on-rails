@@ -35,8 +35,8 @@ module Jira
       result.first
     end
 
-    def pre_imported?
-      !@jira_ref.description.blank?
+    def save
+      @jira_ref.save!
     end
 
     def set_field(jirafield,value)
@@ -56,7 +56,8 @@ module Jira
     end
 
     def pre_imported?
-      binding.pry
+       @jira_ref.description.include? "CurrencyIsoCode" or
+         @jira_ref.description.include? "Campaign Start Date" 
     end
 
     def attach_file(rfattmt)
@@ -71,7 +72,10 @@ module Jira
 
     def self.find_or_create_by_campaign_order(campaign_order,subject=nil)
       j = find_by_campaign_order(campaign_order)
+      binding.pry
       j = self.create!(campaign_order.sfdcid,type='Media: New Business',subject ) if j.nil?
+      binding.pry
+      j
     end
 
     def self.create!(sfdcid,type='Media: New Business',subject = "Test created #{Time.now.utc.to_s} by #{__FILE__}", parent_key = nil)
