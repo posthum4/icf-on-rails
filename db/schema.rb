@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140406035450) do
+ActiveRecord::Schema.define(version: 20140409045507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 20140406035450) do
     t.string   "who_is_paying_for_viewability"
     t.integer  "budget_cents"
     t.string   "budget_currency",                         default: "USD", null: false
+    t.string   "messageid"
+    t.text     "result"
   end
 
   create_table "employees", force: true do |t|
