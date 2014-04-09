@@ -1,4 +1,6 @@
 IcfOnRails::Application.routes.draw do
+
+  root 'welcome#index'
   resources :attachments
 
   resources :campaign_orders
@@ -7,7 +9,7 @@ IcfOnRails::Application.routes.draw do
 
   resources :line_items
 
-  root :to => "home#index"
+  #root :to => "home#index"
   resources :users, :only => [:index, :show, :edit, :update ]
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin' => 'sessions#new', :as => :signin
