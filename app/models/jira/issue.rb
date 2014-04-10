@@ -88,9 +88,8 @@ module Jira
       jlc.fields.set_id("project", "11490") # this is the ICF project. Hardcoded :)
       Rails.logger.debug "setting #{jlc} issue type to 19"
       jlc.fields.set_id("issuetype", Value::IssueType.jira_id(type)) # this is a campaign launch
-      Rails.logger.debug "setting #{jlc} summary to " + ENV['CALLOUT']+"#{subject}"
-      ENV['CALLOUT'].nil? ? s = subject : s = ENV['CALLOUT']+ subject
-      jlc.fields.set("summary", s )
+      Rails.logger.debug "setting #{jlc} summary to #{subject}"
+      jlc.fields.set("summary", subject )
       # no point in saving before sfdcid gets put in, or it creates duplicates
       Rails.logger.debug "setting #{jlc} sfdcid to #{sfdcid}"
       jlc.fields.set("customfield_11862", sfdcid )
