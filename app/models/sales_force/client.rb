@@ -1,5 +1,3 @@
-class SalesForceClientError < StandardError ; end
-
 module SalesForce
   class Client
 

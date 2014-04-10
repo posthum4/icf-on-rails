@@ -1,9 +1,6 @@
 module Service
   class IssueCreator
 
-    class JiraUnknownIssueNumberError < StandardError ; end
-    class JiraAlreadyExistsError < StandardError ; end
-
     attr_accessor :sfdcid, :campaign_order, :jira, :fields, :description
 
     def initialize(campaign_order)

@@ -1,14 +1,15 @@
 module Email
   class Message
 
+    attr_accessor :subject, :from, :to, :date, :msgid
+
     def initialize(m)
-      binding.pry
       #@envelope = m.envelope
       @subject = m.subject
       @from = m.from.first.mailbox + '@' + m.from.first.host
       @to = m.to.first.mailbox + '@' + m.to.first.host
       @date = m.date.to_time
-      @msgid = m.id
+      @msgid = m.message_id
     end
 
     def sfdcid

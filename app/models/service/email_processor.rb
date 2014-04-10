@@ -1,9 +1,13 @@
 module Service
   class EmailProcessor
 
+
     def initialize(*args)
+      Rails.logger.level = Logger::DEBUG
       @mailbox    = Email::Mailbox.new.inbox
       @batch_size = ENV['EMAIL_BATCH_SIZE'].to_i
+      @result     = ''
+      @message    = ''
     end
 
     def process_batch
@@ -15,19 +19,18 @@ module Service
 
     def process_message(m)
       sfdcid = m.sfdcid
-
+      Rails.logger.info "SFDCID = #{sfdcid}"
       begin
-        result = ::Importer.new(sfdcid).import_and_export
-        campaign_order = result.campaign_order
-        campaign_order.messageid = m.message_id
-      rescue ::Importer::JiraForThisOpportunityAlreadyCreatedError => e
+        fail MissingSalesForceOpportunityIDError, sfdcid if sfdcid.nil?
+        fail MissingEmailID, m.inspect if m.msgid.nil?
+        r = ::Importer.new(sfdcid,m.msgid).import_and_export
+        co = result.campaign_order
+        co.messageid = m.message_id
+      rescue Exceptions::JiraAlreadyExistsError => e
         result = "A JIRA for this opportunity already exists #{e.message}"
-      rescue Service::IssueCreator::JiraAlreadyExistsError => e
-        result = "A JIRA for this opportunity already exists #{e.message}"
-      ensure
-        Rails.logger.info "result = #{result}"
-        campaign_order.result = result
       end
+      Rails.logger.info "result = #{result}"
+      co.result = result
     end
   end
 end

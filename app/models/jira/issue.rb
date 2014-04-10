@@ -1,8 +1,6 @@
 module Jira
   class Issue
-
-    class MissingSalesForceOpportunityIDError < StandardError ; end
-
+    
     attr_accessor :key, :summary, :assignee, :reporter, :sfdcid
 
     def initialize(j)
@@ -72,7 +70,6 @@ module Jira
 
     def self.find_or_create_by_campaign_order(campaign_order,subject=nil)
       j = find_by_campaign_order(campaign_order)
-      binding.pry
       j = self.create!(campaign_order.sfdcid,type='Media: New Business',subject ) if j.nil?
       binding.pry
       j
