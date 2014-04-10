@@ -19,7 +19,7 @@ module ViewModel
         @warning    = "Imported @#{@stagename}: May be inconsistent with IO. Please double check."
         @colors     = %w/ #FFFF00 #FFFF99 /
       else
-        @warning    = "Imported @#{@stagename}: LIKELY inconsistent with IO - Please TRIPLE CHECK."
+        @warning    = "Imported @#{@stagename}: PROBABLY inconsistent with IO - Please TRIPLE CHECK."
         @colors     = %w/ #FF6600 #FF9966 /
       end
     end
@@ -34,12 +34,16 @@ module ViewModel
     end
 
     def core_table
-      Rails.logger.level = Logger::DEBUG
+
       s ||= @header
       s << "\n"
-      @line_items.order("ordinal").each do |li|
-        s << ViewModel::LineItem.new(li).paid
-        s << ViewModel::LineItem.new(li).bonus
+      if @line_items.empty?
+        s << "No line items found in SalesForce"
+      else
+        @line_items.order("ordinal").each do |li|
+          s << ViewModel::LineItem.new(li).paid
+          s << ViewModel::LineItem.new(li).bonus
+        end
       end
       s
       #Rails.logger.debug "\n\n #{s.to_yaml}\n s = #{s.class}\n#{__FILE__}:#{__LINE__}"
