@@ -22,7 +22,6 @@ gem 'RedCloth'
 gem 'redcarpet', '~> 2.1.1'
 gem 'databasedotcom'
 gem 'chronic'
-gem 'paperclip'
 gem 'money', '= 5.1.0' #added by Roland to get out of deprecation warning
 gem 'money-rails', '= 0.8.1'
 gem 'gmail'

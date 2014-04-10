@@ -41,7 +41,12 @@ module Jira
       set_type = @fields.jira_set_type(jirafield)
       case set_type
       when 'name'
-        @jira_ref.fields.set_name(jirafield, value)
+        begin
+          @jira_ref.fields.set_name(jirafield, value)
+          @jira_ref.save
+        rescue Jiralicious::TransitionError
+          @jira_ref.fields.set_name(jirafield, ENV['JIRA_DEFAULT_USER'])
+        end
       when 'decimal'
         @jira_ref.fields.set(jirafield, value.to_f)
       when 'amount'
@@ -54,7 +59,7 @@ module Jira
     end
 
     def pre_imported?
-      !(@jira_ref.description.nil?) and 
+      !(@jira_ref.description.nil?) and
       @jira_ref.description.include? "CurrencyIsoCode" and
       @jira_ref.description.include? "Campaign Start Date"
     end

@@ -7,6 +7,7 @@ class Importer
     @msg_id         = msgid
     check_sfdcid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: @sfdcid)
+    self
   end
 
   def import_and_export
@@ -16,16 +17,19 @@ class Importer
   def import(force=false)
     fail Exceptions::JiraAlreadyExistsError, @campaign_order.jira_key if (force && !@campaign_order.jira_key.nil?)
     # check if imported already
-    fail Exceptions::OpportunityAlreadyImportedLocallyAndNotForcedError, @campaign_order.id if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
+    skipimport = true  if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
     Rails.logger.info "Starting on General Import Script for #{@sfdcid}"
     #return false unless @campaign_order
     #return false unless @sfdcid
     oppt = SalesForce::Opportunity.find(@sfdcid)
     # TODO: 2014-04-01 add full import flow here
     #@campaign_order.import_from_salesforce
-    Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
-    Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
-    Service::Importer::Attachments.new(oppt, @campaign_order)
+    unless skipimport
+      Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
+      Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
+      Service::Importer::Attachments.new(oppt, @campaign_order)
+    end
+    self
   end
 
   def export

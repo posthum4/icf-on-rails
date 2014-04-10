@@ -23,8 +23,8 @@ module Service
     def import_from_campaign_order
       @jira = find_or_create_jira_by_campaign_order if @jira.nil?
       # second test: if still no JIRA then fail
-      fail JiraUnknownIssueNumberError, @sfdcid.to_s if @jira.nil?
-      fail JiraAlreadyExistsError, @jira_key if @jira.pre_imported?
+      fail Exceptions::JiraUnknownIssueNumberError, @sfdcid.to_s if @jira.nil?
+      return @jira_key if @jira.pre_imported?
 
       Rails.logger.level=Logger::INFO
       import_matched_fields
