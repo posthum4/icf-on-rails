@@ -13,6 +13,7 @@ module Service
     def process_batch
       Rails.logger.level = Logger::INFO
       @mailbox[0..@batch_size].each do |m|
+        Rails.logger.info "#{m.from} #{m.subject}"
         process_message(m)
       end
     end
@@ -21,16 +22,26 @@ module Service
       sfdcid = m.sfdcid
       Rails.logger.info "SFDCID = #{sfdcid}"
       begin
-        fail MissingSalesForceOpportunityIDError, sfdcid if sfdcid.nil?
-        fail MissingEmailID, m.inspect if m.msgid.nil?
-        r = ::Importer.new(sfdcid,m.msgid).import_and_export
-        co = result.campaign_order
-        co.messageid = m.message_id
+        i = ::Importer.new(sfdcid,m.msgid).import
+      rescue Exceptions::OpportunityAlreadyImportedLocallyAndNotForcedError => e
+        result = "This opportunity was already imported in the ICF database. (CO##{e.message})"
+        co = CampaignOrder.find(e.message)
+      rescue Exceptions::MissingSalesForceOpportunityID => e
+        result = "Not a valid SalesForce Opportunity ID: SFDCID=#{e.message}"
+        co = nil
       rescue Exceptions::JiraAlreadyExistsError => e
-        result = "A JIRA for this opportunity already exists #{e.message}"
+        puts "A JIRA for this opportunity already exists #{e.message}"
+        return
+      ensure
+        #m.archive!
       end
-      Rails.logger.info "result = #{result}"
-      co.result = result
+      Rails.logger.info "#{result}"
+      unless (!co || co.nil?)
+        co.messageid = m.msgid
+        co.result = result
+        i.campaign_order = co
+        i.export
+      end
     end
   end
 end

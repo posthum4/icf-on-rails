@@ -45,4 +45,7 @@ IcfOnRails::Application.configure do
 
   # WebMock.allow_net_connect!
 
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new('icf_on_rails.log'))
+
+
 end

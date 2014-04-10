@@ -1,6 +1,6 @@
 module Jira
   class Issue
-    
+
     attr_accessor :key, :summary, :assignee, :reporter, :sfdcid
 
     def initialize(j)
@@ -54,8 +54,9 @@ module Jira
     end
 
     def pre_imported?
-       @jira_ref.description.include? "CurrencyIsoCode" or
-         @jira_ref.description.include? "Campaign Start Date" 
+      !(@jira_ref.description.nil?) and 
+      @jira_ref.description.include? "CurrencyIsoCode" and
+      @jira_ref.description.include? "Campaign Start Date"
     end
 
     def attach_file(rfattmt)
@@ -71,7 +72,6 @@ module Jira
     def self.find_or_create_by_campaign_order(campaign_order,subject=nil)
       j = find_by_campaign_order(campaign_order)
       j = self.create!(campaign_order.sfdcid,type='Media: New Business',subject ) if j.nil?
-      binding.pry
       j
     end
 
@@ -84,12 +84,13 @@ module Jira
       Rails.logger.debug "setting #{jlc} issue type to 19"
       jlc.fields.set_id("issuetype", Value::IssueType.jira_id(type)) # this is a campaign launch
       Rails.logger.debug "setting #{jlc} summary to " + ENV['CALLOUT']+"#{subject}"
-      jlc.fields.set("summary", ENV['CALLOUT']+"#{subject}" )
+      ENV['CALLOUT'].nil? ? s = subject : s = ENV['CALLOUT']+ subject
+      jlc.fields.set("summary", s )
       # no point in saving before sfdcid gets put in, or it creates duplicates
       Rails.logger.debug "setting #{jlc} sfdcid to #{sfdcid}"
       jlc.fields.set("customfield_11862", sfdcid )
       Rails.logger.debug "Trying to save #{jlc}"
-      jlc.save
+      jlc.save!
       j=Jira::Issue.new(jlc)
     end
   end

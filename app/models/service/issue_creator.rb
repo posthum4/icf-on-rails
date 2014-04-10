@@ -12,9 +12,8 @@ module Service
     end
 
     def find_or_create_jira_by_campaign_order
-      return false unless @co
-      @jira = Jira::Issue.find_or_create_by_campaign_order(@co,self.subject)
-      binding.pry
+      fail CampaignOrderMissing, @co if ( !@co || @co.nil? )
+      @jira = Jira::Issue.find_or_create_by_campaign_order(@co, self.subject)
       @jira_key = @jira.key
       @co.jira_key = @jira_key
       @co.save

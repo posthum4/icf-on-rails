@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409045507) do
+ActiveRecord::Schema.define(version: 20140410023706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,13 +52,13 @@ ActiveRecord::Schema.define(version: 20140409045507) do
     t.string   "sales_region"
     t.string   "account_executive"
     t.string   "account_manager"
-    t.string   "campaign_objectives"
+    t.text     "campaign_objectives"
     t.string   "primary_audience_am"
     t.string   "secondary_audience_am"
     t.string   "hard_constraints_am"
     t.string   "is_secondary_audience_a_hard_constraint"
-    t.string   "rfp_special_client_requests"
-    t.string   "special_client_requirements"
+    t.text     "rfp_special_client_requests"
+    t.text     "special_client_requirements"
     t.string   "special_notes"
     t.string   "brand_safety_vendor"
     t.string   "type_of_service"
