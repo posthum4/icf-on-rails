@@ -52,7 +52,7 @@ module Email
         Rails.logger.error "Ensuring the rest..."
         @label = 'ICF/error' if (!@label or @label.nil?)
         self.move_to(@label)
-        #self.archive!
+        self.archive!
       end
       Rails.logger.warn "#{@result}"
       unless (!@co || @co.nil?)
