@@ -27,12 +27,12 @@ module Service
       return @jira_key if @jira.pre_imported?
 
       Rails.logger.level=Logger::INFO
-      import_matched_fields
-      Rails.logger.info 'Imported matched fields'
       import_tables
       Rails.logger.info 'Imported tables'
       import_attachments
       Rails.logger.info 'Imported attachments'
+      import_matched_fields
+      Rails.logger.info 'Imported matched fields'
     end
 
     def import_matched_fields
