@@ -12,7 +12,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'simple_form'
 gem 'slim-rails'
-gem 'pg'
+gem 'mysql2'
 
 # Added by Roland
 gem 'figaro'
@@ -25,6 +25,7 @@ gem 'chronic'
 gem 'money', '= 5.1.0' #added by Roland to get out of deprecation warning
 gem 'money-rails', '= 0.8.1'
 gem 'gmail'
+gem 'yaml_db'
 
 group :development do
   gem 'better_errors'

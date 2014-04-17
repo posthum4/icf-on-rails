@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140410023706) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
     t.string   "name"
@@ -34,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140410023706) do
     t.string   "jira_key"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "amount"
+    t.decimal  "amount",                                  precision: 10, scale: 0
     t.string   "amount_currency"
     t.date     "campaign_start_date"
     t.date     "campaign_end_date"
@@ -72,7 +69,7 @@ ActiveRecord::Schema.define(version: 20140410023706) do
     t.string   "viewability_metrics"
     t.string   "who_is_paying_for_viewability"
     t.integer  "budget_cents"
-    t.string   "budget_currency",                         default: "USD", null: false
+    t.string   "budget_currency",                                                  default: "USD", null: false
     t.string   "messageid"
     t.text     "result"
   end
@@ -89,9 +86,9 @@ ActiveRecord::Schema.define(version: 20140410023706) do
 
   create_table "line_items", force: true do |t|
     t.string   "add_on"
-    t.decimal  "amount"
+    t.decimal  "amount",                      precision: 10, scale: 0
     t.integer  "bonus_impressions"
-    t.decimal  "cost"
+    t.decimal  "cost",                        precision: 10, scale: 0
     t.text     "flight_instructions"
     t.string   "goal"
     t.integer  "impressions"
@@ -105,7 +102,7 @@ ActiveRecord::Schema.define(version: 20140410023706) do
     t.integer  "campaign_order_id"
     t.integer  "ordinal"
     t.integer  "budget_cents"
-    t.string   "budget_currency",             default: "USD", null: false
+    t.string   "budget_currency",                                      default: "USD", null: false
     t.integer  "price_cents"
     t.string   "shortname"
   end
