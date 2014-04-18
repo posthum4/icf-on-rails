@@ -81,7 +81,6 @@ module Jira
     end
 
     def self.create!(sfdcid,type='Media: New Business',subject = "Test created #{Time.now.utc.to_s} by #{__FILE__}", parent_key = nil)
-      Rails.logger.level = Logger::DEBUG
       fail MissingSalesForceOpportunityIDError, @subject if sfdcid.nil?
       jlc = Jiralicious::Issue.new()
       Rails.logger.debug "setting #{jlc} to project 11490"

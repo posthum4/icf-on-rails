@@ -26,7 +26,6 @@ module Service
       fail Exceptions::JiraUnknownIssueNumberError, @sfdcid.to_s if @jira.nil?
       return @jira_key if @jira.pre_imported?
 
-      Rails.logger.level=Logger::INFO
       import_tables
       Rails.logger.info 'Imported tables'
       import_attachments
@@ -51,12 +50,10 @@ module Service
     end
 
     def import_attachments
-      Rails.logger.level=Logger::DEBUG
       attmts = @co.attachments.select { |a| a.created_at > 7.days.ago }
       attmts.each do |a|
         @jira.attach_file(a)
       end
-      Rails.logger.level=Logger::INFO
     end
 
     def subject
