@@ -38,7 +38,7 @@ module ViewModel
       s ||= @header
       s << "\n"
       if @line_items.empty?
-        s << "No line items found in SalesForce"
+        s << "Error importing line items from SalesForce. Please check original"
       else
         @line_items.order("ordinal").each do |li|
           s << ViewModel::LineItem.new(li).paid
