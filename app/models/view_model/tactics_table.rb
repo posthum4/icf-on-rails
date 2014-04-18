@@ -8,7 +8,7 @@ module ViewModel
 
     def to_s
       s = ''
-      @campaign_order.line_items.each do |li|
+      @campaign_order.line_items.order("ordinal").each do |li|
         s << ViewModel::TacticsPanel.new(li).to_s
       end
       s
