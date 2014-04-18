@@ -38,7 +38,7 @@ module Service
         subject:    "#{co_best_guess} #{error[:msg].inspect}",
         body:       <<-ENDOFBODY
         Error:          #{error[:msg].inspect}
-        Campaign Order: #{co_best_guess}
+        Campaign Order: https://na6.salesforce.com/#{co_best_guess}
         Email subject:  #{error[:subject]}
         Email from:     #{error[:from]}
         Message ID:     #{message.msgid}
@@ -51,20 +51,28 @@ module Service
       _to      = "#{message.from}"
       _subject = "SUCCESS: #{message.subject}}"
       _body    = "You have successfully generated a manual ICF JIRA:"
-      _body    << "\n\n"
-      _body    << "https://rocketfuel.jira.com/browse/#{result}"
-      _body    << "\n\n"
-      _body    << "Manual imports have a much higher chance of errors. Please do check everything extra carefully. Have a successful campaign launch!"
+      _body    << "\n"
+      _body    << "\nhttps://rocketfuel.jira.com/browse/#{result}"
+      _body    << "\n"
+      _body    << "\nManual imports have a much higher chance of errors. Please do check everything"
+      _body    << "\nextra carefully. Have a successful campaign launch!"
       answer_manual_general(_to,_subject,_body)
     end
 
     def answer_manual_error(result,message)
       _to      = "#{message.from}"
       _subject = "ERROR: #{message.subject}}"
-      _body    = "Your request generated the error below. Please try again if it is clear what you can correct or ask your local ICF Champion (Derrick, Amanda, Nick, Erin, Roullo or Thuan) for help!"
-      _body    << "\n\n"
-      _body    << "#{result[:msg].inspect}"
-      _body    << "\n\n"
+      _body    = "Your request generated the error below. Please try again if it is clear what"
+      _body    << "\nyou can correct or otherwise ask your local ICF AM Champion* for help:"
+      _body    << "\n"
+      _body    << "\n- Derrick (US West-North)"
+      _body    << "\n- Nick (US West-South)"
+      _body    << "\n- Amanda (US East)"
+      _body    << "\n- Roullz (EMEA)"
+      _body    << "\n- Erin (US Central, Canada)"
+      _body    << "\n- Thuan (Texas)"
+      _body    << "\n"
+      _body    << "\n#{result[:msg].inspect}"
       answer_manual_general(_to,_subject,_body)
     end
 
