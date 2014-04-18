@@ -55,7 +55,7 @@ module Email
         # end
         Rails.logger.info "Ensuring labeling of the message as #{@label}..."
         self.move_to(@label)
-        self.archive! if @label == 'ICF/imported'
+        self.archive!
       end
       return @result
     end

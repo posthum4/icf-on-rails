@@ -71,7 +71,7 @@ module Service
     def answer_manual_general(_to,_subject,_body)
       p = {to: _to, subject: _subject, body: _body}
       # overriding for testing
-      p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
+      # p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
       m = Email::Message.new(p).send!
     end
   end
