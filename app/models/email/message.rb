@@ -36,45 +36,26 @@ module Email
         @co.messageid     = self.msgid
         @co.result        = @result
         @i.campaign_order = @co
-        @i.export         if @export
+        @i.export
         @label            = 'ICF/imported'
         @result           = @co.jira_key
       rescue => faultline
         Rails.logger.error faultline.inspect
         @result = {
-          msg:      faultline.inspect,
+          msg:      faultline,
           co:       @co,
           from:     @from,
           subject:  @subject
         }
         @label = 'ICF/error'
-        # rescue Exceptions::OpportunityAlreadyImportedLocallyAndNotForcedError => e
-        #   Rails.logger.error "Exceptions::OpportunityAlreadyImportedLocallyAndNotForcedError"
-        #   @result = "This opportunity was already imported in the ICF database. (CO##{e.message})"
-        #   @co = CampaignOrder.find_by(sfdcid: sfdcid)
-        #   @label = 'ICF/notcreated'
-        #   @export = true
-        # rescue Exceptions::MissingSalesForceOpportunityID => f
-        #   Rails.logger.error "MissingSalesForceOpportunityID"
-        #   @result = "Not a valid SalesForce Opportunity ID: SFDCID=#{f.message}"
-        #   @co = nil
-        #   @label = 'ICF/error'
-        #   @export = false
-        # rescue Exceptions::JiraAlreadyExistsError => g
-        #   Rails.logger.error "Exceptions::JiraAlreadyExistsError"
-        #   @result = "A JIRA for this opportunity already exists #{g.message}"
-        #   @co = nil
-        #   @label = 'ICF/skipped'
-        #   @export = false
-        # rescue => h
-        #   Rails.logger.error "Exceptions::General"
-        #   @result = "Different exception #{h.message}"
-        #   @label = 'ICF/error'
-        #   @export = false
       ensure
+        # unless @co.jira_key.nil?
+        #   @result = @co.jira_key
+        #   @label  = 'ICF/imported'
+        # end
         Rails.logger.info "Ensuring labeling of the message as #{@label}..."
         self.move_to(@label)
-        self.archive!
+        self.archive! if @label == 'ICF/imported'
       end
       return @result
     end
@@ -98,12 +79,7 @@ module Email
     end
 
     def manual?
-      ( !@from.include? 'hqevents' and
-        !@to.include? 'all' and
-        (
-          @body.nil? or !@body.include? 'Opportunity Overview'
-        )
-      )
+      !@msgid.include? '@sfdc.net'
     end
 
 

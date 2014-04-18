@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140410023706) do
+ActiveRecord::Schema.define(version: 20140418061433) do
 
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20140410023706) do
     t.string   "who_is_paying_for_brand_safety"
     t.string   "client_vendor_pre_existing_relations"
     t.string   "who_will_implement_adchoices_icon"
-    t.string   "brand_safety_notes"
+    t.text     "brand_safety_notes"
     t.string   "who_will_wrap_the_tags"
     t.string   "viewability"
     t.string   "viewability_metrics"
@@ -86,12 +86,12 @@ ActiveRecord::Schema.define(version: 20140410023706) do
 
   create_table "line_items", force: true do |t|
     t.string   "add_on"
-    t.decimal  "amount",                      precision: 10, scale: 0
+    t.decimal  "amount",                                precision: 10, scale: 0
     t.integer  "bonus_impressions"
-    t.decimal  "cost",                        precision: 10, scale: 0
+    t.decimal  "cost",                                  precision: 10, scale: 0
     t.text     "flight_instructions"
     t.string   "goal"
-    t.integer  "impressions"
+    t.integer  "impressions",                 limit: 8
     t.string   "io_line_item"
     t.string   "media_channel"
     t.string   "pricing_term"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20140410023706) do
     t.integer  "campaign_order_id"
     t.integer  "ordinal"
     t.integer  "budget_cents"
-    t.string   "budget_currency",                                      default: "USD", null: false
+    t.string   "budget_currency",                                                default: "USD", null: false
     t.integer  "price_cents"
     t.string   "shortname"
   end

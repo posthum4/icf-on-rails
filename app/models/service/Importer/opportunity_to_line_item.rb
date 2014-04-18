@@ -75,7 +75,7 @@ module Service
         end
         active = paid + bonus
         Rails.logger.debug "Line Item #{nn}: paid = #{paid}, bonus = #{bonus} active #{active}"
-        active > 0 ? true : false
+        active != 0 ? true : false
       end
 
     end

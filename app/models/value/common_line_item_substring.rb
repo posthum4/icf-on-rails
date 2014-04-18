@@ -4,7 +4,7 @@ module Value
     def initialize(campaign_order)
       @campaign_order = campaign_order
       @line_items     = @campaign_order.line_items
-      fail NoLineItemsFound, @campaign_order.sfdcid, @campaign_order.name if @line_items.empty? or @line_items.nil?
+      fail Exceptions::NoLineItemsFound, @campaign_order.sfdcid, @campaign_order.name if @line_items.empty? or @line_items.nil?
       get_all_names
     end
 
