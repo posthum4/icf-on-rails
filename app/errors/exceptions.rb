@@ -8,4 +8,11 @@ module Exceptions
   class MissingEmailIDError < StandardError ; end
   class NoLineItemsFound < StandardError ; end
   class InvalidSalesForceOpportunityID < StandardError ; end
+
+  class StandardError
+    def to_s
+      inspect
+    end
+  end
+  
 end

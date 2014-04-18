@@ -32,12 +32,12 @@ module Service
 
     def report_error(error,message)
       error = {msg: "NilResultFromImport", co:nil} if error.nil?
-      co_best_guess = error[:co] || message.sfdcid || #NULL
+      co_best_guess = error[:co] || message.sfdcid || '#NULL'
       p = {
         to:         ENV['ERROR_MONITOR_ADDRESS'],
-        subject:    "#{co_best_guess} #{error[:msg]}",
+        subject:    "#{co_best_guess} #{error[:msg].inspect}",
         body:       <<-ENDOFBODY
-        Error:          #{error[:msg]}
+        Error:          #{error[:msg].inspect}
         Campaign Order: #{co_best_guess}
         Email subject:  #{error[:subject]}
         Email from:     #{error[:from]}
@@ -62,16 +62,16 @@ module Service
       _to      = "#{message.from}"
       _subject = "ERROR: #{message.subject}}"
       _body    = "Your request generated the error below. Please try again if it is clear what you can correct or ask your local ICF Champion (Derrick, Amanda, Nick, Erin, Roullo or Thuan) for help!"
-      _body    << "\n"
-      _body    << "#{result[:msg]}"
-      _body    << "\n"
+      _body    << "\n\n"
+      _body    << "#{result[:msg].inspect}"
+      _body    << "\n\n"
       answer_manual_general(_to,_subject,_body)
     end
 
     def answer_manual_general(_to,_subject,_body)
       p = {to: _to, subject: _subject, body: _body}
       # overriding for testing
-      #p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
+      p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
       m = Email::Message.new(p).send!
     end
   end
