@@ -42,7 +42,7 @@ class Importer
     # TODO: 2014-04-06 this may have to be a policy object
     matcher = @sfdcid_orig.match(/0068000000\w{5}/)
     if matcher.nil?
-      fail InvalidSalesForceOpportunityID, @sfdcid_orig.to_s
+      fail Exceptions::InvalidSalesForceOpportunityID, @sfdcid_orig.to_s
     else
       @sfdcid = matcher[0]
     end

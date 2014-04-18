@@ -3,6 +3,7 @@ module Exceptions
   class MissingSalesForceOpportunityID < StandardError ; end
   class JiraAlreadyExistsError < StandardError ; end
   class OpportunityAlreadyImportedLocallyAndNotForcedError < StandardError ; end
+  class InvalidSalesForceOpportunityID < StandardError ; end
   class SalesForceClientError < StandardError ; end
   class MissingJiraKeyError < StandardError ; end
   class MissingEmailIDError < StandardError ; end
@@ -14,5 +15,5 @@ module Exceptions
       inspect
     end
   end
-  
+
 end
