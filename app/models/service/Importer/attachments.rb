@@ -17,14 +17,15 @@ module Service
             a = @co.attachments.find_or_create_by(sfdcid: f.Id)
             # sets the normal attributes
             a.name           = f.Name
-            a.body           = f.Body 
+            a.body           = f.Body
             a.content_type   = f.ContentType
             a.created_at     = f.CreatedDate
             Rails.logger.info "Imported attachment #{a.name} attributes"
             a.save!
             request = SalesForce::Client.new.http_get(a.body)
-            a.body = request.body
-            a.save!
+            fileloc="/tmp/#{a.name}"
+            File.open(fileloc, 'wb') { |f| f.write(request.body) }
+            # curl -D- -u {username}:{password} -X POST -H "X-Atlassian-Token: nocheck" -F "file=@{path/to/image}" http://{base-url}/rest/api/2/issue/{issue-key}/attachments
             Rails.logger.info "Imported attachment #{a.name} body"
           end
         end
