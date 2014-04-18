@@ -6,8 +6,8 @@ module Email
     # def initialize(m)
     #   #@envelope = m.envelope
     #   @subject   = m.subject
-    #   @from      = 
-    #   @to        = 
+    #   @from      =
+    #   @to        =
     #   @date      = m.date.to_time
     #   @msgid     = m.message_id
     #   @gmailobj  = m
@@ -25,7 +25,7 @@ module Email
       @label    = nil
       @export   = nil
       @result   = nil
-      @i        = nil 
+      @i        = nil
     end
 
     def process
@@ -74,7 +74,7 @@ module Email
       ensure
         Rails.logger.info "Ensuring labeling of the message as #{@label}..."
         self.move_to(@label)
-        #self.archive!
+        self.archive!
       end
       return @result
     end
@@ -96,6 +96,17 @@ module Email
     def move_to(predefinedlabel)
       @gmailobj.add_label(predefinedlabel)
     end
+
+    def manual?
+      ( !@from.include? 'hqevents' and
+        !@to.include? 'all' and
+        (
+          @body.nil? or !@body.include? 'Opportunity Overview'
+        )
+      )
+    end
+
+
 
   end
 
