@@ -91,3 +91,4 @@ pickle-email-*.html
 *.sublime-workspace
 /spec/vcr
 db/data.yml
+logfile
