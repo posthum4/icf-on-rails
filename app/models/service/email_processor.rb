@@ -23,7 +23,6 @@ module Service
           answer_manual_success(r,m) if m.manual?
         else
           Rails.logger.error "Fail: #{r}"
-          binding.pry
           report_error(r,m)
           answer_manual_error(r,m) if m.manual?
         end

@@ -9,7 +9,6 @@ module Value
     end
 
     def get_all_names
-      #binding.pry
       @all_names = []
       @line_items.each do |li|
         @all_names << li.io_line_item
