@@ -51,15 +51,19 @@ module ViewModel
     end
 
     def bonus
-      s ||= "|" + ( @ordinal + "/bonus" or "\u{2009}" )
-      s <<  "|" + ( @shortname         or "\u{2009}" )
-      s <<  "|" + "\u{2009}"
-      s <<  "|" + ( @product           or "\u{2009}" )
-      s <<  "|" + ( @media_channel     or "\u{2009}" )
-      s <<  "|" + ( @bonus_impressions or "\u{2014}" )
-      s <<  "|" + "\u{2009}"
-      s <<  "|" + "\u{2009}"
-      s <<  "|\n"
+      if @bonus_impressions == "0"
+        s = ""
+      else
+        s ||= "|" + ( @ordinal + "/bonus" or "\u{2009}" )
+        s <<  "|" + ( @shortname         or "\u{2009}" )
+        s <<  "|" + "\u{2009}"
+        s <<  "|" + ( @product           or "\u{2009}" )
+        s <<  "|" + ( @media_channel     or "\u{2009}" )
+        s <<  "|" + ( @bonus_impressions or "\u{2014}" )
+        s <<  "|" + "\u{2009}"
+        s <<  "|" + "\u{2009}"
+        s <<  "|\n"
+      end
       s
     end
   end
