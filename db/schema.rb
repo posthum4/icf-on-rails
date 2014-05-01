@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140418061433) do
+ActiveRecord::Schema.define(version: 20140501021833) do
 
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140418061433) do
     t.string   "jira_key"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "amount",                                  precision: 10, scale: 0
+    t.decimal  "amount",                                  precision: 10, scale: 2
     t.string   "amount_currency"
     t.date     "campaign_start_date"
     t.date     "campaign_end_date"
@@ -86,9 +86,9 @@ ActiveRecord::Schema.define(version: 20140418061433) do
 
   create_table "line_items", force: true do |t|
     t.string   "add_on"
-    t.decimal  "amount",                                precision: 10, scale: 0
+    t.decimal  "amount",                                precision: 10, scale: 2
     t.integer  "bonus_impressions"
-    t.decimal  "cost",                                  precision: 10, scale: 0
+    t.decimal  "cost",                                  precision: 10, scale: 2
     t.text     "flight_instructions"
     t.string   "goal"
     t.integer  "impressions",                 limit: 8
