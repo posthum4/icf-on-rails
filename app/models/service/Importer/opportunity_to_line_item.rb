@@ -51,7 +51,6 @@ module Service
         factor                         = Money::Currency.find(@co.budget_currency).subunit_to_unit.to_f
         li.budget_cents                = li.amount * factor
         li.price_cents                 = li.cost * factor
-        binding.pry
       end
 
       def generate_shortnames
