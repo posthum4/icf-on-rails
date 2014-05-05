@@ -54,7 +54,7 @@ module Service
       end
 
       def generate_shortnames
-        substring = Value::CommonLineItemSubstring.new(@co).to_s
+        substring = Value::CommonLineItemSubstring.new(@co).longest_common_substr
         @co.line_items.each do |li|
           li.shortname = li.io_line_item
           li.shortname.sub!(substring,'..') if substring.size > 3

@@ -1,22 +1,19 @@
 module Value
-  class CommonLineItemSubstring(campaign_order)
+  class CommonLineItemSubstring
 
-    def initialize
-      @line_item = line_item
-      @campaign_order = CampaignOrder.find(@line_item.campaign_order_id)
+    def initialize(campaign_order)
+      @campaign_order = campaign_order
+    end
 
-
-      def shorter_name
-        cutout = line_item_names.longest_common_substr
-        li[1..-1].each do |a|
-          unless a.nil?
-            unless cutout.nil? || a['Line Item'] == cutout || cutout.length < 5
-              a['Line Item'].gsub!(cutout,'..').gsub!(/\.{2,}/,'..')
-            end
+    def shorter_name
+      cutout = line_item_names.longest_common_substr
+      li[1..-1].each do |a|
+        unless a.nil?
+          unless cutout.nil? || a['Line Item'] == cutout || cutout.length < 5
+            a['Line Item'].gsub!(cutout,'..').gsub!(/\.{2,}/,'..')
           end
         end
       end
-
     end
 
   end
