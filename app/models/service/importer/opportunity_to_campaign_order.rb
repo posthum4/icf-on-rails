@@ -52,6 +52,15 @@ module Service
         @co.who_will_wrap_the_tags                  = @oppt['Who_Will_Wrap_The_Tags__c']
         @co.viewability                             = @oppt['Viewability__c']
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
+        @co.insights_package                        = @oppt['Insights_Package__c']
+        @co.offline_sales_impact                    = @oppt['Offline_Sales_Impact__c']
+        @co.viewability_sold                        = @oppt['Viewability__c']
+        @co.viewability_vendor                      = @oppt['Who_is_Viewability_Vendor__c']
+        @co.suppl_add_on_products                   = @oppt['Supplemental_Add_On_Products__c'].join("\n")
+        @co.rm_ad_serving_fees                      = @oppt['RM_and_Serving_Fees__c']
+        @co.who_is_paying_for_rm_ad_serving_fees    = @oppt['Who_is_Paying_for_RM_Serving_Fees__c']
+        @co.who_is_rm_vendor                        = @oppt['Who_is_Rich_Media_Vendor__c']
+        @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
         @co.who_is_paying_for_viewability           = @oppt['Who_is_Paying_for_Viewability__c']
         @co.save!
       end
