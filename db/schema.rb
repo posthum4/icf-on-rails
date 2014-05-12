@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501021833) do
+ActiveRecord::Schema.define(version: 20140512021205) do
 
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
@@ -72,6 +72,14 @@ ActiveRecord::Schema.define(version: 20140501021833) do
     t.string   "budget_currency",                                                  default: "USD", null: false
     t.string   "messageid"
     t.text     "result"
+    t.string   "insights_package"
+    t.string   "offline_sales_impact"
+    t.string   "viewability_vendor"
+    t.string   "suppl_add_on_products"
+    t.string   "rm_ad_serving_fees"
+    t.string   "who_is_paying_for_rm_ad_serving_fees"
+    t.string   "who_is_rm_vendor"
+    t.string   "account_executive_2"
   end
 
   create_table "employees", force: true do |t|
