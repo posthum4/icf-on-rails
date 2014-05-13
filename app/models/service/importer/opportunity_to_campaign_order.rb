@@ -54,7 +54,6 @@ module Service
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
         @co.insights_package                        = @oppt['Insights_Package__c']
         @co.offline_sales_impact                    = @oppt['Offline_Sales_Impact__c']
-        @co.viewability_sold                        = @oppt['Viewability__c']
         @co.viewability_vendor                      = @oppt['Who_is_Viewability_Vendor__c']
         @co.suppl_add_on_products                   = @oppt['Supplemental_Add_On_Products__c'].join("\n")
         @co.rm_ad_serving_fees                      = @oppt['RM_and_Serving_Fees__c']
