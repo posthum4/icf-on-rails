@@ -18,6 +18,7 @@ class Importer
     fail Exceptions::JiraAlreadyExistsError, @campaign_order.jira_key if (force && !@campaign_order.jira_key.nil?)
     # check if imported already
     skipimport = true  if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
+    Rails.logger.info "skipimport = #{skipimport} for #{@sfdcid}"
     Rails.logger.info "Starting on General Import Script for #{@sfdcid}"
     #return false unless @campaign_order
     #return false unless @sfdcid
@@ -38,7 +39,9 @@ class Importer
   end
 
   def check_sfdcid
-    fail Exceptions::MissingSalesForceOpportunityID, @sfdcid if @sfdcid_orig.nil? or !@sfdcid_orig
+    Rails.logger.info "Checking sfdcid for #{@sfdcid_orig}"
+    fail Exceptions::MissingSalesForceOpportunityID, @sfdcid_orig, @sfdcid if ( @sfdcid_orig.nil? or !@sfdcid_orig )
+    fail Exceptions::ReceivedCaseIDbutNeedOpportunityID, @sfdcid_orig if @sfdcid_orig =~ (/5008000000\w{5}/)
     # TODO: 2014-04-06 this may have to be a policy object
     matcher = @sfdcid_orig.match(/0068000000\w{5}/)
     if matcher.nil?
