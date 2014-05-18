@@ -58,6 +58,7 @@ module Jira
       @jira_ref.save
     end
 
+    # not using this for now, just checking in the importer file if there is a JIRA key or not
     def pre_imported?
       !(@jira_ref.description.nil?) and
       @jira_ref.description.include? "CurrencyIsoCode" and

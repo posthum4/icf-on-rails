@@ -62,7 +62,9 @@ module Email
 
 
     def sfdcid
-      r = @subject.match (/0068000000\w{5}/)
+      # taking the matcher out here otherwise the errors cannot fire - may want to clean up the variable names etc later
+      #r = @subject.match (/0068000000\w{5}/)
+      r = @subject
       r.nil? ? false : r[0]
     end
 
