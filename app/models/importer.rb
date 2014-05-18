@@ -14,9 +14,9 @@ class Importer
 
   def importexport
     import_child
-    @parent_sfdcid  = @campaign_order.original_opportunity[0..14] rescue nil
-    @parent_co      = CampaignOrder.find_or_create_by(sfdcid: @parent_sfdcid) rescue nil
-    unless @parent_co.nil?
+    unless @campaign_order.original_opportunity.nil?
+      @parent_sfdcid  = @campaign_order.original_opportunity[0..14] || ''
+      @parent_co      = CampaignOrder.find_or_create_by(sfdcid: @parent_sfdcid) || ''
       import_parent
       export_parent
     end
