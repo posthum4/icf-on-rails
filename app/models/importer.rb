@@ -15,7 +15,6 @@ class Importer
   end
 
   def import(force=false)
-    fail Exceptions::JiraAlreadyExistsError, @campaign_order.jira_key if (force && !@campaign_order.jira_key.nil?)
     # check if imported already
     skipimport = true  if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
     Rails.logger.info "skipimport = #{skipimport} for #{@sfdcid}"

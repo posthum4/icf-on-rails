@@ -24,14 +24,17 @@ module Service
       @jira = find_or_create_jira_by_campaign_order if @jira.nil?
       # second test: if still no JIRA then fail
       fail Exceptions::JiraUnknownIssueNumberError, @sfdcid.to_s if @jira.nil?
-      return @jira_key if @jira.pre_imported?
-
-      import_tables
-      Rails.logger.info 'Imported tables'
-      import_attachments
-      Rails.logger.info 'Imported attachments'
-      import_matched_fields
-      Rails.logger.info 'Imported matched fields'
+      if !@jira.key.nil? and @jira.key.starts_with?('ICF-')
+        fail Warnings::JiraAlreadyExisted_NotOverwritten, @jira.key
+      else
+        import_tables
+        Rails.logger.info 'Imported tables'
+        import_attachments
+        Rails.logger.info 'Imported attachments'
+        import_matched_fields
+        Rails.logger.info 'Imported matched fields'
+      end
+      return @jira
     end
 
     def import_matched_fields
