@@ -23,7 +23,7 @@ module ViewModel
           # end
         end
       end
-      data_string
+      data_string << "|ICF version |#{ENV['ICF_VERSION']} |\n"
     end
 
     def description
