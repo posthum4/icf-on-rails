@@ -17,30 +17,39 @@ module Service
       @mailbox[0..@batch_size].each do |m|
         Rails.logger.info "#{m.from} #{m.subject}"
         Rails.logger.warn "This is a manual request!" if m.manual?
-          r = m.process
-          if r =~ /ICF\-\d+/
-            Rails.logger.warn "Success: #{r}"
-            answer_manual_success(r,m) if m.manual?
+        begin
+          importer = m.process
+          if importer.jira =~ /ICF\-\d+/
+            Rails.logger.warn "Success: #{importer.jira}"
+            answer_manual_success(importer,m) if m.manual?
+            m.move_to('ICF/imported')
           else
-            Rails.logger.error "Fail: #{r}"
-            report_error(r,m)
-            answer_manual_error(r,m) if m.manual?
+            Rails.logger.error "Fail: #{importer.jira}"
+            answer_manual_error("Invalid JIRA ID or other, undefined error #{importer.inspect}",m) if m.manual?
+            m.move_to('ICF/error')
           end
-          puts r
+        rescue => err
+          Rails.logger.error "Fail: #{err.inspect}"
+          report_error(err,m)
+          answer_manual_error(err,m) if m.manual?
+          m.move_to('ICF/error')
+        ensure
+          m.archive!
+        end
       end
     end
 
     def report_error(error,message)
-      error = {msg: "NilResultFromImport", co:nil} if error.nil?
-      co_best_guess = error[:co] || message.sfdcid || '#NULL'
+      error = "NilResultFromImport" if error.nil?
+      co_best_guess = message.sfdcid rescue '#NULL'
       p = {
         to:         ENV['ERROR_MONITOR_ADDRESS'],
-        subject:    "#{co_best_guess} #{error[:msg].inspect}",
+        subject:    "#{error.inspect}",
         body:       <<-ENDOFBODY
-        Error:          #{error[:msg].inspect}
+        Error:          #{error.inspect}
         Campaign Order: https://na6.salesforce.com/#{co_best_guess}
-        Email subject:  #{error[:subject]}
-        Email from:     #{error[:from]}
+        Email subject:  #{message.subject}
+        Email from:     #{message.from}
         Message ID:     #{message.msgid}
         ENDOFBODY
       }
@@ -61,7 +70,7 @@ module Service
 
     def answer_manual_error(result,message)
       _to      = "#{message.from}"
-      _subject = "ERROR: #{message.subject}}"
+      _subject = "ERROR: #{message.subject}"
       _body    = "Your request generated the error below. Please try again if it is clear what"
       _body    << "\nyou can correct or otherwise ask your local ICF AM Champion* for help:"
       _body    << "\n"
@@ -72,7 +81,7 @@ module Service
       _body    << "\n- Erin (US Central, Canada)"
       _body    << "\n- Thuan (Texas)"
       _body    << "\n"
-      _body    << "\n#{result[:msg].inspect}"
+      _body    << "\n#{result.inspect}"
       answer_manual_general(_to,_subject,_body)
     end
 
