@@ -29,14 +29,13 @@ module Email
     end
 
     def process
-      Rails.logger.info "SFDCID = #{sfdcid}"
+      Rails.logger.info "Subject = #{subject}"
       begin
-        @i                = ::Importer.new(self.sfdcid,@msgid).import
+        @i                = ::Importer.new(self.sfdcid,@msgid).importexport
         @co               = @i.campaign_order
         @co.messageid     = self.msgid
         @co.result        = @result
         @i.campaign_order = @co
-        @i.export
         @label            = 'ICF/imported'
         @result           = @co.jira_key
       rescue => faultline
@@ -60,12 +59,8 @@ module Email
       return @result
     end
 
-
     def sfdcid
-      # taking the matcher out here otherwise the errors cannot fire - may want to clean up the variable names etc later
-      #r = @subject.match (/0068000000\w{5}/)
-      r = @subject
-      r.nil? ? false : r[0]
+      Policy::OpportunityID.validate(@subject)
     end
 
     def archive!

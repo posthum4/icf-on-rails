@@ -3,7 +3,7 @@ class Importer
 
   def initialize(sfdcid,msgid=nil)
     @sfdcid_orig    = sfdcid
-    @sfdcid         = Policy.OpportunityID.validate(@sfdcid_orig)
+    @sfdcid         = Policy::OpportunityID.validate(@sfdcid_orig)
     @msg_id         = msgid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: @sfdcid)
     @parent_sfdcid  = @campaign_order.original_opportunity[0..14] rescue nil
@@ -20,6 +20,7 @@ class Importer
       export_parent
     end
     export_child
+    self
   end
 
   def import_child(force=false)
