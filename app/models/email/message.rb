@@ -30,33 +30,7 @@ module Email
 
     def process
       Rails.logger.info "Subject = #{subject}"
-      begin
-        @i                = ::Importer.new(self.sfdcid,@msgid).importexport
-        @co               = @i.campaign_order
-        @co.messageid     = self.msgid
-        @co.result        = @result
-        @i.campaign_order = @co
-        @label            = 'ICF/imported'
-        @result           = @co.jira_key
-      rescue => faultline
-        Rails.logger.error faultline.inspect
-        @result = {
-          msg:      faultline,
-          co:       @co,
-          from:     @from,
-          subject:  @subject
-        }
-        @label = 'ICF/error'
-      ensure
-        # unless @co.jira_key.nil?
-        #   @result = @co.jira_key
-        #   @label  = 'ICF/imported'
-        # end
-        Rails.logger.info "Ensuring labeling of the message as #{@label}..."
-        self.move_to(@label)
-        self.archive!
-      end
-      return @result
+      @i                = ::Importer.new(self.sfdcid,@msgid).importexport
     end
 
     def sfdcid

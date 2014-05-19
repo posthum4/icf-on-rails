@@ -1,5 +1,5 @@
 class Importer
-  attr_accessor :sfdcid, :campaign_order, :issue_importer
+  attr_accessor :sfdcid_orig, :sfdcid, :campaign_order, :parent_sfdcid, :jira, :parent_co, :parent_jira
 
   def initialize(sfdcid,msgid=nil)
     @sfdcid_orig    = sfdcid
@@ -8,6 +8,8 @@ class Importer
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: @sfdcid)
     @parent_sfdcid  = @campaign_order.original_opportunity[0..14] rescue nil
     @parent_co      = CampaignOrder.find_or_create_by(sfdcid: @parent_sfdcid) rescue nil
+    @parent_jira    = nil
+    @jira           = nil
     self
   end
 
@@ -43,12 +45,12 @@ class Importer
 
   def export_child
     jex = Service::IssueCreator.new(@campaign_order,false)
-    jex.import_from_campaign_order.key
+    @jira = jex.import_from_campaign_order.key
   end
 
   def export_parent
     jex = Service::IssueCreator.new(@parent_co,true)
-    jex.import_from_campaign_order.key
+    @parent_jira = jex.import_from_campaign_order.key
   end
 
   def import_parent(force=false)
