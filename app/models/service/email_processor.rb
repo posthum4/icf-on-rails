@@ -19,19 +19,20 @@ module Service
         Rails.logger.warn "This is a manual request!" if m.manual?
         begin
           r = m.process
-        rescue  => faultline
+        rescue => faultline
           Rails.logger.error faultline.inspect
           r = faultline
+        ensure
+          if r =~ /ICF\-\d+/
+            Rails.logger.warn "Success: #{r}"
+            answer_manual_success(r,m) if m.manual?
+          else
+            Rails.logger.error "Fail: #{r}"
+            report_error(r,m)
+            answer_manual_error(r,m) if m.manual?
+          end
+          puts r
         end
-        if r =~ /ICF\-\d+/
-          Rails.logger.warn "Success: #{r}"
-          answer_manual_success(r,m) if m.manual?
-        else
-          Rails.logger.error "Fail: #{r}"
-          report_error(r,m)
-          answer_manual_error(r,m) if m.manual?
-        end
-        puts r
       end
     end
 
