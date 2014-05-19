@@ -17,12 +17,7 @@ module Service
       @mailbox[0..@batch_size].each do |m|
         Rails.logger.info "#{m.from} #{m.subject}"
         Rails.logger.warn "This is a manual request!" if m.manual?
-        begin
           r = m.process
-        rescue => faultline
-          Rails.logger.error faultline.inspect
-          r = faultline
-        ensure
           if r =~ /ICF\-\d+/
             Rails.logger.warn "Success: #{r}"
             answer_manual_success(r,m) if m.manual?
@@ -32,7 +27,6 @@ module Service
             answer_manual_error(r,m) if m.manual?
           end
           puts r
-        end
       end
     end
 

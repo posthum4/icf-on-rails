@@ -46,6 +46,7 @@ module Email
           from:     @from,
           subject:  @subject
         }
+        #raise faultline, @result
         @label = 'ICF/error'
       ensure
         # unless @co.jira_key.nil?
