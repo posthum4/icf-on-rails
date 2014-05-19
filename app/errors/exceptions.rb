@@ -10,6 +10,7 @@ module Exceptions
   class NoLineItemsFound < StandardError ; end
   class InvalidSalesForceOpportunityID < StandardError ; end
   class ReceivedCaseIDbutNeedOpportunityID < StandardError ; end
+  class ReceivedAttachmentIDbutNeedOpportunityID < StandardError ; end
 
   class StandardError
     def to_s

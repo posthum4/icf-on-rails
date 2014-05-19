@@ -3,9 +3,8 @@ class Importer
 
   def initialize(sfdcid,msgid=nil)
     @sfdcid_orig    = sfdcid
-    @sfdcid         = ''
+    @sfdcid         = Policy::OpportunityID.validate(@sfdcid_orig)
     @msg_id         = msgid
-    check_sfdcid
     @campaign_order = CampaignOrder.find_or_create_by(sfdcid: @sfdcid)
     @parent_sfdcid  = @campaign_order.original_opportunity[0..14] rescue nil
     @parent_co      = CampaignOrder.find_or_create_by(sfdcid: @parent_sfdcid) rescue nil
@@ -21,6 +20,7 @@ class Importer
       export_parent
     end
     export_child
+    self
   end
 
   def import_child(force=false)
@@ -49,19 +49,6 @@ class Importer
   def export_parent
     jex = Service::IssueCreator.new(@parent_co,true)
     jex.import_from_campaign_order.key
-  end
-
-  def check_sfdcid
-    Rails.logger.info "Checking sfdcid for #{@sfdcid_orig}"
-    fail Exceptions::MissingSalesForceOpportunityID, @sfdcid_orig, @sfdcid if ( @sfdcid_orig.nil? or !@sfdcid_orig )
-    fail Exceptions::ReceivedCaseIDbutNeedOpportunityID, @sfdcid_orig if @sfdcid_orig =~ (/5008000000\w{5}/)
-    # TODO: 2014-04-06 this may have to be a policy object
-    matcher = @sfdcid_orig.match(/0068000000\w{5}/)
-    if matcher.nil?
-      fail Exceptions::InvalidSalesForceOpportunityID, @sfdcid_orig.to_s
-    else
-      @sfdcid = matcher[0]
-    end
   end
 
   def import_parent(force=false)
