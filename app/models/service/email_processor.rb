@@ -58,7 +58,7 @@ module Service
 
     def answer_manual_success(result,message)
       _to      = "#{message.from}"
-      _subject = "SUCCESS: #{message.subject}}"
+      _subject = "SUCCESS: #{message.subject}"
       _body    = "You have successfully generated a manual ICF JIRA:"
       _body    << "\n"
       _body    << "\nhttps://rocketfuel.jira.com/browse/#{result}"
