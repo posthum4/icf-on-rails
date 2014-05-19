@@ -1,5 +1,5 @@
 class Importer
-  attr_accessor :sfdcid, :campaign_order, :issue_importer
+  attr_accessor :sfdcid_orig, :sfdcid, :campaign_order, :parent_sfdcid, :jira, :parent_co, :parent_jira
 
   def initialize(sfdcid,msgid=nil)
     @sfdcid_orig    = sfdcid

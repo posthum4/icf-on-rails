@@ -19,9 +19,9 @@ module Service
         Rails.logger.warn "This is a manual request!" if m.manual?
         begin
           importer = m.process
-          if importer.jira =~ /ICF\-\d+/
+          if !importer.jira.nil? and importer.jira =~ /ICF\-\d+/
             Rails.logger.warn "Success: #{importer.jira}"
-            answer_manual_success(importer,m) if m.manual?
+            answer_manual_success(importer.jira,m) if m.manual?
             m.move_to('ICF/imported')
           else
             Rails.logger.error "Fail: #{importer.jira}"
