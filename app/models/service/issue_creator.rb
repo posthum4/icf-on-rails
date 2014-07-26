@@ -15,7 +15,7 @@ module Service
     def find_jira_by_campaign_order
       fail CampaignOrderMissing, @co if ( !@co || @co.nil? )
       @jira = Jira::Issue.find_by_campaign_order(@co) rescue nil
-      unless @jira.nil?
+      unless @jira.nil? 
         @jira_key = @jira.key
         @co.jira_key = @jira_key
         @co.save
