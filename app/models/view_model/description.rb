@@ -19,8 +19,11 @@ module ViewModel
           # if v.include? "\n"
           #   data_string << "\n\n #{label.upcase}\n#{[v]}\n\n"
           # else
-            data_string << "|#{label} |#{v} |\n"
-          # end
+          if v =~ /0068000000/ || v=~ /5008000000/
+            data_string << "|#{label} | https://na6.salesforce.com/#{v} |\n"
+          else
+            data_string << "|#{label} | #{v} |\n"
+          end
         end
       end
       data_string << "|ICF version |#{VERSION} |\n"
