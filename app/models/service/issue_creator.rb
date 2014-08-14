@@ -43,6 +43,7 @@ module Service
         import_tables
         Rails.logger.info 'Imported tables'
         import_attachments
+
         Rails.logger.info 'Imported attachments'
         import_matched_fields
         Rails.logger.info 'Imported matched fields'
