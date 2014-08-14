@@ -8,7 +8,6 @@ module Exceptions
   class MissingJiraKeyError < StandardError ; end
   class MissingEmailIDError < StandardError ; end
   class NoLineItemsFound < StandardError ; end
-  class InvalidSalesForceOpportunityID < StandardError ; end
   class ReceivedCaseIDbutNeedOpportunityID < StandardError ; end
   class ReceivedAttachmentIDbutNeedOpportunityID < StandardError ; end
 
