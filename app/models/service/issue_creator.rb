@@ -78,10 +78,10 @@ module Service
         result = "Original #{@co.name} [use as parent JIRA for IO changes]"
       else
         case @co.opp_type_new
-        when 'Media: New Business', 'Enterprise: New Business'
+        when 'New Business'
           mymarker = 'Launch'
         else
-          mymarker = 'Change'
+          mymarker = @co.opp_type_new
         end
         result = "#{mymarker} #{@co.name} due #{@co.campaign_start_date}"
       end
