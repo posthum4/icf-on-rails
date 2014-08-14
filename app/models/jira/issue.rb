@@ -27,10 +27,16 @@ module Jira
     def self.find_by_campaign_order(co)
       sfdcid = co.sfdcid
       result = []
-      Jiralicious.search("\"SalesForce Opportunity ID\" ~ \"#{sfdcid}\"").issues.each do |i|
+      Jiralicious.search("\"SalesForce Opportunity ID\" ~ \"#{sfdcid}\" ").issues.each do |i|
         result << self.new(i)
       end
-      result.first
+      bestguess = nil
+      result.each do |j|
+        if j.sfdcid == co.sfdcid
+          bestguess = j
+        end
+      end
+      return bestguess # only one result expected
     end
 
     def save

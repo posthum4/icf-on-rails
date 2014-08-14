@@ -17,6 +17,7 @@ module Service
       end
 
       def import
+        any_non_zero = false
         # DONE: 2014-04-05 refactor this into a specific line_item_importer
         # NOTE: this looks extremely hacky but it's because SalesForce is inconsistent with fields
         (1..6).each do |n|
@@ -26,11 +27,12 @@ module Service
             _line_item = @co.line_items.find_or_create_by(ordinal: n)
             import_individual_fields(_line_item, n.to_s, nn)
             _line_item.save!
+            any_non_zero = true
           else
             Rails.logger.info "Line item #{n} (ex-#{nn}) is nil."
           end
         end
-        generate_shortnames
+        generate_shortnames if any_non_zero
       end
 
       def import_individual_fields(li, n, nn)
