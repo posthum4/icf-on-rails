@@ -56,6 +56,7 @@ module Service
       end
 
       def generate_shortnames
+        binding.pry
         substring = Value::CommonLineItemSubstring.new(@co).to_s
         @co.line_items.each do |li|
           li.shortname = li.io_line_item

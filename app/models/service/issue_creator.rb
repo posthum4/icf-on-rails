@@ -60,7 +60,8 @@ module Service
     end
 
     def import_tables
-      @jira.set_field("description", ViewModel::Description.new(@sfdcid).to_s)
+      #@jira.set_field("description", ViewModel::Description.new(@sfdcid).to_s)
+      @jira.set_field("description", ViewModel::Description.new(@co).to_s)
       @jira.set_field("customfield_12274", ViewModel::LineItemTable.new(@co).to_s)
       @jira.set_field("customfield_13360", ViewModel::TacticsTable.new(@co).to_s)
       @jira.save
