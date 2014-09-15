@@ -30,7 +30,7 @@ module Service
         @co.vertical                                = @oppt['Vertical__c']
         @co.advertiser                              = SalesForce::Account.find(@oppt.Advertiser__c).Name
         @co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
-        @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name
+        @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name || SalesForce::Account.find(@oppt.AccountId).Name
         @co.sales_region                            = @oppt['Sales_Region__c']
         @co.account_executive                       = ( SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first || 'robbie' ).sub('ewu','edithwu')
         @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first rescue 'dwong' )
