@@ -30,7 +30,7 @@ module Service
         @co.vertical                                = @oppt['Vertical__c']
         @co.advertiser                              = SalesForce::Account.find(@oppt.Advertiser__c).Name
         @co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
-        @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name
+        @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name || SalesForce::Account.find(@oppt.AccountId).Name
         @co.sales_region                            = @oppt['Sales_Region__c']
         @co.account_executive                       = ( SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first || 'robbie' ).sub('ewu','edithwu')
         @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first rescue 'dwong' )
@@ -61,6 +61,7 @@ module Service
         @co.who_is_rm_vendor                        = @oppt['Who_is_Rich_Media_Vendor__c']
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
         @co.who_is_paying_for_viewability           = @oppt['Who_is_Paying_for_Viewability__c']
+        @co.customer_tier                           = SalesForce::Account.find(@oppt.Advertiser__c).Customer_Tier__c
         @co.save!
       end
 
