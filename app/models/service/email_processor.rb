@@ -75,8 +75,8 @@ module Service
       _body    << "\n"
       _body    << "\n#{result.inspect}"
       _body    << "\n"
-      _body    << "Please try again if it is clear what you can correct "
-      _body    << "\nor e=Emailask your dedicated ICF Champion for help:"
+      _body    << "\nPlease try again if it is clear what you can correct. "
+      _body    << "\nIf not, you can ask your dedicated ICF Champion for help:"
       _body    << "\n"
       _body    << "\n- Nick Amoroso (AMs US West-South)"
       _body    << "\n- Amanda Schneider (AMs US East)"
@@ -85,7 +85,7 @@ module Service
       _body    << "\n- Thuan Ngo (AMs Texas)"
       _body    << "\n- Elaine Talebbeik (AMs US West-North)"
       _body    << "\n- Chris Kukstis (Analysts US)"
-      _body    << "\n- JKulius Syvanen (Analysts/Ops EMEA)"
+      _body    << "\n- Julius Syvanen (Analysts/Ops EMEA)"
       _body    << "\n- Renata Pecko (Ops US and any not mentioned above)"
       answer_manual_general(_to,_subject,_body)
     end
