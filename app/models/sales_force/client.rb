@@ -32,6 +32,7 @@ module SalesForce
       @@client.materialize("Opportunity")
       @@client.materialize("Case")
       @@client.materialize("Attachment")
+      @@client.materialize("OpportunitySplit")
     end
 
     def client_id

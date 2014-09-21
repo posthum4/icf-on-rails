@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140522231157) do
+ActiveRecord::Schema.define(version: 20140921194149) do
 
   create_table "attachments", force: true do |t|
     t.string   "sfdcid"
@@ -87,6 +87,8 @@ ActiveRecord::Schema.define(version: 20140522231157) do
     t.string   "audience_guarantee_geo"
     t.string   "audience_guarantee_verification_vendor"
     t.float    "viewability_optimization_goal"
+    t.string   "customer_tier"
+    t.string   "split_notes"
   end
 
   create_table "employees", force: true do |t|

@@ -26,7 +26,8 @@ module Value
 
     def description
       r = @@table.select { |f| f['JIRA_description'] }
-      CSV::Table.new(r).values_at('Label','SalesForce')
+#      CSV::Table.new(r).values_at('Label','SalesForce')
+      CSV::Table.new(r).values_at('Label','Internal')
     end
 
     def from_oppt_to_co
