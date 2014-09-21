@@ -15,7 +15,7 @@ module Service
     def find_jira_by_campaign_order
       fail CampaignOrderMissing, @co if ( !@co || @co.nil? )
       @jira = Jira::Issue.find_by_campaign_order(@co) rescue nil
-      unless @jira.nil? 
+      unless @jira.nil?
         @jira_key = @jira.key
         @co.jira_key = @jira_key
         @co.save
@@ -52,17 +52,24 @@ module Service
     end
 
     def import_matched_fields
-      @fields.jira_direct.each do |a|
+      matched_fields = @fields.jira_direct
+      matched_fields.each do |a|
         internal_field, jira_field = a
-        @jira.set_field(jira_field, eval("@co.#{internal_field}"))
+        begin
+          @jira.set_field(jira_field, eval("@co.#{internal_field}"))
+          @jira.save
+        rescue Exception => e
+          Rails.logger.error "Error on importing field #{internal_field}=>#{jira_field}: #{e}"
+        end
       end
-      @jira.save
     end
 
     def import_tables
-      @jira.set_field("description", ViewModel::Description.new(@sfdcid).to_s)
+      #@jira.set_field("description", ViewModel::Description.new(@sfdcid).to_s)
+      @jira.set_field("description", ViewModel::Description.new(@co).to_s)
       @jira.set_field("customfield_12274", ViewModel::LineItemTable.new(@co).to_s)
       @jira.set_field("customfield_13360", ViewModel::TacticsTable.new(@co).to_s)
+      @jira.set_field("customfield_12269", :id => Value::CustomerTier.jira_id(@co.customer_tier))
       @jira.save
     end
 

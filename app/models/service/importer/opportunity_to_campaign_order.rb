@@ -30,10 +30,14 @@ module Service
         @co.vertical                                = @oppt['Vertical__c']
         @co.advertiser                              = SalesForce::Account.find(@oppt.Advertiser__c).Name
         @co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
-        @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name
+        @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name || SalesForce::Account.find(@oppt.AccountId).Name
         @co.sales_region                            = @oppt['Sales_Region__c']
+        # Note that the salesforce username (part before @rocketfuel.com) is equal to the JIRA user name (part before @rocketfuelinc.com)
+        # The only exception found so far is Edith Wu who is "ewu" in SalesForce and "edithwu" in JIRA. Need a manual correction for that... :(
         @co.account_executive                       = ( SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first || 'robbie' ).sub('ewu','edithwu')
-        @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first rescue 'dwong' )
+        @co.split_notes                             = Policy::SplitOwners.new(@co.sfdcid).splits.map{|k,v| "#{k}:#{v}"}.join(', ')
+        @co.account_executive_2                     = Policy::SplitOwners.new(@co.sfdcid).splits.sort_by {|_key, value| value}.reverse![1][0]
+        @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first rescue 'aschneider' )
         @co.campaign_objectives                     = @oppt['Campaign_Objectives__c']
         @co.primary_audience_am                     = @oppt['Primary_Audience_AM__c']
         @co.secondary_audience_am                   = @oppt['Secondary_Audience_AM__c']
@@ -61,6 +65,7 @@ module Service
         @co.who_is_rm_vendor                        = @oppt['Who_is_Rich_Media_Vendor__c']
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
         @co.who_is_paying_for_viewability           = @oppt['Who_is_Paying_for_Viewability__c']
+        @co.customer_tier                           = SalesForce::Account.find(@oppt.Advertiser__c).Customer_Tier__c
         @co.save!
       end
 
