@@ -24,9 +24,11 @@ module ViewModel
       s << "\n|Regulus Target:| _set_target_here_ |"
       s << "\n|Flight Instructions:| #{@li.flight_instructions.gsub("\r\n",' / ')}|" if @li.flight_instructions
       s << "\n\n||PAID Tactic || Segment || Budget Allocation"
-      s << "\n| _set_model_1_here_ | _set_segment_1_here_\n"
-      [2,3,4].each{|x| s << "_set_segment_#{x.to_s}_here_\n" }
-      s << "_set_segment_n_here_ | 100% |"
+#      s << "\n| _set_model_1_here_ | _set_segment_1_here_\n"
+#      [2,3,4].each{|x| s << "_set_segment_#{x.to_s}_here_\n" }
+#      s << "_set_segment_n_here_ | 100% |"
+      s << "\n| _set_model_1_here_ | _set_segment_1_here_ | 1000% |"
+
       s << "\n| _set_model_n_here_ | _set_segment_n_here_ | 0% |"
       s << "\n{panel}"
     end
@@ -41,9 +43,11 @@ module ViewModel
         s << "\n|Min CPM:| #{ENV['MINCPM']}|"
         s << "\n|Max CPM:| #{ENV['MAXCPM']}|"
         s << "\n\n||BONUS Tactic || Segment/Target || Budget Allocation ||"
-        s << "\n| _set_model_1_here_ | _set_segment_1_here_\n"
-        [2,3,4].each{|x| s << "_set_segment_#{x.to_s}_here_\n" }
-        s << "_set_segment_n_here_ | 100% |"
+#      s << "\n| _set_model_1_here_ | _set_segment_1_here_\n"
+#      [2,3,4].each{|x| s << "_set_segment_#{x.to_s}_here_\n" }
+#      s << "_set_segment_n_here_ | 100% |"
+        s << "\n| _set_model_1_here_ | _set_segment_1_here_ | 1000% |"
+
         s << "\n| _set_model_n_here_ | _set_segment_n_here_ | 0% |"
         s << "\n{panel}"
       end
