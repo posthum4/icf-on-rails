@@ -78,7 +78,7 @@ module Service
       _body    << "\nPlease try again if it is clear what you can correct. "
       _body    << "\nIf not, you can ask your dedicated ICF Champion for help:"
       _body    << "\n"
-      champions=<<-CHAMPS
+      champions=<<-DONE
       # Account Managers:
 
       - East: Kristy Bendetti
@@ -95,7 +95,7 @@ module Service
       - Reporting: Steve Sammond
       - Sales: your account manager
 
-      CHAMPS
+      DONE
       _body = _body + champions
 
       answer_manual_general(_to,_subject,_body)
