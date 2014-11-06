@@ -79,24 +79,24 @@ module Service
       _body    << "\nIf not, you can ask your dedicated ICF Champion for help:"
       _body    << "\n"
       champions=<<-DONE
-# Account Managers:
+      # Account Managers:
 
-- East: Kristy Bendetti
-- Central: Erin Seramur
-- HQ, San Francisco, Seattle: Elaine Tabelleik
-- Los Angeles, Denver, Las Vegas: Nick Amoroso
-- Dallas: Thuan Ngo
-- EMEA: Roulla Demetriou
+      - East: Kristy Bendetti
+      - Central: Erin Seramur
+      - HQ, San Francisco, Seattle: Elaine Talebbeik
+      - Los Angeles, Denver, Las Vegas: Nick Amoroso
+      - Dallas: Thuan Ngo
+      - EMEA: Roulla Demetriou
 
-# Other functions:
+      # Other functions:
 
-- Ops: Elaina Remin
-- Analytics: Jeff Wenzinger
-- Reporting: Steve Sammond
-- Sales: your account manager
+      - Ops: Elaina Remin
+      - Analytics: Jeff Wenzinger
+      - Reporting: Steve Sammond
+      - Sales: your account manager
 
       DONE
-            _body = _body + champions
+      _body = _body + champions
 
       answer_manual_general(_to,_subject,_body)
     end
