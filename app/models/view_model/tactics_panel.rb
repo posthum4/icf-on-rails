@@ -27,9 +27,9 @@ module ViewModel
 #      s << "\n| _set_model_1_here_ | _set_segment_1_here_\n"
 #      [2,3,4].each{|x| s << "_set_segment_#{x.to_s}_here_\n" }
 #      s << "_set_segment_n_here_ | 100% |"
-      s << "\n| _set_model_1_here_ | _set_segment_1_here_ | 1000% |"
+      s << "\n| Optimization Model | N/A | 100% |"
 
-      s << "\n| _set_model_n_here_ | _set_segment_n_here_ | 0% |"
+#      s << "\n| _set_model_n_here_ | _set_segment_n_here_ | 0% |"
       s << "\n{panel}"
     end
 
@@ -40,15 +40,16 @@ module ViewModel
         s = "\n{panel:title=BONUS Line Item \##{@li.ordinal}. #{@li.io_line_item}|titleBGColor=#AAAABB|bgColor=#E0EEFF}"
         s << "\n\n||BONUS Line Item||Value||"
         s << "\n|Fractional Bonus:| #{number_to_percentage(@li.fractional_bonus)}|"
-        s << "\n|Min CPM:| #{ENV['MINCPM']}|"
-        s << "\n|Max CPM:| #{ENV['MAXCPM']}|"
+        s << "\n|Min/max CPM:| Autobonus |"
+#        s << "\n|Min CPM:| #{ENV['MINCPM']}|"
+#        s << "\n|Max CPM:| #{ENV['MAXCPM']}|"
         s << "\n\n||BONUS Tactic || Segment/Target || Budget Allocation ||"
-#      s << "\n| _set_model_1_here_ | _set_segment_1_here_\n"
+#      s << "\n| set_model_1_here_ | _set_segment_1_here_\n"
 #      [2,3,4].each{|x| s << "_set_segment_#{x.to_s}_here_\n" }
 #      s << "_set_segment_n_here_ | 100% |"
-        s << "\n| _set_model_1_here_ | _set_segment_1_here_ | 1000% |"
+        s << "\n| Optimization Model | N/A | 100% |"
 
-        s << "\n| _set_model_n_here_ | _set_segment_n_here_ | 0% |"
+#        s << "\n| _set_model_n_here_ | _set_segment_n_here_ | 0% |"
         s << "\n{panel}"
       end
       s
