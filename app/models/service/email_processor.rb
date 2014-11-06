@@ -79,28 +79,29 @@ module Service
       _body    << "\nIf not, you can ask your dedicated ICF Champion for help:"
       _body    << "\n"
       champions=<<-CHAMPS
-        # Account Managers:
+      # Account Managers:
 
-        - East: Kristy Bendetti
-        - Central: Erin Seramur
-        - HQ, San Francisco, Seattle: Elaine Tabelleik
-        - Los Angeles, Denver, Las Vegas: Nick Amoroso
-        - Dallas: Thuan Ngo
-        - EMEA: Roulla Demetriou
+      - East: Kristy Bendetti
+      - Central: Erin Seramur
+      - HQ, San Francisco, Seattle: Elaine Talebbeik
+      - Los Angeles, Denver, Las Vegas: Nick Amoroso
+      - Dallas: Thuan Ngo
+      - EMEA: Roulla Demetriou
 
-        # Other functions:
+      # Other functions:
 
-        - Ops: Elaina Remin
-        - Analytics: Jeff Wenzinger
-        - Reporting: Steve Sammond
+      - Ops: Elaina Remin
+      - Analytics: Jeff Wenzinger
+      - Reporting: Steve Sammond
+      - Sales: your account manager
 
       CHAMPS
-      _body << champions
+      _body = _body + champions
+
       answer_manual_general(_to,_subject,_body)
     end
 
     def answer_manual_general(_to,_subject,_body)
-      p = {to: _to, subject: _subject, body: _body}
       # overriding for testing
       # p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
       m = Email::Message.new(p).send!
