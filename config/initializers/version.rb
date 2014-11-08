@@ -1,7 +1,7 @@
-VERSION = '2.4.2'
+VERSION = '2.4.3'
 
 DESCR_PREFIX=<<-EOP
-- ICF v2.4.2 (2014-11-06): better default values for campaign plans (thanks Jeff and Amol!)
+- ICF v2.4.3 (2014-11-07): better default values for campaign plans (thanks Jeff and Amol!)
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 
