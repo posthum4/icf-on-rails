@@ -32,11 +32,11 @@ module ViewModel
 
     def description
       descr = ''
-      descr << ENV['DESCR_PREFIX'] || ''
+      descr << DESCR_PREFIX || ''
       descr << "\n\n"
       descr << general_info
       descr << "\n"
-      descr << ENV['DESCR_SUFFIX'] || ''
+      descr << DESCR_SUFFIX || ''
     end
 
     def to_s

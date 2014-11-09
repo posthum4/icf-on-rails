@@ -78,20 +78,12 @@ module Service
       _body    << "\nPlease try again if it is clear what you can correct. "
       _body    << "\nIf not, you can ask your dedicated ICF Champion for help:"
       _body    << "\n"
-      _body    << "\n- Nick Amoroso (AMs US West-South)"
-      _body    << "\n- Amanda Schneider (AMs US East)"
-      _body    << "\n- Roulla Demetriou (AMs EMEA)"
-      _body    << "\n- Erin Seramur (AMs US Central, Canada)"
-      _body    << "\n- Thuan Ngo (AMs Texas)"
-      _body    << "\n- Elaine Talebbeik (AMs US West-North)"
-      _body    << "\n- Chris Kukstis (Analysts US)"
-      _body    << "\n- Julius Syvanen (Analysts/Ops EMEA)"
-      _body    << "\n- Renata Pecko (Ops US and any not mentioned above)"
+      _body = _body + CHAMPIONS
+
       answer_manual_general(_to,_subject,_body)
     end
 
     def answer_manual_general(_to,_subject,_body)
-      p = {to: _to, subject: _subject, body: _body}
       # overriding for testing
       # p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
       m = Email::Message.new(p).send!
