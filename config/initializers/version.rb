@@ -1,4 +1,4 @@
-VERSION = '2.4.4b'
+VERSION = '2.4.4c'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2014-11-24): Robbie now matches SalesForce Opportunities to ICF both by Opportunity ID and Case ID, so we should see no more 'case sensitivity issues'. Comments welcome in Yammer!

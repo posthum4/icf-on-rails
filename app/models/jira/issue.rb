@@ -26,7 +26,7 @@ module Jira
 
     def self.find_by_campaign_order(co)
       result = []
-      if co.update_io_case && co.io_case.size > 0
+      if co.update_io_case && !co.io_case.nil?
         jiraquery = "\"SalesForce Opportunity ID\" ~ \"#{co.sfdcid}\" and text ~ \"#{co.io_case}\" "
       else
         jiraquery = "\"SalesForce Opportunity ID\" ~ \"#{co.sfdcid}\" "
