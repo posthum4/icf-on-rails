@@ -26,7 +26,12 @@ module Jira
 
     def self.find_by_campaign_order(co)
       result = []
-      Jiralicious.search("\"SalesForce Opportunity ID\" ~ \"#{co.sfdcid}\" and text ~ \"#{co.io_case}\" ").issues.each do |i|
+      if co.update_io_case && co.io_case.size > 0
+        jiraquery = "\"SalesForce Opportunity ID\" ~ \"#{co.sfdcid}\" and text ~ \"#{co.io_case}\" "
+      else
+        jiraquery = "\"SalesForce Opportunity ID\" ~ \"#{co.sfdcid}\" "
+      end
+      Jiralicious.search(jiraquery).issues.each do |i|
         result << self.new(i)
       end
       bestguess = nil
