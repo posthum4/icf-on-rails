@@ -22,6 +22,7 @@ class Importer
       export_parent
     end
     export_child
+    Rails.logger.info "https://na6.salesforce.com/#{self.sfdcid} >> https://rocketfuel.jira.com/browse/#{self.jira}"
     self
   end
 
