@@ -20,7 +20,7 @@ MoneyRails.configure do |config|
   # config.add_rate "CAD", "USD", 0.803115
   require 'csv'
   CSV::read("#{Rails.root}/db/currencies.csv",
-    headers: true).values_at('ISO','FY14').each do |r|
+    headers: true).values_at('ISO','Latest').each do |r|
     config.add_rate(r[0].strip,'USD', r[1].strip.to_f)
   end
 

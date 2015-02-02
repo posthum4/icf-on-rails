@@ -1,7 +1,9 @@
-VERSION = '2.4.5'
+VERSION = '2.4.6'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-01-09): Updated currency exchange rates in line with Rate Card
+- ICF v#{VERSION} (2015-02-01): Updated exchange rates in line with February Rate Card
+- Please note that **these rate card exchange rates are the official ones** to use. Do not
+  use historical exchange rates, rates displayed in SalesForce or manual calculations.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 
