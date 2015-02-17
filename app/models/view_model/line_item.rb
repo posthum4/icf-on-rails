@@ -7,7 +7,7 @@ module ViewModel
     def initialize(line_item)
       #@currency                    = CampaignOrder(line_item.campaign_order_id)
       @ordinal                     = line_item.ordinal.to_s
-      @shortname                   = line_item.io_line_item
+      @shortname                   = line_item.io_line_item.gsub("|","\\")
       # TODO: 2014-04-05 add currency view on amount and pricing term
       @amount                      = ViewModel::Amount.new(line_item.budget).to_s
       @product                     = line_item.product
