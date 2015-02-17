@@ -21,20 +21,20 @@ module Service
           importer = m.process
           if !importer.jira.nil? and importer.jira =~ /ICF\-\d+/
             Rails.logger.warn "Success: #{importer.jira}"
-            answer_manual_success(importer.jira,m) if m.manual?
-            m.move_to('ICF/imported')
+            #answer_manual_success(importer.jira,m) if m.manual?
+            #m.move_to('ICF/imported')
           else
             Rails.logger.error "Fail: #{importer.jira}"
-            answer_manual_error("Invalid JIRA ID or other, undefined error #{importer.inspect}",m) if m.manual?
-            m.move_to('ICF/error')
+            #answer_manual_error("Invalid JIRA ID or other, undefined error #{importer.inspect}",m) if m.manual?
+            #m.move_to('ICF/error')
           end
         rescue => err
           Rails.logger.error "Fail: #{err.inspect}"
           report_error(err,m)
-          answer_manual_error(err,m) if m.manual?
-          m.move_to('ICF/error')
+          #answer_manual_error(err,m) if m.manual?
+          #m.move_to('ICF/error')
         ensure
-          m.archive!
+          #m.archive!
         end
       end
     end
@@ -61,7 +61,7 @@ module Service
       _subject = "SUCCESS: #{message.subject}"
       _body    = "You have successfully generated a manual ICF JIRA:"
       _body    << "\n"
-      _body    << "\nhttps://rocketfuel.jira.com/browse/#{result}"
+      _body    << "\n#{ENV['JIRA_API']}/browse/#{result}"
       _body    << "\n"
       _body    << "\nManual imports have a much higher chance of errors. Please do check everything"
       _body    << "\nextra carefully. Have a successful campaign launch!"
