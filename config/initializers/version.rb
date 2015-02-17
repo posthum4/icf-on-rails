@@ -1,9 +1,8 @@
-VERSION = '2.4.6'
+VERSION = '2.4.7'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-02-01): Updated exchange rates in line with February Rate Card
-- Please note that **these rate card exchange rates are the official ones** to use. Do not
-  use historical exchange rates, rates displayed in SalesForce or manual calculations.
+- ICF v#{VERSION} (2015-02-17): Getting ready for the big JIRA migration this weekend.
+- Also caught an issue where | characters in the line item name would distort tables.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 
