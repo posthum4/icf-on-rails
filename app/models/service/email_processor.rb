@@ -21,20 +21,20 @@ module Service
           importer = m.process
           if !importer.jira.nil? and importer.jira =~ /ICF\-\d+/
             Rails.logger.warn "Success: #{importer.jira}"
-            #answer_manual_success(importer.jira,m) if m.manual?
-            #m.move_to('ICF/imported')
+            answer_manual_success(importer.jira,m) if m.manual?
+            m.move_to('ICF/imported')
           else
             Rails.logger.error "Fail: #{importer.jira}"
-            #answer_manual_error("Invalid JIRA ID or other, undefined error #{importer.inspect}",m) if m.manual?
-            #m.move_to('ICF/error')
+            answer_manual_error("Invalid JIRA ID or other, undefined error #{importer.inspect}",m) if m.manual?
+            m.move_to('ICF/error')
           end
         rescue => err
           Rails.logger.error "Fail: #{err.inspect}"
           report_error(err,m)
-          #answer_manual_error(err,m) if m.manual?
-          #m.move_to('ICF/error')
+          answer_manual_error(err,m) if m.manual?
+          m.move_to('ICF/error')
         ensure
-          #m.archive!
+          m.archive!
         end
       end
     end
