@@ -1,7 +1,7 @@
-VERSION = '2.4.7'
+VERSION = '2.5.0'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-02-17): Getting ready for the big JIRA migration this weekend.
+- ICF v#{VERSION} (2015-02-22): Updated for our new, more stable and faster JIRA.ROCKETFUEL.COM, woot!
 - Also caught an issue where | characters in the line item name would distort tables.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
