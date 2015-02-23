@@ -1,8 +1,9 @@
-VERSION = '2.5.0'
+VERSION = '2.5.1'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-02-22): Updated for our new, more stable and faster JIRA.ROCKETFUEL.COM, woot!
 - Also caught an issue where | characters in the line item name would distort tables.
+- Updated ICF Champions list
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 
@@ -18,10 +19,9 @@ CHAMPIONS=<<-EOC
 
 - East: Kristy Bendetti
 - Central: Erin Seramur
-- HQ, San Francisco, Seattle: Elaine Talebbeik
-- Los Angeles, Denver, Las Vegas: Nick Amoroso
-- Dallas: Thuan Ngo
+- West: Youna Kim
 - EMEA: Roulla Demetriou
+- Champion-in-chief: Amanda Schneider
 
 # Other functions:
 
