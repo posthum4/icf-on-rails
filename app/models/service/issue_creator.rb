@@ -35,7 +35,7 @@ module Service
     def import_from_campaign_order
       @jira = find_jira_by_campaign_order if @jira.nil?
       if !@jira.nil? and !@jira.key.nil? and @jira.key.starts_with?('ICF-')
-        warn Warnings::JiraAlreadyExisted_NotOverwritten, "https://rocketfuel.jira.com/browse/#{@jira.key}"
+        warn Warnings::JiraAlreadyExisted_NotOverwritten, "#{ENV['JIRA_API']}/browse/#{@jira.key}"
       else
         @jira = create_jira_by_campaign_order
         # second test: if still no JIRA then fail
