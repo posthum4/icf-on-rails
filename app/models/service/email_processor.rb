@@ -61,7 +61,7 @@ module Service
       _subject = "SUCCESS: #{message.subject}"
       _body    = "You have successfully generated a manual ICF JIRA:"
       _body    << "\n"
-      _body    << "\nhttps://rocketfuel.jira.com/browse/#{result}"
+      _body    << "\n#{ENV['JIRA_API']}/browse/#{result}"
       _body    << "\n"
       _body    << "\nManual imports have a much higher chance of errors. Please do check everything"
       _body    << "\nextra carefully. Have a successful campaign launch!"
@@ -84,7 +84,6 @@ module Service
     end
 
     def answer_manual_general(_to,_subject,_body)
-      p = {to: _to, subject: _subject, body: _body}
       # overriding for testing
       # p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
       m = Email::Message.new(p).send!
