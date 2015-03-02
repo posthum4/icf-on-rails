@@ -5,5 +5,8 @@ namespace :mailbox do
 end
 
 task :impexp, [:sfdcid] => [:environment] do |t, args|
+  logger           = Logger.new(STDOUT)
+  logger.level     = Logger::DEBUG
+  Rails.logger     = logger
   Importer.new(args.sfdcid).importexport
 end
