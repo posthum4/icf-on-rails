@@ -6,8 +6,8 @@ module Jira
     def initialize(j)
       @key            = j.jira_key
       @summary        = j.summary
-      @assignee       = j['fields']['assignee']['name'] rescue nil
-      @reporter       = j['fields']['reporter']['name'] || nil
+      @assignee       = j['fields']['assignee']['name'] rescue ENV['JIRA_DEFAULT_USER']
+      @reporter       = j['fields']['reporter']['name'] rescue ENV['JIRA_DEFAULT_USER']
       @updated_at     = j.updated.to_datetime
       @created_at     = j.created.to_datetime
       @sfdcid         = ( j.customfield_11862 || nil )
@@ -34,6 +34,7 @@ module Jira
       Jiralicious.search(jiraquery).issues.each do |i|
         result << self.new(i)
       end
+
       bestguess = nil
       result.each do |j|
         if j.sfdcid == co.sfdcid
