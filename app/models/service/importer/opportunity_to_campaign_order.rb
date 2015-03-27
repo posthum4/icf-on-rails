@@ -34,8 +34,9 @@ module Service
         @co.sales_region                            = @oppt['Sales_Region__c']
         # Note that the salesforce username (part before @rocketfuel.com) is equal to the JIRA user name (part before @rocketfuelinc.com)
         # The only exception found so far is Edith Wu who is "ewu" in SalesForce and "edithwu" in JIRA. Need a manual correction for that... :(
+        # found another one: jlilly in salesforce equals jguzman in JIRA. Mike launched QI-1203 for this change and a request with IT for a more fundamental process
         Rails.logger.info "Importing AE"
-        @co.account_executive                       = ( SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first || 'robbie' ).sub('ewu','edithwu')
+        @co.account_executive                       = ( SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first || 'robbie' ).sub('ewu','edithwu').sub('jlilly','jguzman')
         Rails.logger.info "Importing split notes"
         @co.split_notes                             = Policy::SplitOwners.new(@co.sfdcid).splits.map{|k,v| "#{k}:#{v}"}.join(', ')
         Rails.logger.info "Importing AE2"

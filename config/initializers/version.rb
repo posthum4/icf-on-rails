@@ -1,7 +1,7 @@
-VERSION = '2.5.2'
+VERSION = '2.5.3'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-03-02): Caught import errors when reporter was set to anonmyous.
+- ICF v#{VERSION} (2015-03-26): fix for Jessica L/G :)
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 
