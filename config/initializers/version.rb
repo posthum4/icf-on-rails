@@ -1,7 +1,7 @@
-VERSION = '2.5.3'
+VERSION = '2.5.4'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-03-26): fix for Jessica L/G :)
+- ICF v#{VERSION} (2015-03-26): Caught error with long case names
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 
