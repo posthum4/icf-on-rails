@@ -1,4 +1,4 @@
-VERSION = '2.5.4'
+VERSION = '2.5.5'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-03-26): Caught error with long case names
