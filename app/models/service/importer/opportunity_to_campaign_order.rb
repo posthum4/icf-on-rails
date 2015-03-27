@@ -80,7 +80,9 @@ module Service
         if @co.io_case.nil?
           guesscase = SalesForce::Case.find_by_Opportunity__c(@co.sfdcid)
           unless guesscase.nil?
-            @co.io_case = guesscase
+            if guesscase.class == String
+              @co.io_case = guesscase
+            end
           end
         end
         @co.io_case
