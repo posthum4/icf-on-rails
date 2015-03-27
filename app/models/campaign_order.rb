@@ -15,6 +15,7 @@ class CampaignOrder < ActiveRecord::Base
     # longer be necessary here
     if self.io_case.nil?
       guesscase = SalesForce::Case.find_by_Opportunity__c(sfdcid)
+      # TODO 2015-03-26 change to its own object to encapsulate error checking
       unless guesscase.nil?
         self.io_case = guesscase
         self.save!
