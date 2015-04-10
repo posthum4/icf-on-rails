@@ -1,7 +1,7 @@
-VERSION = '2.5.5'
+VERSION = '2.5.6'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-03-26): Caught error with long case names
+- ICF v#{VERSION} (2015-04-09): Updated error catching for long case names
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 

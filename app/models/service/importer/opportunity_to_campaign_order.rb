@@ -24,7 +24,7 @@ module Service
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
         @co.closedate                               = Chronic::parse(@oppt['CloseDate'])
-        @co.io_case                                 = @oppt['IO_Case__c']
+        # @co.io_case                                 = @oppt['IO_Case__c'] - Taking this out so that guesscase routine below always applies
         @co.lastmodifieddate                        = Chronic::parse(@oppt['LastModifiedDate'].to_s)
         @co.brand                                   = @oppt['Brand__c']
         @co.vertical                                = @oppt['Vertical__c']
