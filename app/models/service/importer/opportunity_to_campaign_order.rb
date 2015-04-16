@@ -8,8 +8,8 @@ module Service
         Rails.logger.info "Initializing Opportunity-to-CampaignOrder import..."
         @oppt = opportunity
         @co   = campaign_order
-        import
         @co.update_io_case
+        import
         Rails.logger.info "Imported Order #{@co.sfdcid} #{@co.name}"
       end
 
@@ -24,7 +24,7 @@ module Service
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
         @co.closedate                               = Chronic::parse(@oppt['CloseDate'])
-        # @co.io_case                                 = @oppt['IO_Case__c'] - Taking this out so that guesscase routine below always applies
+        #@co.io_case                                 = @oppt['IO_Case__c'] # Trying to put this back in again to solve a persistent bug
         @co.lastmodifieddate                        = Chronic::parse(@oppt['LastModifiedDate'].to_s)
         @co.brand                                   = @oppt['Brand__c']
         @co.vertical                                = @oppt['Vertical__c']
@@ -73,21 +73,6 @@ module Service
         @co.customer_tier                           = SalesForce::Account.find(@oppt.Advertiser__c).Customer_Tier__c
         @co.save!
       end
-
-      # def update_io_case
-      #   # also still present in campaign_order, may no
-      #   # longer be necessary there
-      #   if @co.io_case.nil?
-      #     guesscase = SalesForce::Case.find_by_Opportunity__c(@co.sfdcid)
-      #     unless guesscase.nil?
-      #       if guesscase.class == String
-      #         @co.io_case = guesscase
-      #       end
-      #     end
-      #   end
-      #   @co.io_case
-      # end
-
 
     end
   end

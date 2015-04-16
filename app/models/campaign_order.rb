@@ -11,13 +11,13 @@ class CampaignOrder < ActiveRecord::Base
   monetize :budget_cents, with_model_currency: :budget_currency, :allow_nil => true
 
   def update_io_case
-    # also moved this to to opportunity_to_campaign_order importer, may no
-    # longer be necessary here
     if self.io_case.nil?
-      guesscase = SalesForce::Case.find_by_Opportunity__c(sfdcid)['Id']
+      guesscase = SalesForce::Case.find_by_Opportunity__c(sfdcid)
       # TODO 2015-03-26 change to its own object to encapsulate error checking
-      unless guesscase.nil?
-        self.io_case = guesscase
+      if guesscase.nil?
+        fail Exceptions::DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport, @sfdcid.to_s 
+      else
+        self.io_case = guesscase['Id']
         self.save!
       end
     end
