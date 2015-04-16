@@ -9,7 +9,7 @@ module Service
         @oppt = opportunity
         @co   = campaign_order
         import
-        update_io_case
+        @co.update_io_case
         Rails.logger.info "Imported Order #{@co.sfdcid} #{@co.name}"
       end
 
@@ -74,19 +74,19 @@ module Service
         @co.save!
       end
 
-      def update_io_case
-        # also still present in campaign_order, may no
-        # longer be necessary there
-        if @co.io_case.nil?
-          guesscase = SalesForce::Case.find_by_Opportunity__c(@co.sfdcid)
-          unless guesscase.nil?
-            if guesscase.class == String
-              @co.io_case = guesscase
-            end
-          end
-        end
-        @co.io_case
-      end
+      # def update_io_case
+      #   # also still present in campaign_order, may no
+      #   # longer be necessary there
+      #   if @co.io_case.nil?
+      #     guesscase = SalesForce::Case.find_by_Opportunity__c(@co.sfdcid)
+      #     unless guesscase.nil?
+      #       if guesscase.class == String
+      #         @co.io_case = guesscase
+      #       end
+      #     end
+      #   end
+      #   @co.io_case
+      # end
 
 
     end

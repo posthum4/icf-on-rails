@@ -1,7 +1,7 @@
-VERSION = '2.5.6'
+VERSION = '2.5.7'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-04-09): Updated error catching for long case names
+- ICF v#{VERSION} (2015-04-15): Resolved error with some attachments not uploading (thx Roulla)
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
 EOP
 
