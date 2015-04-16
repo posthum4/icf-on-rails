@@ -1,8 +1,10 @@
-VERSION = '2.5.7'
+VERSION = '2.5.8'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-04-15): Resolved error with some attachments not uploading (thx Roulla)
-- Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
+- ICF v#{VERSION} (2015-04-16): Prevent import when deal desk approval case is missing,
+  thx to Karolin and David
+- Remember always to convert Renewals and Revisions to "IO Change" subtasks before
+  working on them!
 EOP
 
 DESCR_SUFFIX=<<-EOS

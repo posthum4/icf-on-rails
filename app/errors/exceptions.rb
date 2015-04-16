@@ -11,6 +11,7 @@ module Exceptions
   class NoLineItemsFound < StandardError ; end
   class ReceivedCaseIDbutNeedOpportunityIDstartingWith0068 < StandardError ; end
   class ReceivedAttachmentIDbutNeedOpportunityIDstartingWith0068 < StandardError ; end
+  class DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport < StandardError ; end
 
   class StandardError
     def to_s
