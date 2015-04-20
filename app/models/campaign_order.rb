@@ -11,6 +11,8 @@ class CampaignOrder < ActiveRecord::Base
   monetize :budget_cents, with_model_currency: :budget_currency, :allow_nil => true
 
   def update_io_case
+    self.io_case=SalesForce::Opportunity.find_by_Id(sfdcid).IO_Case__c
+    self.save!
     if self.io_case.nil?
       guesscase = SalesForce::Case.find_by_Opportunity__c(sfdcid)
       # TODO 2015-03-26 change to its own object to encapsulate error checking
