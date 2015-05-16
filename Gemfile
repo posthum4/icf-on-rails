@@ -15,7 +15,7 @@ gem 'slim-rails'
 gem 'mysql2'
 
 # Added by Roland
-gem 'figaro'
+gem 'figaro', '>= 1.0'
 gem 'restforce'
 gem 'jiralicious'
 gem 'RedCloth'

@@ -24,7 +24,24 @@ class Importer
     export_child
     Rails.logger.info "https://na6.salesforce.com/#{self.sfdcid} >> #{ENV['JIRA_API']}/browse/#{self.jira}"
     self
+  rescue Exceptions::DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport => e
+    errstring = "ERROR:"
+    errstring << "\n"
+    errstring <<  "Missing deal desk case. Opportunity #{sfdcid} needs to be"
+    errstring << "\n"
+    errstring << "submitted to deal desk before ICF can import it."
+    errstring << "\n"
+    errstring << e.message
+    puts errstring
+  rescue StandardError => e
+    errstring = "ERROR:"
+    errstring << "\n"
+    errstring  = "Other error occurred with opportunity #{sfdcid}."
+    errstring << "\n"
+    errstring << e.message
+    puts errstring
   end
+
 
   def import_child(force=false)
     # check if imported already
