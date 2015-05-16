@@ -33,14 +33,25 @@ module SalesForce
       @@client.materialize("Case")
       @@client.materialize("Attachment")
       @@client.materialize("OpportunitySplit")
+      @@client.materialize("Delivery_Plan__c")
     end
 
     def client_id
       @@client.client_id
     end
 
+    def materialize(sobject_name)
+      @@client.materialize(sobject_name)
+    rescue Exception => e
+      puts "an error occurred: #{e}"
+    end
+
     def client_secret
       @@client.client_secret
+    end
+
+    def objects
+      @@client.list_sobjects
     end
 
     def http_get(request)
