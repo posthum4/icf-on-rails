@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
-gem 'rails', '4.0.1'
+ruby '2.2.1'
+gem 'rails', '4.2.1'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -22,8 +22,10 @@ gem 'RedCloth'
 gem 'redcarpet', '~> 2.1.1'
 gem 'databasedotcom'
 gem 'chronic'
-gem 'money', '= 5.1.0' #added by Roland to get out of deprecation warning
-gem 'money-rails', '= 0.8.1'
+#gem 'money', '= 5.1.0' #added by Roland to get out of deprecation warning
+#gem 'money-rails', '= 0.8.1'
+gem 'money', '>= 5.1.0'
+gem 'money-rails', '>= 0.8.1'
 gem 'gmail'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 

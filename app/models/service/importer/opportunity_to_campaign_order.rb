@@ -24,7 +24,7 @@ module Service
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
         @co.closedate                               = Chronic::parse(@oppt['CloseDate'])
-        #@co.io_case                                 = @oppt['IO_Case__c'] # Trying to put this back in again to solve a persistent bug
+        #@co.io_case                                = @oppt['IO_Case__c'] # Trying to put this back in again to solve a persistent bug
         @co.lastmodifieddate                        = Chronic::parse(@oppt['LastModifiedDate'].to_s)
         @co.brand                                   = @oppt['Brand__c']
         @co.vertical                                = @oppt['Vertical__c']
@@ -71,6 +71,8 @@ module Service
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
         @co.who_is_paying_for_viewability           = @oppt['Who_is_Paying_for_Viewability__c']
         @co.customer_tier                           = SalesForce::Account.find(@oppt.Advertiser__c).Customer_Tier__c
+        @co.opportunity_transcript                  = @oppt.attributes.compact.to_yaml
+        @co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
         @co.save!
       end
 

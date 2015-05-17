@@ -34,12 +34,14 @@ class Importer
     errstring << e.message
     puts errstring
   rescue StandardError => e
-    errstring = "ERROR:"
-    errstring << "\n"
-    errstring  = "Other error occurred with opportunity #{sfdcid}."
-    errstring << "\n"
-    errstring << e.message
-    puts errstring
+    # errstring = "ERROR:"
+    # errstring << "\n"
+    # errstring  = "Other error occurred with opportunity #{sfdcid}."
+    # errstring << "\n"
+    # errstring << e.message
+    #puts errstring
+    puts "Error during processing: #{$!}"
+    puts "Backtrace:\n\t#{e.backtrace.join("\n\t")}"
   end
 
 
@@ -54,6 +56,7 @@ class Importer
     # TODO: 2014-04-01 add full import flow here
     #@campaign_order.import_from_salesforce
     unless skipimport
+      #TOBEADDEDLATER Service::Importer::DeliveryPlanToCampaignOrder.new(delplan, @campaign_order)
       Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
       Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
       Service::Importer::Attachments.new(oppt, @campaign_order)
