@@ -1,4 +1,4 @@
-VERSION = '2.5.9'
+VERSION = '2.5.9.1'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-04-20): Reduced scope of DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport error, thx Roulla & Linda!

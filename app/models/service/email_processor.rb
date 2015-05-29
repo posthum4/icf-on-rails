@@ -85,8 +85,12 @@ module Service
 
     def answer_manual_general(_to,_subject,_body)
       # overriding for testing
-      # p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
-      m = Email::Message.new(p).send!
+      p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
+      begin
+        m = Email::Message.new(p).send!
+      rescue => err
+          Rails.logger.error "Failed to send email: #{err.inspect}"
+        end
     end
   end
 end
