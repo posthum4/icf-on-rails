@@ -1,19 +1,20 @@
 module Service
   module Importer
-    class OpportunityToCampaignOrder
+    class DeliveryPlanToCampaignOrder
 
       attr_accessor :sfdcid
 
-      def initialize(opportunity,campaign_order)
-        Rails.logger.info "Initializing Opportunity-to-CampaignOrder import..."
-        @oppt = opportunity
-        @co   = campaign_order
-        @co.update_io_case
+      def initialize(delivery_plan,campaign_order)
+        Rails.logger.info "Initializing DeliveryPlan-to-CampaignOrder import..."
+        @dp = delivery_plan
+        @co = campaign_order
+        #@co.update_io_case
         import
         Rails.logger.info "Imported Order #{@co.sfdcid} #{@co.name}"
       end
 
       def import
+      	binding.pry
         @co.name                                    = @oppt['Name']
         @co.budget_currency                         = @oppt['CurrencyIsoCode']
         @co.amount                                  = @oppt['Amount'].to_f
@@ -24,7 +25,7 @@ module Service
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
         @co.closedate                               = Chronic::parse(@oppt['CloseDate'])
-        #@co.io_case                                = @oppt['IO_Case__c'] # Trying to put this back in again to solve a persistent bug
+        #@co.io_case                                 = @oppt['IO_Case__c'] # Trying to put this back in again to solve a persistent bug
         @co.lastmodifieddate                        = Chronic::parse(@oppt['LastModifiedDate'].to_s)
         @co.brand                                   = @oppt['Brand__c']
         @co.vertical                                = @oppt['Vertical__c']
@@ -71,8 +72,6 @@ module Service
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
         @co.who_is_paying_for_viewability           = @oppt['Who_is_Paying_for_Viewability__c']
         @co.customer_tier                           = SalesForce::Account.find(@oppt.Advertiser__c).Customer_Tier__c
-        @co.opportunity_transcript                  = @oppt.attributes.compact.to_yaml
-        @co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
         @co.save!
       end
 

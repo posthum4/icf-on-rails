@@ -5,12 +5,15 @@ module Jira
 
     def initialize(j)
       @key            = j.jira_key
-      @summary        = j.summary
-      @assignee       = j['fields']['assignee']['name'] rescue ENV['JIRA_DEFAULT_USER']
-      @reporter       = j['fields']['reporter']['name'] rescue ENV['JIRA_DEFAULT_USER']
-      @updated_at     = j.updated.to_datetime
-      @created_at     = j.created.to_datetime
-      @sfdcid         = ( j.customfield_11862 || nil )
+      binding.pry
+      @summary        = j.fields.fields_update['summary']
+      @assignee       = j.fields.fields_update['assignee']['name'] rescue ENV['JIRA_DEFAULT_USER']
+      @reporter       = j.fields.fields_update['name'] rescue ENV['JIRA_DEFAULT_USER']
+      j.save
+      @updated_at     = j.fields.fields_update['updated'].to_datetime
+      @created_at     = j.fields.fields_update['created'].to_datetime
+      @sfdcid         = ( j.fields.fields_update['customfield_11862'] || nil )
+      binding.pry
       @campaign_order = CampaignOrder.find_by(sfdcid: sfdcid)
       @fields         = Value::Field.new
       @jira_ref       = j
@@ -105,7 +108,7 @@ module Jira
       Rails.logger.debug "setting #{jlc} sfdcid to #{sfdcid}"
       jlc.fields.set("customfield_11862", sfdcid )
       Rails.logger.debug "Trying to save #{jlc}"
-      jlc.save!
+      jlc.save
       j=Jira::Issue.new(jlc)
     end
   end
