@@ -7,7 +7,7 @@ module Value
 
     def self.jira_id(opp_type_new__c)
       case opp_type_new__c
-      when 'Media: New Business'
+      when 'New Business'
         "19"
       else
         "19"
