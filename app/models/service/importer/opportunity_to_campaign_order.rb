@@ -10,6 +10,7 @@ module Service
         @co   = campaign_order
         @co.update_io_case
         import
+        import_line_items
         Rails.logger.info "Imported Order #{@co.sfdcid} #{@co.name}"
       end
 
@@ -74,6 +75,15 @@ module Service
         @co.opportunity_transcript                  = @oppt.attributes.compact.to_yaml
         @co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
         @co.save!
+      end
+
+      def import_line_items
+        ## find all the line items attached to this opportunity 
+        ## loop through them with a count
+        ## and import each line item
+        Service::Importer::OpportunityLineItemToLineItem.new(oli,self)
+        ## and log back the count
+        Rails.logger.info "Imported #{@co.line_items.size} Line Items"
       end
 
     end

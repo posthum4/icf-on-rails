@@ -58,7 +58,11 @@ class Importer
     unless skipimport
       #TOBEADDEDLATER Service::Importer::DeliveryPlanToCampaignOrder.new(delplan, @campaign_order)
       Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
-      Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
+      # Commenting out the old OpportunityToLineItem importer because
+      # in the new setup, the OpportunityToCampaignOrder importer also
+      # calls for the individual Line Items to be imported. Better separation
+      # of concerns? 2015-05-31 Roland
+      #Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
       Service::Importer::Attachments.new(oppt, @campaign_order)
     end
     self
