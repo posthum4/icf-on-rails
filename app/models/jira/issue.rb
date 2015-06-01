@@ -5,7 +5,6 @@ module Jira
 
     def initialize(j)
       @key            = j.jira_key
-      binding.pry
       @summary        = j.fields.fields_update['summary']
       @assignee       = j.fields.fields_update['assignee']['name'] rescue ENV['JIRA_DEFAULT_USER']
       @reporter       = j.fields.fields_update['name'] rescue ENV['JIRA_DEFAULT_USER']
@@ -13,7 +12,6 @@ module Jira
       @updated_at     = j.fields.fields_update['updated'].to_datetime
       @created_at     = j.fields.fields_update['created'].to_datetime
       @sfdcid         = ( j.fields.fields_update['customfield_11862'] || nil )
-      binding.pry
       @campaign_order = CampaignOrder.find_by(sfdcid: sfdcid)
       @fields         = Value::Field.new
       @jira_ref       = j
