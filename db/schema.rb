@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517163116) do
+ActiveRecord::Schema.define(version: 20150601012345) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "sfdcid",            limit: 255
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 20150517163116) do
     t.string   "budget_currency",             limit: 255,                            default: "USD", null: false
     t.integer  "price_cents",                 limit: 4
     t.string   "shortname",                   limit: 255
+    t.string   "ad_format",                   limit: 255
   end
 
   add_index "line_items", ["campaign_order_id"], name: "index_line_items_on_campaign_order_id", using: :btree

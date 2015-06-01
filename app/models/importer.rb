@@ -47,8 +47,9 @@ class Importer
 
   def import_child(force=false)
     # check if imported already
-    skipimport = true  if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
-    Rails.logger.info "skipimport = #{skipimport} for (child) #{@sfdcid}"
+    skipimport=false
+    #skipimport = true  if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
+    #Rails.logger.info "skipimport = #{skipimport} for (child) #{@sfdcid}"
     Rails.logger.info "Starting on General Import Script for (child) #{@sfdcid}"
     #return false unless @campaign_order
     #return false unless @sfdcid
