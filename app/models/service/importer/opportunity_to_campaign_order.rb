@@ -37,7 +37,6 @@ module Service
         # The only exception found so far is Edith Wu who is "ewu" in SalesForce and "edithwu" in JIRA. Need a manual correction for that... :(
         # found another one: jlilly in salesforce equals jguzman in JIRA. Mike launched QI-1203 for this change and a request with IT for a more fundamental process
         Rails.logger.info "Importing AE"
-        binding.pry
         @co.account_executive                       = ( SalesForce::User.find(@oppt.OwnerId).Alias || 'robbie' ).sub('ewu','edithwu').sub('jlilly','jguzman')
         Rails.logger.info "Importing split notes"
         @co.split_notes                             = Policy::SplitOwners.new(@co.sfdcid).splits.map{|k,v| "#{k}:#{v}"}.join(', ')

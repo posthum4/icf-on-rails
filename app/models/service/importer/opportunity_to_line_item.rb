@@ -8,7 +8,7 @@ module Service
       MAP = %w( none DR Retargeting Brand Video Social RTBO )
 
       def initialize(opportunity,campaign_order)
-        Rails.logger.info "Initializing Opportunity-to-LineItemOrder import..."
+        Rails.logger.info "Initializing Opportunity-to-LineItem import..."
         @oppt           = opportunity
         @co             = campaign_order
         @curr           = @co.budget_currency
