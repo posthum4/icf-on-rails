@@ -1,7 +1,7 @@
-VERSION = '2.5.9'
+VERSION = '2.5.9.1'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-04-20): Reduced scope of DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport error, thx Roulla & Linda!
+- ICF v#{VERSION} (2015-06-02): Getting ready for SalesForce migration.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
