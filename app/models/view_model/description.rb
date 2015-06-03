@@ -16,7 +16,7 @@ module ViewModel
         label,cofield = a
         # TODO: 2014-04-01 write a nicer formatter for non-string fields
         v = @co[cofield]
-        unless v.blank? or v == 'No' or v == 'NO BRAND SAFETY PRODUCT'
+        unless (v.blank? or v == 'No') or v == 'NO BRAND SAFETY PRODUCT'
           # if v.include? "\n"
           #   data_string << "\n\n #{label.upcase}\n#{[v]}\n\n"
           # else
