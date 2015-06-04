@@ -16,7 +16,7 @@ module Service
         li = @co.line_items.find_or_create_by(ordinal: @lino)
         # amounts
         li.impressions                 = ( @oli['Quantity'].to_i || 0 )
-        li.bonus_impressions           = ( @oli['Bonus_Impressions___c'].to_i || 0 )
+        li.bonus_impressions           = ( @oli['Bonus_Impressions__c'].to_i || 0 )
         li.cost                        = @oli['Price__c'].to_f
         li.budget_currency             = @oli['CurrencyIsoCode']
         li.pricing_term                = @oli['Rate_Type__c']
@@ -26,7 +26,6 @@ module Service
         li.price_cents                 = li.cost * factor
 
         # product
-        # TODO: 2015-05-31 replace the io_line_item below with proper @oli['Name'] field but this does not seem to be exposed in the API, asked Ryan and Erica
         li.io_line_item                = @oli['Opp_Product_Name__c']
         li.shortname                   = li.io_line_item
         li.product                     = @oli['Product_Name__c']

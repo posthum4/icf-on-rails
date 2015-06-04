@@ -90,7 +90,11 @@ class Importer
     #@campaign_order.import_from_salesforce
     unless skipimport
       Service::Importer::OpportunityToCampaignOrder.new(oppt, @parent_co)
-      Service::Importer::OpportunityToLineItem.new(oppt, @parent_co)
+      # Commenting out the old OpportunityToLineItem importer because
+      # in the new setup, the OpportunityToCampaignOrder importer also
+      # calls for the individual Line Items to be imported. Better separation
+      # of concerns? 2015-05-31 Roland
+      #Service::Importer::OpportunityToLineItem.new(oppt, @parent_co)
     end
     self
   end
