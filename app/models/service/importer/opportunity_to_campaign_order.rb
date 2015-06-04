@@ -44,7 +44,10 @@ module Service
         @co.account_executive_2                     = Policy::SplitOwners.new(@co.sfdcid).splits.sort_by {|_key, value| value}.reverse![1][0] rescue nil
         Rails.logger.info "Importing AM"
         @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first rescue 'aschneider' )
-        @co.campaign_objectives                     = @oppt['Campaign_Objectives__c']
+        
+        @co.campaign_objectives                     = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).Delivery_Objectives__c
+        @co.insights_package                        = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).Insights_Package__c
+
         @co.primary_audience_am                     = @oppt['Primary_Audience_AM__c']
         @co.secondary_audience_am                   = @oppt['Secondary_Audience_AM__c']
         @co.hard_constraints_am                     = @oppt['Hard_Constraints_AM__c']
@@ -62,7 +65,6 @@ module Service
         @co.who_will_wrap_the_tags                  = @oppt['Who_Will_Wrap_The_Tags__c']
         @co.viewability                             = @oppt['Viewability__c']
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
-        @co.insights_package                        = @oppt['Insights_Package__c']
         @co.offline_sales_impact                    = @oppt['Offline_Sales_Impact__c']
         @co.viewability_vendor                      = @oppt['Who_is_Viewability_Vendor__c']
         @co.suppl_add_on_products                   = @oppt['Supplemental_Add_On_Products__c'].join("\n")
