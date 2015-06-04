@@ -62,11 +62,10 @@ module Jira
         @jira_ref.fields.set(jirafield, value.to_f)
       when 'amount'
         v=ViewModel::Amount.new(value)
-        @jira_ref.fields.set(jirafield, v.to_usd_f)
+        @jira_ref.fields.set(jirafield, v.to_usd_f.to_f)
       else
         @jira_ref.fields.set(jirafield, value)
       end
-      binding.pry
       @jira_ref.save
     end
 
