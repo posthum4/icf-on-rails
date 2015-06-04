@@ -1,4 +1,21 @@
 GIT
+  remote: git://github.com/RubyMoney/money
+  revision: 03c2034e7674097d536f084f40c57770411550a9
+  specs:
+    money (6.5.1)
+      i18n (>= 0.6.4, <= 0.7.0)
+
+GIT
+  remote: git://github.com/RubyMoney/money-rails
+  revision: 30f07b91a9c17d512f537583c02b4a62485ad0f3
+  specs:
+    money-rails (1.4.1)
+      activesupport (>= 3.0)
+      monetize (~> 1.1.0)
+      money (~> 6.5.0)
+      railties (>= 3.0)
+
+GIT
   remote: git://github.com/dorack/jiralicious
   revision: 384ba645070b2eda4bdc1f625bedfbcab521ca5e
   specs:
@@ -161,7 +178,7 @@ GEM
     guard-rails (0.7.1)
       guard (~> 2.11)
       guard-compat (~> 1.0)
-    guard-rspec (4.5.1)
+    guard-rspec (4.5.2)
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
@@ -200,13 +217,6 @@ GEM
     minitest (5.7.0)
     monetize (1.1.0)
       money (~> 6.5.0)
-    money (6.5.1)
-      i18n (>= 0.6.4, <= 0.7.0)
-    money-rails (1.4.1)
-      activesupport (>= 3.0)
-      monetize (~> 1.1.0)
-      money (~> 6.5.0)
-      railties (>= 3.0)
     multi_json (1.11.0)
     multi_test (0.1.2)
     multi_xml (0.5.5)
@@ -300,7 +310,7 @@ GEM
     rspec-mocks (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
-    rspec-rails (3.2.1)
+    rspec-rails (3.2.2)
       actionpack (>= 3.0, < 4.3)
       activesupport (>= 3.0, < 4.3)
       railties (>= 3.0, < 4.3)
@@ -391,7 +401,8 @@ DEPENDENCIES
   jiralicious!
   jquery-rails
   launchy
-  money-rails (>= 1.4.1)
+  money!
+  money-rails!
   mysql2
   omniauth
   omniauth-google-oauth2

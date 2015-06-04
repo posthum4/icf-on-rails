@@ -20,7 +20,7 @@ module ViewModel
           # if v.include? "\n"
           #   data_string << "\n\n #{label.upcase}\n#{[v]}\n\n"
           # else
-          if v =~ /0068000000/ || v=~ /5008000000/
+          if v =~ /006/ || v=~ /5008000000/ || v=~ /500n000000/
             data_string << "|#{label} | https://na6.salesforce.com/#{v} |\n"
           else
             data_string << "|#{label} | #{v} |\n"
