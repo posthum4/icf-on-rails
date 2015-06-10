@@ -13,7 +13,7 @@ module Email
       @messages = []
       # Changed this simple line with workaround as per https://github.com/gmailgem/gmail/issues/160
       #tobeprocessed = @@client.inbox.emails(:unread)
-      tobeprocessed = @@client.mailbox('[Gmail]/All Mail').emails(gm: 'in:inbox')
+      tobeprocessed = @@client.mailbox('[Gmail]/All Mail').emails(gm: 'in:inbox is:unread')
       tobeprocessed.each do |msge|
       #@@client.mailbox('ICF/for_devt').emails.each do |msge|
         @messages << create_msg(msge)
