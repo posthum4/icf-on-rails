@@ -47,5 +47,4 @@ IcfOnRails::Application.configure do
 
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
-
 end
