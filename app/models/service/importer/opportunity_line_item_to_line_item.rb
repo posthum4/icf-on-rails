@@ -1,22 +1,46 @@
 module Service
   module Importer
-    class OpportunityToLineItem
+    class OpportunityLineItemToLineItem
 
-      # RocketFuel used to label SalesForce line items by product in the database.
-      # The below labels now map to LineItems1..6 in the UI. Using this map to translate
-      # Counting from 1 thru 6 so adding "none" value for array(0)
-      MAP = %w( none DR Retargeting Brand Video Social RTBO )
-
-      def initialize(opportunity,campaign_order)
-        Rails.logger.info "Initializing Opportunity-to-LineItem import..."
-        @oppt           = opportunity
+      def initialize(opportunity_line_item,campaign_order,line_item_number)
+        Rails.logger.info "Initializing OpportunityLineItem-to-LineItem import... #{line_item_number} #{opportunity_line_item.Id}"
+        @oli            = opportunity_line_item
         @co             = campaign_order
+        @lino           = line_item_number
         @curr           = @co.budget_currency
         import
-        Rails.logger.info "Imported #{@co.line_items.size} Line Items"
+        Rails.logger.info "Imported opportunity line item #{@oli.Id}"
       end
 
       def import
+        li = @co.line_items.find_or_create_by(ordinal: @lino)
+        # amounts
+        li.impressions                 = ( @oli['Quantity'].to_i || 0 )
+        li.bonus_impressions           = ( @oli['Bonus_Impressions__c'].to_i || 0 )
+        li.cost                        = @oli['Price__c'].to_f
+        li.budget_currency             = @oli['CurrencyIsoCode']
+        li.pricing_term                = @oli['Rate_Type__c']
+        li.amount                      = @oli['Gross_Total_Price__c'].to_f
+        factor                         = Money::Currency.find(@co.budget_currency).subunit_to_unit.to_f
+        li.budget_cents                = li.amount * factor
+        li.price_cents                 = li.cost * factor
+
+        # product
+        li.io_line_item                = @oli['Opp_Product_Name__c']
+        li.shortname                   = li.io_line_item
+        li.product                     = @oli['Product_Name__c']
+        li.media_channel               = @oli['Media_Channel__c']
+        li.ad_format                   = @oli['Ad_Format__c']
+        li.add_on                      = @oli['Add_On_Product_Detail__c'].to_s
+
+        # instructions
+        li.flight_instructions         = @oli['Flight_Instructions__c']
+        li.goal                        = @oli['Optimization_Goal__c']
+        li.secondary_optimization_goal = @oli['Optimization_Details__c']
+        li.save!
+      end
+
+      def old_import
         any_non_zero = false
         # DONE: 2014-04-05 refactor this into a specific line_item_importer
         # NOTE: this looks extremely hacky but it's because SalesForce is inconsistent with fields
@@ -24,7 +48,7 @@ module Service
           nn = MAP[n]
           if nonzero?(@oppt,nn)
             Rails.logger.info "Line item #{n} (ex-#{nn}) is non zero."
-            _line_item = @co.line_items.find_or_create_by(ordinal: n)
+            
             import_individual_fields(_line_item, n.to_s, nn)
             _line_item.save!
             any_non_zero = true

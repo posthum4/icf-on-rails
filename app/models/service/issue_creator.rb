@@ -7,8 +7,9 @@ module Service
       @co       = campaign_order
       @sfdcid   = @co.sfdcid
       @fields   = Value::Field.new
-#      @jira_key = @co.jira_key
-#      @jira     = Jira::Issue.find_by_key(@jira_key) unless @jira_key.nil?
+      # removing to force ICF to find the JIRA key again
+      #@jira_key = @co.jira_key
+      #@jira     = Jira::Issue.find_by_key(@jira_key) unless @jira_key.nil?
       @parent   = parent
     end
 

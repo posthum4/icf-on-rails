@@ -4,21 +4,21 @@ module Jira
     attr_accessor :key, :summary, :assignee, :reporter, :sfdcid
 
     def initialize(j)
-      @key            = j.jira_key
-      @summary        = j.summary
+      @key            = j['key']
+      @summary        = j['fields']['summary']
       @assignee       = j['fields']['assignee']['name'] rescue ENV['JIRA_DEFAULT_USER']
-      @reporter       = j['fields']['reporter']['name'] rescue ENV['JIRA_DEFAULT_USER']
-      @updated_at     = j.updated.to_datetime
-      @created_at     = j.created.to_datetime
-      @sfdcid         = ( j.customfield_11862 || nil )
+      @reporter       = j['fields']['name'] rescue ENV['JIRA_DEFAULT_USER']
+      @updated_at     = j['fields']['updated'].to_datetime rescue Time.now
+      @created_at     = j['fields']['created'].to_datetime rescue Time.now
+      @sfdcid         = ( j['fields']['customfield_11862'] || nil )
       @campaign_order = CampaignOrder.find_by(sfdcid: sfdcid)
       @fields         = Value::Field.new
-      @jira_ref       = j
+      @jira_ref       = Jiralicious.search("key=#{@key}").issues.first
     end
 
     def self.find_by_key(jira_key)
       result = []
-      Jiralicious.search("key = #{jira_key}").issues.each do |i|
+      Jiralicious.search("key = #{jira_key}").issues_raw.each do |i|
         result << self.new(i)
       end
       result.first
@@ -31,7 +31,7 @@ module Jira
       else
         jiraquery = "\"SalesForce Opportunity ID\" ~ \"#{co.sfdcid}\" "
       end
-      Jiralicious.search(jiraquery).issues.each do |i|
+      Jiralicious.search(jiraquery).issues_raw.each do |i|
         result << self.new(i)
       end
 
@@ -62,7 +62,7 @@ module Jira
         @jira_ref.fields.set(jirafield, value.to_f)
       when 'amount'
         v=ViewModel::Amount.new(value)
-        @jira_ref.fields.set(jirafield, v.to_usd_f)
+        @jira_ref.fields.set(jirafield, v.to_usd_f.to_f)
       else
         @jira_ref.fields.set(jirafield, value)
       end
@@ -105,8 +105,9 @@ module Jira
       Rails.logger.debug "setting #{jlc} sfdcid to #{sfdcid}"
       jlc.fields.set("customfield_11862", sfdcid )
       Rails.logger.debug "Trying to save #{jlc}"
-      jlc.save!
-      j=Jira::Issue.new(jlc)
+      jlc.save
+      Rails.logger.debug "Saved #{jlc.jira_key}"
+      j=Jira::Issue.find_by_key(jlc.jira_key)
     end
   end
 end
