@@ -19,7 +19,7 @@ module Email
       @subject  = p[:subject]
       @date     = p[:date]
       @body     = p[:body]
-      @msgid    = p[:msgid]
+      @msgid    = p[:msgid].to_s
       @gmailobj = p[:gmailobj]
       @co       = nil
       @label    = nil
