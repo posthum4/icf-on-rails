@@ -1,4 +1,4 @@
-VERSION = '3.0.1'
+VERSION = '3.0.2'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-06-09): Now supporting new SalesForce opportunities!
