@@ -38,6 +38,7 @@ module Email
     end
 
     def archive!
+      @gmailobj.read!
       @gmailobj.archive!
     end
 
