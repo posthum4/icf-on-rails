@@ -22,13 +22,34 @@ class Importer
       export_parent
     end
     export_child
+    Rails.logger.info "https://na6.salesforce.com/#{self.sfdcid} >> #{ENV['JIRA_API']}/browse/#{self.jira}"
     self
+  rescue Exceptions::DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport => e
+    errstring = "ERROR:"
+    errstring << "\n"
+    errstring <<  "Missing deal desk case. Opportunity #{sfdcid} needs to be"
+    errstring << "\n"
+    errstring << "submitted to deal desk before ICF can import it."
+    errstring << "\n"
+    errstring << e.message
+    puts errstring
+  rescue StandardError => e
+    # errstring = "ERROR:"
+    # errstring << "\n"
+    # errstring  = "Other error occurred with opportunity #{sfdcid}."
+    # errstring << "\n"
+    # errstring << e.message
+    #puts errstring
+    puts "Error during processing: #{$!}"
+    puts "Backtrace:\n\t#{e.backtrace.join("\n\t")}"
   end
+
 
   def import_child(force=false)
     # check if imported already
-    skipimport = true  if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
-    Rails.logger.info "skipimport = #{skipimport} for (child) #{@sfdcid}"
+    skipimport=false
+    #skipimport = true  if !force &&  !( @campaign_order.name.nil? || @campaign_order.line_items.nil? )
+    #Rails.logger.info "skipimport = #{skipimport} for (child) #{@sfdcid}"
     Rails.logger.info "Starting on General Import Script for (child) #{@sfdcid}"
     #return false unless @campaign_order
     #return false unless @sfdcid
@@ -36,8 +57,13 @@ class Importer
     # TODO: 2014-04-01 add full import flow here
     #@campaign_order.import_from_salesforce
     unless skipimport
+      #TOBEADDEDLATER Service::Importer::DeliveryPlanToCampaignOrder.new(delplan, @campaign_order)
       Service::Importer::OpportunityToCampaignOrder.new(oppt, @campaign_order)
-      Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
+      # Commenting out the old OpportunityToLineItem importer because
+      # in the new setup, the OpportunityToCampaignOrder importer also
+      # calls for the individual Line Items to be imported. Better separation
+      # of concerns? 2015-05-31 Roland
+      #Service::Importer::OpportunityToLineItem.new(oppt, @campaign_order)
       Service::Importer::Attachments.new(oppt, @campaign_order)
     end
     self
@@ -64,7 +90,11 @@ class Importer
     #@campaign_order.import_from_salesforce
     unless skipimport
       Service::Importer::OpportunityToCampaignOrder.new(oppt, @parent_co)
-      Service::Importer::OpportunityToLineItem.new(oppt, @parent_co)
+      # Commenting out the old OpportunityToLineItem importer because
+      # in the new setup, the OpportunityToCampaignOrder importer also
+      # calls for the individual Line Items to be imported. Better separation
+      # of concerns? 2015-05-31 Roland
+      #Service::Importer::OpportunityToLineItem.new(oppt, @parent_co)
     end
     self
   end

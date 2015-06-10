@@ -1,14 +1,15 @@
-VERSION = '2.4.4a'
+VERSION = '3.0.0'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2014-11-24): Robbie now matches SalesForce Opportunities to ICF both by Opportunity ID and Case ID, so we should see no more 'case sensitivity issues'. Comments welcome in Yammer!
-- Remember always to convert Renewals and Revisions to "IO Change" subtasks before working on them!
+- ICF v#{VERSION} (2015-06-09): Now supporting new SalesForce opportunities!
+- You may find errors on import, please send them to roland@rocketfuelinc.com
+- Remember always to convert Renewals and Revisions to "IO Change" subtasks before
+  working on them!
 EOP
 
 DESCR_SUFFIX=<<-EOS
-- See all your ICF campaigns on the Kanban board: <http://is.gd/gUve2O>
+- See all your ICF campaigns on the Kanban board: <http://is.gd/awF7Cc>
 - See the ICF user group for docs and any questions: <http://is.gd/cbVtcu>
-- Get the latest ICF news with Yammer on your phone <http://goo.gl/TYvnlw>
 EOS
 
 CHAMPIONS=<<-EOC
@@ -17,10 +18,9 @@ CHAMPIONS=<<-EOC
 
 - East: Kristy Bendetti
 - Central: Erin Seramur
-- HQ, San Francisco, Seattle: Elaine Talebbeik
-- Los Angeles, Denver, Las Vegas: Nick Amoroso
-- Dallas: Thuan Ngo
+- West: Youna Kim
 - EMEA: Roulla Demetriou
+- Champion-in-chief: Amanda Schneider
 
 # Other functions:
 

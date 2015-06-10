@@ -8,8 +8,9 @@ module Service
         Rails.logger.info "Initializing Opportunity-to-CampaignOrder import..."
         @oppt = opportunity
         @co   = campaign_order
+        @co.update_io_case
         import
-        update_io_case
+        import_line_items(@co)
         Rails.logger.info "Imported Order #{@co.sfdcid} #{@co.name}"
       end
 
@@ -24,7 +25,7 @@ module Service
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
         @co.closedate                               = Chronic::parse(@oppt['CloseDate'])
-        @co.io_case                                 = @oppt['IO_Case__c']
+        #@co.io_case                                = @oppt['IO_Case__c'] # Trying to put this back in again to solve a persistent bug
         @co.lastmodifieddate                        = Chronic::parse(@oppt['LastModifiedDate'].to_s)
         @co.brand                                   = @oppt['Brand__c']
         @co.vertical                                = @oppt['Vertical__c']
@@ -34,15 +35,19 @@ module Service
         @co.sales_region                            = @oppt['Sales_Region__c']
         # Note that the salesforce username (part before @rocketfuel.com) is equal to the JIRA user name (part before @rocketfuelinc.com)
         # The only exception found so far is Edith Wu who is "ewu" in SalesForce and "edithwu" in JIRA. Need a manual correction for that... :(
+        # found another one: jlilly in salesforce equals jguzman in JIRA. Mike launched QI-1203 for this change and a request with IT for a more fundamental process
         Rails.logger.info "Importing AE"
-        @co.account_executive                       = ( SalesForce::User.find(@oppt.Opportunity_Owner_User__c).Email.split('@').first || 'robbie' ).sub('ewu','edithwu')
+        @co.account_executive                       = ( SalesForce::User.find(@oppt.OwnerId).Alias || 'robbie' ).sub('ewu','edithwu').sub('jlilly','jguzman')
         Rails.logger.info "Importing split notes"
         @co.split_notes                             = Policy::SplitOwners.new(@co.sfdcid).splits.map{|k,v| "#{k}:#{v}"}.join(', ')
         Rails.logger.info "Importing AE2"
         @co.account_executive_2                     = Policy::SplitOwners.new(@co.sfdcid).splits.sort_by {|_key, value| value}.reverse![1][0] rescue nil
         Rails.logger.info "Importing AM"
         @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first rescue 'aschneider' )
-        @co.campaign_objectives                     = @oppt['Campaign_Objectives__c']
+        
+        @co.campaign_objectives                     = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).Delivery_Objectives__c
+        @co.insights_package                        = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).Insights_Package__c
+
         @co.primary_audience_am                     = @oppt['Primary_Audience_AM__c']
         @co.secondary_audience_am                   = @oppt['Secondary_Audience_AM__c']
         @co.hard_constraints_am                     = @oppt['Hard_Constraints_AM__c']
@@ -60,7 +65,6 @@ module Service
         @co.who_will_wrap_the_tags                  = @oppt['Who_Will_Wrap_The_Tags__c']
         @co.viewability                             = @oppt['Viewability__c']
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
-        @co.insights_package                        = @oppt['Insights_Package__c']
         @co.offline_sales_impact                    = @oppt['Offline_Sales_Impact__c']
         @co.viewability_vendor                      = @oppt['Who_is_Viewability_Vendor__c']
         @co.suppl_add_on_products                   = @oppt['Supplemental_Add_On_Products__c'].join("\n")
@@ -70,21 +74,24 @@ module Service
         @co.viewability_metrics                     = @oppt['Viewability_Metrics__c']
         @co.who_is_paying_for_viewability           = @oppt['Who_is_Paying_for_Viewability__c']
         @co.customer_tier                           = SalesForce::Account.find(@oppt.Advertiser__c).Customer_Tier__c
+        @co.opportunity_transcript                  = @oppt.attributes.compact.to_yaml
+        @co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
         @co.save!
       end
 
-      def update_io_case
-        # also still present in campaign_order, may no
-        # longer be necessary there
-        if @co.io_case.nil?
-          guesscase = SalesForce::Case.find_by_Opportunity__c(@co.sfdcid)
-          unless guesscase.nil?
-            @co.io_case = guesscase
-          end
+      def import_line_items(co)
+        ## find all the line items attached to this opportunity
+        opportunity_line_items=SalesForce::OpportunityLineItem.query("OpportunityId='#{co.sfdcid}'")
+        oli_counter = 1
+        ## loop through them with a count
+        opportunity_line_items.each do |oli|
+          ## and import each line item
+          Service::Importer::OpportunityLineItemToLineItem.new(oli,co,oli_counter)
+          ## and log back the count
+          oli_counter += 1
         end
-        @co.io_case
+        Rails.logger.info "Imported #{@co.line_items.size} Line Items"
       end
-
 
     end
   end

@@ -12,6 +12,7 @@ module ViewModel
       @amount                      = ViewModel::Amount.new(line_item.budget).to_s
       @product                     = line_item.product
       @media_channel               = line_item.media_channel
+      @ad_format                   = line_item.ad_format
       @impressions                 = number_with_delimiter(line_item.impressions, delimiter: "\u{2009}")
       @bonus_impressions           = number_with_delimiter(line_item.bonus_impressions, delimiter: "\u{2009}")
       @cost                        = ViewModel::Amount.new(line_item.price).to_s
@@ -28,6 +29,7 @@ module ViewModel
       s <<  "|" + ( @shortname         or "\u{2009}" )
       s <<  "|" + ( @amount            or "\u{2009}" )
       s <<  "|" + ( @product           or "\u{2009}" )
+      s <<  "|" + ( @ad_format         or "\u{2009}" )
       s <<  "|" + ( @media_channel     or "\u{2009}" )
       s <<  "|" + ( @impressions       or "\u{2009}" )
       s <<  "|" + ( @bonus_impressions or "\u{2009}" )
@@ -42,6 +44,7 @@ module ViewModel
       s <<  "|" + ( @shortname         or "\u{2009}" )
       s <<  "|" + ( @amount            or "\u{2009}" )
       s <<  "|" + ( @product           or "\u{2009}" )
+      s <<  "|" + ( @ad_format         or "\u{2009}" )
       s <<  "|" + ( @media_channel     or "\u{2009}" )
       s <<  "|" + ( @impressions       or "\u{2009}" )
       s <<  "|" + ( @cost              or "\u{2009}" )
@@ -58,6 +61,7 @@ module ViewModel
         s <<  "|" + ( @shortname         or "\u{2009}" )
         s <<  "|" + "\u{2009}"
         s <<  "|" + ( @product           or "\u{2009}" )
+        s <<  "|" + ( @ad_format         or "\u{2009}" )
         s <<  "|" + ( @media_channel     or "\u{2009}" )
         s <<  "|" + ( @bonus_impressions or "\u{2014}" )
         s <<  "|" + "\u{2009}"
