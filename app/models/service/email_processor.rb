@@ -94,8 +94,8 @@ module Service
       begin
         m = Email::Message.new(p).send!
       rescue => err
-          Rails.logger.error "Failed to send email: #{err.inspect}"
-        end
+        Rails.logger.error "Failed to send email: #{err.inspect}"
+      end
     end
   end
 end

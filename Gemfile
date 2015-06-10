@@ -24,7 +24,7 @@ gem 'databasedotcom'
 gem 'chronic'
 gem 'money', :git => 'git://github.com/RubyMoney/money'
 gem 'money-rails', :git => 'git://github.com/RubyMoney/money-rails'
-gem 'gmail'
+gem 'gmail', :git => 'git://github.com/gmailgem/gmail.git'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
 group :development do
