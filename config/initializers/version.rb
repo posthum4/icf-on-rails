@@ -1,7 +1,8 @@
-VERSION = '3.0.1'
+VERSION = '3.0.3'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-06-09): Solved issue with stuck opportunities
+- ICF v#{VERSION} (2015-06-09): 
+- Fixed issues with assignments to default in stead of SF-assigned AMs and AEs
 - Now supporting new SalesForce opportunities!You may find errors on import,
   please post them in the ICF User group on Yammer: <http://is.gd/cbVtcu>
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before

@@ -33,20 +33,22 @@ module Service
         @co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
         @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name || SalesForce::Account.find(@oppt.AccountId).Name
         @co.sales_region                            = @oppt['Sales_Region__c']
+        dplan                                       = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c)
         # Note that the salesforce username (part before @rocketfuel.com) is equal to the JIRA user name (part before @rocketfuelinc.com)
         # The only exception found so far is Edith Wu who is "ewu" in SalesForce and "edithwu" in JIRA. Need a manual correction for that... :(
         # found another one: jlilly in salesforce equals jguzman in JIRA. Mike launched QI-1203 for this change and a request with IT for a more fundamental process
-        Rails.logger.info "Importing AE"
-        @co.account_executive                       = ( SalesForce::User.find(@oppt.OwnerId).Alias || 'robbie' ).sub('ewu','edithwu').sub('jlilly','jguzman')
-        Rails.logger.info "Importing split notes"
         @co.split_notes                             = Policy::SplitOwners.new(@co.sfdcid).splits.map{|k,v| "#{k}:#{v}"}.join(', ')
-        Rails.logger.info "Importing AE2"
-        @co.account_executive_2                     = Policy::SplitOwners.new(@co.sfdcid).splits.sort_by {|_key, value| value}.reverse![1][0] rescue nil
-        Rails.logger.info "Importing AM"
-        @co.account_manager                         = ( SalesForce::User.find(@oppt.Account_Manager__c).Email.split('@').first rescue 'aschneider' )
+        Rails.logger.info "SN = #{@co.split_notes}"
+        #@co.account_executive                       = ( SalesForce::User.find(@oppt.OwnerId).Alias || 'robbie' ).sub('ewu','edithwu').sub('jlilly','jguzman')
+        @co.account_executive                       = Policy::SplitOwners.new(@co.sfdcid).splits.sort_by {|_key, value| value}.reverse![0][0].sub('ewu','edithwu').sub('jlilly','jguzman') rescue 'robbie'
+        Rails.logger.info "AE1 = #{@co.account_executive}"
+        @co.account_executive_2                     = Policy::SplitOwners.new(@co.sfdcid).splits.sort_by {|_key, value| value}.reverse![1][0].sub('ewu','edithwu').sub('jlilly','jguzman') rescue nil
+        Rails.logger.info "AE2 = #{@co.account_executive_2}"
+        @co.account_manager                         = ( SalesForce::User.find(dplan.Account_Manager__c).Email.split('@').first rescue ENV['JIRA_DEFAULT_USER'] )
+        Rails.logger.info "AM = #{@co.account_manager}"
         
-        @co.campaign_objectives                     = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).Delivery_Objectives__c
-        @co.insights_package                        = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).Insights_Package__c
+        @co.campaign_objectives                     = dplan.Delivery_Objectives__c
+        @co.insights_package                        = dplan.Insights_Package__c
 
         @co.primary_audience_am                     = @oppt['Primary_Audience_AM__c']
         @co.secondary_audience_am                   = @oppt['Secondary_Audience_AM__c']
