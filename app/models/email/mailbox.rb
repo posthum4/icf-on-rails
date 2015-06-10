@@ -16,6 +16,7 @@ module Email
       tobeprocessed = @@client.mailbox('[Gmail]/All Mail').emails(gm: 'in:inbox is:unread')
       tobeprocessed.each do |msge|
       #@@client.mailbox('ICF/for_devt').emails.each do |msge|
+        Rails.logger.info("#{msge.labels} #{msge.subject}")
         @messages << create_msg(msge)
       end
       @messages

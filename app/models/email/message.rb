@@ -51,7 +51,7 @@ module Email
     end
 
     def manual?
-      !@msgid.include? '@sfdc.net'
+      @gmailobj.labels.include?('ICF/Manual!')
     end
 
 
