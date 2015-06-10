@@ -5,7 +5,7 @@ module ViewModel
       @campaign_order   = campaign_order
       @line_items       = @campaign_order.line_items
       @stagename       = @campaign_order.stagename
-      @header           = '||#||Line Item||Budget||Product||Channel||Imp||Price||Term||'
+      @header           = '||#||Line Item||Budget||Product||Ad format||Channel||Imp||Price||Term||'
       @panelfooter      = '{panel}'
       set_reliability
     end

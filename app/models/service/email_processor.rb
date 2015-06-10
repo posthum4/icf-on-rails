@@ -51,6 +51,8 @@ module Service
         Email subject:  #{message.subject}
         Email from:     #{message.from}
         Message ID:     #{message.msgid}
+
+        #{error.backtrace}
         ENDOFBODY
       }
       m = Email::Message.new(p).send!

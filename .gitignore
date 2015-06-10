@@ -92,3 +92,6 @@ pickle-email-*.html
 /spec/vcr
 db/data.yml
 logfile
+
+# test files roland
+**_testrs.rb
