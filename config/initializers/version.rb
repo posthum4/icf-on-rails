@@ -2,7 +2,8 @@ VERSION = '3.0.1'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-06-09): Now supporting new SalesForce opportunities!
-- You may find errors on import, please send them to roland@rocketfuelinc.com
+- You may find errors on import, please post them in the ICF User group on Yammer:
+  <http://is.gd/cbVtcu>
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
