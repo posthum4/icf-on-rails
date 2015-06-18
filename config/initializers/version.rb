@@ -1,9 +1,8 @@
-VERSION = '3.0.4'
+VERSION = '3.0.5'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-06-09): saving Deal desk from getting email on every import
-- Now supporting new SalesForce opportunities!You may find errors on import,
-  please post them in the ICF User group on Yammer: <http://is.gd/cbVtcu>
+- ICF v#{VERSION} (2015-06-18): solved "undefined method `jira' for nil:NilClass"
+  error that occurred over night for some users
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
