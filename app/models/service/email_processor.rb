@@ -29,7 +29,7 @@ module Service
             m.move_to('ICF/error')
           end
         rescue => err
-          Rails.logger.error "Fail: #{err.inspect}"
+          Rails.logger.error "Fail: #{err.inspect} \n #{err.backtrace}"
           report_error(err,m)
           answer_manual_error(err,m) if m.manual?
           m.move_to('ICF/error')
@@ -86,9 +86,16 @@ module Service
     end
 
     def answer_manual_general(_to,_subject,_body)
-      # overriding for testing
-      # p[:to] =         ENV['AM_SUBSTITUTE_ADDRESS']
-      m = Email::Message.new(p).send!
+      p = {
+        to:         "#{_to}",
+        subject:    "#{_subject}",
+        body:       "#{_body}"
+      }
+      begin
+        m = Email::Message.new(p).send!
+      rescue => err
+        Rails.logger.error "Failed to send email: #{err.inspect}"
+      end
     end
   end
 end

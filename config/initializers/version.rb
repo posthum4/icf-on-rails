@@ -1,8 +1,8 @@
-VERSION = '3.0.0'
+VERSION = '3.0.5'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-06-09):Now supporting new SalesForce opportunities!
-- You may find errors on import, please send them to roland@rocketfuelinc.com
+- ICF v#{VERSION} (2015-06-18): solved "undefined method `jira' for nil:NilClass"
+  error that occurred over night for some users
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
