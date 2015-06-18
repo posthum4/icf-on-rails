@@ -19,7 +19,7 @@ module Email
       @subject  = p[:subject]
       @date     = p[:date]
       @body     = p[:body]
-      @msgid    = p[:msgid]
+      @msgid    = p[:msgid].to_s
       @gmailobj = p[:gmailobj]
       @co       = nil
       @label    = nil
@@ -38,6 +38,7 @@ module Email
     end
 
     def archive!
+      @gmailobj.read!
       @gmailobj.archive!
     end
 
@@ -50,7 +51,7 @@ module Email
     end
 
     def manual?
-      !@msgid.include? '@sfdc.net'
+      @gmailobj.labels.include?('ICF/Manual!')
     end
 
 
