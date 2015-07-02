@@ -1,8 +1,8 @@
-VERSION = '3.0.5'
+VERSION = '3.1.1'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-06-18): solved "undefined method `jira' for nil:NilClass"
-  error that occurred over night for some users
+- ICF v#{VERSION} (2015-07-02): now importing manual requests sent to icf-jira@
+  with priority. Make sure it's submitted to deal desk first though.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
