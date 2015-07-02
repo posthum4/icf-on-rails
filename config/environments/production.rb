@@ -44,6 +44,7 @@ IcfOnRails::Application.configure do
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
+  ActiveRecord::Base.logger = nil
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]

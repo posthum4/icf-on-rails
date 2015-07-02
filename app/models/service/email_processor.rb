@@ -14,7 +14,8 @@ module Service
     end
 
     def process_batch
-      @mailbox[0..@batch_size].each do |m|
+      #@mailbox[0..@batch_size].each do |m|
+      @mailbox.each do |m|
         Rails.logger.info "#{m.from} #{m.subject}"
         Rails.logger.warn "This is a manual request!" if m.manual?
         begin

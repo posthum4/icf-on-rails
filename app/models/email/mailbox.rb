@@ -6,6 +6,7 @@ module Email
     def initialize
       @@client = Gmail.connect(ENV['GMAIL_USER'], ENV['GMAIL_PASS']) if @@client.nil?
       @messages = []
+      @batch_size = ENV['EMAIL_BATCH_SIZE'].to_i
       @@client
     end
 
@@ -13,8 +14,8 @@ module Email
       @messages = []
       # Changed this simple line with workaround as per https://github.com/gmailgem/gmail/issues/160
       #tobeprocessed = @@client.inbox.emails(:unread)
-      tobeprocessed = @@client.mailbox('[Gmail]/All Mail').emails(gm: 'in:inbox is:unread')
-      tobeprocessed.each do |msge|
+      tobeprocessed = @@client.mailbox('[Gmail]/All Mail').emails(gm: 'in:inbox is:unread is:important') + @@client.mailbox('[Gmail]/All Mail').emails(gm: 'in:inbox is:unread !is:important')
+      tobeprocessed[0..@batch_size].each do |msge|
       #@@client.mailbox('ICF/for_devt').emails.each do |msge|
         Rails.logger.info("#{msge.labels} #{msge.subject}")
         @messages << create_msg(msge)

@@ -81,7 +81,7 @@ module Jira
       # File.open(fileloc, 'wb') { |f| f.write(rfattmt.body) }
       # # curl -D- -u {username}:{password} -X POST -H "X-Atlassian-Token: nocheck" -F "file=@{path/to/image}" http://{base-url}/rest/api/2/issue/{issue-key}/attachments
       # Rails.logger.debug "Wrote file #{fileloc}"
-      result = %x! curl -D- -v -u #{ENV['JIRA_USER']}:#{ENV['JIRA_PASS']} -X POST -H "X-Atlassian-Token: nocheck" -F "file=@#{fileloc}" #{ENV['JIRA_API']}/rest/api/2/issue/#{@key}/attachments !
+      result = %x! curl --silent -D- -v -u #{ENV['JIRA_USER']}:#{ENV['JIRA_PASS']} -X POST -H "X-Atlassian-Token: nocheck" -F "file=@#{fileloc}" #{ENV['JIRA_API']}/rest/api/2/issue/#{@key}/attachments > /dev/null 2>&1 !
       Rails.logger.debug "Uploading attachments resulted in #{result.inspect}"
       result
     end

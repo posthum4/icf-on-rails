@@ -42,12 +42,12 @@ module Service
         # second test: if still no JIRA then fail
         fail Exceptions::JiraUnknownIssueNumberError, @sfdcid.to_s if @jira.nil?
         import_tables
-        Rails.logger.info 'Imported tables'
+        Rails.logger.info 'Uploaded tables to JIRA'
         import_attachments
 
-        Rails.logger.info 'Imported attachments'
+        Rails.logger.info 'Uploaded attachments to JIRA'
         import_matched_fields
-        Rails.logger.info 'Imported matched fields'
+        Rails.logger.info 'Uploaded matched fields to JIRA'
       end
       return @jira
     end
