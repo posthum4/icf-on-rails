@@ -1,9 +1,8 @@
-VERSION = '3.0.4'
+VERSION = '3.1'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-06-09): saving Deal desk from getting email on every import
-- Now supporting new SalesForce opportunities!You may find errors on import,
-  please post them in the ICF User group on Yammer: <http://is.gd/cbVtcu>
+- ICF v#{VERSION} (2015-07-02): now importing manual requests sent to icf-jira@
+  with priority. Make sure it's submitted to deal desk first though.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
