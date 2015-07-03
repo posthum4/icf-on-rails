@@ -1,4 +1,4 @@
-VERSION = '3.1'
+VERSION = '3.1.2'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-07-02): now importing manual requests sent to icf-jira@

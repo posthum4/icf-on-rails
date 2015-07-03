@@ -94,4 +94,7 @@ IcfOnRails::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # Adding this for NewRelic GarbageCollection profiling as per https://docs.newrelic.com/docs/agents/ruby-agent/features/garbage-collection
+  GC::Profiler.enable
 end
