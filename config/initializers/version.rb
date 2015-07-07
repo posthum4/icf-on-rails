@@ -1,7 +1,7 @@
-VERSION = '3.1.2'
+VERSION = '3.1.3'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-07-02): now importing manual requests sent to icf-jira@
+- ICF v#{VERSION} (2015-07-07): now importing manual requests sent to icf-jira@
   with priority. Make sure it's submitted to deal desk first though.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
