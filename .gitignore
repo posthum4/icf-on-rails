@@ -95,3 +95,4 @@ logfile
 
 # test files roland
 **_testrs.rb
+/config/newrelic.yml

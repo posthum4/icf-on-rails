@@ -1,7 +1,7 @@
-VERSION = '3.1.2'
+VERSION = '3.1.5'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-07-17): another squash at the case insensitivity bug.
+- ICF v#{VERSION} (2015-07-17): another blow to the case insensitivity bug.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
@@ -16,13 +16,14 @@ CHAMPIONS=<<-EOC
 # Account Managers:
 
 - East: Kristy Bendetti
-- Central: Erin Seramur
+- Central/Canada: Erin Seramur
 - West: Youna Kim
 - EMEA: Roulla Demetriou
 - Champion-in-chief: Amanda Schneider
 
 # Other functions:
 
+- (Lean) Campaign Managers: Mike Walker
 - Ops: Elaina Remin
 - Analytics: Jeff Wenzinger
 - Reporting: Steve Sammonds

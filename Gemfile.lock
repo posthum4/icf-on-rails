@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: git://github.com/gmailgem/gmail.git
-  revision: 7d4bc450a915834bf66ec06ef2d532fd504f2cd6
+  revision: b3629ae72317bccd5235dede8c63666ef30d7e0b
   specs:
     gmail (0.5.0)
       gmail_xoauth (>= 0.3.0)
@@ -161,7 +161,7 @@ GEM
       activesupport (>= 4.1.0)
     gmail_xoauth (0.4.1)
       oauth (>= 0.3.6)
-    guard (2.12.7)
+    guard (2.12.8)
       formatador (>= 0.2.4)
       listen (>= 2.7, <= 4.0)
       lumberjack (~> 1.0)
@@ -219,7 +219,7 @@ GEM
     minitest (5.7.0)
     monetize (1.1.0)
       money (~> 6.5.0)
-    multi_json (1.11.1)
+    multi_json (1.11.2)
     multi_test (0.1.2)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
@@ -371,6 +371,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    whenever (0.9.4)
+      chronic (>= 0.6.3)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -426,7 +428,8 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   unicorn
+  whenever
   yaml_db!
 
 BUNDLED WITH
-   1.10.4
+   1.10.5
