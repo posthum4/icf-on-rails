@@ -1,8 +1,7 @@
-VERSION = '3.1.1'
+VERSION = '3.1.2'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-07-02): now importing manual requests sent to icf-jira@
-  with priority. Make sure it's submitted to deal desk first though.
+- ICF v#{VERSION} (2015-07-17): another squash at the case insensitivity bug.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
