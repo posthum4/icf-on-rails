@@ -1,8 +1,7 @@
-VERSION = '3.1.3'
+VERSION = '3.1.5'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-07-07): now importing manual requests sent to icf-jira@
-  with priority. Make sure it's submitted to deal desk first though.
+- ICF v#{VERSION} (2015-07-17): Another blow to issues with case insensitivity!
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
@@ -24,6 +23,7 @@ CHAMPIONS=<<-EOC
 
 # Other functions:
 
+- (Lean) Campaign Managers: Mike Walker
 - Ops: Elaina Remin
 - Analytics: Jeff Wenzinger
 - Reporting: Steve Sammonds
