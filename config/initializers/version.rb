@@ -17,7 +17,7 @@ CHAMPIONS=<<-EOC
 # Account Managers:
 
 - East: Kristy Bendetti
-- Central: Erin Seramur
+- Central/Canada: Erin Seramur
 - West: Youna Kim
 - EMEA: Andrew Hammond, Robert Marshall
 - Champion-in-chief: Amanda Schneider
