@@ -31,6 +31,7 @@ module Service
         @co.vertical                                = @oppt['Vertical__c']
         @co.advertiser                              = SalesForce::Account.find(@oppt.Advertiser__c).Name
         @co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
+        @co.sf_account_id                           = @oppt.AccountId
         @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name || SalesForce::Account.find(@oppt.AccountId).Name
         @co.sales_region                            = @oppt['Sales_Region__c']
         dplan                                       = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c)
