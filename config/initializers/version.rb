@@ -1,7 +1,8 @@
 VERSION = '3.1.6'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-08-28): Testing Cosmetic Changes - Dan
+- ICF v#{VERSION} (2015-08-28): SFDC Account ID now included in description
+- Attachment names now sanitized and should be uploaded properly (unicode chars, slashes, etc. removed)
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP

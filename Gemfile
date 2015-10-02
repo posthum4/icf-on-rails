@@ -42,6 +42,7 @@ group :development do
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
   gem 'pry-rails'
+  gem 'pry-byebug'
 end
 group :development, :test do
   gem 'factory_girl_rails' , "~> 4.0"
