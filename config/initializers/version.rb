@@ -1,4 +1,4 @@
-VERSION = '3.1.7'
+VERSION = '3.1.8'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-10-02): SFDC Account ID now included in description
