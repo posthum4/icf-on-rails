@@ -17,17 +17,18 @@ CHAMPIONS=<<-EOC
 # Account Managers:
 
 - East: Kristy Bendetti
-- Central/Canada: Erin Seramur
+- Central/Canada: Kelsey Julius
 - West: Youna Kim
 - EMEA: Andrew Hammond, Robert Marshall
 - Champion-in-chief: Amanda Schneider
 
 # Other functions:
 
-- (Lean) Campaign Managers: Mike Walker
+- (Lean) Campaign Managers: Jennifer Lin
 - Ops: Elaina Remin
 - Analytics: Therese-Heather Belen
 - Reporting: Steve Sammonds
+- ICF import bugs: Dan Kras
 - Sales: your account manager
 
 EOC
