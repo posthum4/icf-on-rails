@@ -1,7 +1,7 @@
-VERSION = '3.1.8'
+VERSION = '3.1.9'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-10-02): SFDC Account ID now included in description
+- ICF v#{VERSION} (2015-10-12): Migrated ICF to new server with higher reliability/fewer outages!
 - Attachment names now sanitized and should be uploaded properly (unicode chars, slashes, etc. removed)
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
