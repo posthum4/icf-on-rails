@@ -12,7 +12,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'simple_form'
 gem 'slim-rails'
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.20'
 
 # Added by Roland
 gem 'figaro', '>= 1.0'
