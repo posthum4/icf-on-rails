@@ -1,4 +1,4 @@
-VERSION = '3.1.9'
+VERSION = '3.1.9a'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-10-12): Migrated ICF to new server with higher reliability/fewer outages!
