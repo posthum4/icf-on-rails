@@ -17,6 +17,7 @@ class CampaignOrder < ActiveRecord::Base
       guesscase = SalesForce::Case.find_by_Opportunity__c(sfdcid)
       # TODO 2015-03-26 change to its own object to encapsulate error checking
       if guesscase.nil?
+        #TODO figure out how to properly describe exceptions in user friendly way 
         fail Exceptions::DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport, @sfdcid.to_s 
       else
         self.io_case = guesscase['Id']
