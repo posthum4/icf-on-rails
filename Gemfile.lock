@@ -97,6 +97,9 @@ GEM
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
     builder (3.2.2)
+    business_time (0.7.4)
+      activesupport (>= 3.1.0)
+      tzinfo
     byebug (5.0.0)
       columnize (= 0.9.0)
     capybara (2.4.4)
@@ -191,6 +194,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     hashie (2.1.2)
     hike (1.2.3)
+    holidays (2.2.0)
     httparty (0.13.5)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -211,7 +215,7 @@ GEM
     listen (3.0.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
-    loofah (2.0.2)
+    loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
     mail (2.6.3)
@@ -219,7 +223,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
-    minitest (5.7.0)
+    minitest (5.8.1)
     monetize (1.1.0)
       money (~> 6.5.0)
     multi_json (1.11.2)
@@ -277,7 +281,7 @@ GEM
       sprockets-rails
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.6)
+    rails-dom-testing (1.0.7)
       activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6.0)
       rails-deprecated_sanitizer (>= 1.0.1)
@@ -311,15 +315,15 @@ GEM
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
       rspec-mocks (~> 3.3.0)
-    rspec-core (3.3.1)
+    rspec-core (3.3.2)
       rspec-support (~> 3.3.0)
-    rspec-expectations (3.3.0)
+    rspec-expectations (3.3.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
-    rspec-mocks (3.3.1)
+    rspec-mocks (3.3.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
-    rspec-rails (3.3.2)
+    rspec-rails (3.3.3)
       actionpack (>= 3.0, < 4.3)
       activesupport (>= 3.0, < 4.3)
       railties (>= 3.0, < 4.3)
@@ -390,6 +394,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass
+  business_time
   capybara
   chronic
   coffee-rails (~> 4.0.0)
@@ -405,6 +410,7 @@ DEPENDENCIES
   guard-cucumber
   guard-rails
   guard-rspec
+  holidays
   hub
   jbuilder (~> 1.2)
   jiralicious!
