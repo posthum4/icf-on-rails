@@ -1,4 +1,4 @@
-VERSION = '3.1.8'
+VERSION = '3.1.8a'
 
 DESCR_PREFIX=<<-EOP
 - ICF v#{VERSION} (2015-10-02): SFDC Account ID now included in description
@@ -17,7 +17,7 @@ CHAMPIONS=<<-EOC
 # Account Managers:
 
 - East: Kristy Bendetti
-- Central/Canada: Erin Seramur
+- Central/Canada: Kelsey Julius
 - West: Youna Kim
 - EMEA: Andrew Hammond, Robert Marshall
 - Champion-in-chief: Amanda Schneider
