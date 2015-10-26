@@ -1,7 +1,7 @@
-VERSION = '3.1.8a'
+VERSION = '3.1.9'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-10-02): SFDC Account ID now included in description
+- ICF v#{VERSION} (2015-10-26): Updated ICF Champions
 - Attachment names now sanitized and should be uploaded properly (unicode chars, slashes, etc. removed)
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
@@ -24,10 +24,11 @@ CHAMPIONS=<<-EOC
 
 # Other functions:
 
-- (Lean) Campaign Managers: Mike Walker
+- (Lean) Campaign Managers: Jennifer Lin
 - Ops: Elaina Remin
 - Analytics: Therese-Heather Belen
 - Reporting: Steve Sammonds
+- ICF import bugs: Dan Kras
 - Sales: your account manager
 
 EOC
