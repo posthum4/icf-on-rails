@@ -16,7 +16,8 @@ gem 'business_time'
 gem 'holidays'
 gem 'pry-rails'
 gem 'pry-byebug'
-gem 'mysql2', '~> 0.3.20'
+#gem 'mysql2', '~> 0.3.20'
+gem 'mysql2', '~> 0.3.18'
 
 # Added by Roland
 gem 'figaro', '>= 1.0'

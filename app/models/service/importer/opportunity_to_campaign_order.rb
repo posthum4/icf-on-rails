@@ -48,7 +48,7 @@ module Service
         Rails.logger.info "AE2 = #{@co.account_executive_2}"
         @co.account_manager                         = ( SalesForce::User.find(dplan.Account_Manager__c).Email.split('@').first rescue ENV['JIRA_DEFAULT_USER'] )
         Rails.logger.info "AM = #{@co.account_manager}"
-        
+
         @co.campaign_objectives                     = dplan.Delivery_Objectives__c
         @co.insights_package                        = dplan.Insights_Package__c
 
@@ -100,11 +100,11 @@ module Service
 
 
       # Calculates the internal due date for a campaign launch
-      # 
+      #
       # If we have enough time (as measured by SLA) to launch a campaign by the requested start date (meaning the campaign
       # launch is completed BEFORE the start date), then the internal due date should be the business day before the requested
       # start date (i.e. internal_due_date = campaign_start_date - 1 business day)
-      # If a launch comes in too late (i.e. we don't have SLA time to proccess it by the requested start date), then the 
+      # If a launch comes in too late (i.e. we don't have SLA time to proccess it by the requested start date), then the
       # we will complete it according to our SLA (i.e. internal_due_date = SLA + received_date)
       #
       # Args:
@@ -118,17 +118,19 @@ module Service
       #     CampaignStartDateUnexpectedValue
       #     ReceivedDateUnexpectedValue
       #
-      def self.calculate_internal_due_date(received_date, campaign_start_date)
+      def self.calculate_internal_due_date(received_date_with_tz, campaign_start_date)
 
+        received_date=received_date_with_tz.utc
+        binding.pry
         #catch unepected inputs
         if campaign_start_date.nil?
-            fail Exceptions::CampaignStartDateUnexpectedValue, campaign_start_date
+          fail Exceptions::CampaignStartDateUnexpectedValue, campaign_start_date
         elsif !(campaign_start_date.class == Date)
-            fail Exceptions::CampaignStartDateUnexpectedValue, campaign_start_date
+          fail Exceptions::CampaignStartDateUnexpectedValue, campaign_start_date
         elsif received_date.nil?
-            fail Exceptions::ReceivedDateUnexpectedValue, received_date
+          fail Exceptions::ReceivedDateUnexpectedValue, received_date
         elsif !received_date.is_a?(DateTime)
-            fail Exceptions::ReceivedDateUnexpectedValue, received_date
+          fail Exceptions::ReceivedDateUnexpectedValue, received_date
         end
 
         #classify US holidays as non-business days
@@ -139,28 +141,28 @@ module Service
         Holidays.between(Date.today, 2.years.from_now, :us, :observed).map{|holiday| BusinessTime::Config.holidays << holiday[:date]}
 
         #convert campaign_start_date, which is a Date in our system to a DateTime
-        campaign_start_date = campaign_start_date.to_time.to_datetime
+        campaign_start_date = campaign_start_date.to_time.utc.to_datetime
 
-        # we'd like to complete the launch by 5pm the business day before the campaign starts. 
+        # we'd like to complete the launch by 5pm the business day before the campaign starts.
         requested_complete_by = self.business_time_output_to_expected_datetime(0.business_hour.before(campaign_start_date))
+        business_hours_till_due = (received_date.business_time_until(requested_complete_by.to_time)) / Constants::SECONDS_IN_HOUR
 
-        business_hours_till_due = (received_date.business_time_until(requested_complete_by)) / Constants::SECONDS_IN_HOUR
         time_needed = Constants::SLA * Constants::BUSINESS_HOURS_IN_DAY
-        
+
         if (business_hours_till_due >= time_needed)
-            # we'll have enough time to launch as expected
-            internal_due_date = requested_complete_by
+          # we'll have enough time to launch as expected
+          internal_due_date = requested_complete_by
         else
-            # we don't have enough time... we'll launch according to SLA
-            internal_due_date = self.business_time_output_to_expected_datetime((time_needed.business_hours.after(received_date.to_time)).to_datetime)
+          # we don't have enough time... we'll launch according to SLA
+          internal_due_date = self.business_time_output_to_expected_datetime((time_needed.business_hours.after(received_date.to_time)).to_datetime)
         end
-        
-        puts "received date: #{received_date}"
-        puts "campaign start date: #{campaign_start_date}"
-        puts "internal_due_date: #{internal_due_date}"
+
+        Rails.logger.debug "received date: #{received_date}"
+        Rails.logger.debug "campaign start date: #{campaign_start_date}"
+        Rails.logger.debug "internal_due_date: #{internal_due_date}"
 
         return internal_due_date
-      
+
       end
 
 
@@ -168,7 +170,7 @@ module Service
 
       # business_time gem has difficulty working w/ Rails configured timezones.
       # when using functions like '.business.hour.before()' or '.business_hours.after()' on DateTime objects, for example,
-      # instead of returning a DateTime in the correct time zone, as expected, it returns an ActiveSupport::TimeWithZone 
+      # instead of returning a DateTime in the correct time zone, as expected, it returns an ActiveSupport::TimeWithZone
       # with unpredictable timezone behavior. however, everything aside from the timezone is accurate. for this reason,
       # this helper method deconstructs the ActiveSupport::TimeWithZone output, and reconstructs a DateTime object with
       # the correct Rails configured time zone.
@@ -180,9 +182,9 @@ module Service
       #     DateTime object
       #
       def self.business_time_output_to_expected_datetime(aso)
-          return DateTime.new(aso.year, aso.month, aso.day, aso.hour, aso.minute, aso.second, Time.now.strftime("%z"))
+        return DateTime.new(aso.year, aso.month, aso.day, aso.hour, aso.minute, aso.second, Time.now.strftime("%z"))
       end
-    
+
 
     end
   end
