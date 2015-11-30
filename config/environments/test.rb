@@ -13,7 +13,7 @@ IcfOnRails::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_assets  = true
+  config.serve_static_files  = true
   config.static_cache_control = "public, max-age=3600"
 
   # Show full error reports and disable caching.
@@ -33,4 +33,18 @@ IcfOnRails::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Enable stdout logger
+config.logger = Logger.new(STDOUT)
+
+### You can set the log level from the shell when running tests like so:
+# # E.g. Log level :INFO (the value is uppercased in bootstrap.rb)
+# $ LOG_LEVEL=info rake test
+
+# # E.g. Log level :DEBUG
+# $ LOG_LEVEL=debug rake test
+
+
+# default :ERROR
+config.log_level = ENV.fetch("LOG_LEVEL", "ERROR")
 end
