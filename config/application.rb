@@ -7,9 +7,9 @@ require 'rails/all'
 Bundler.require(:default, Rails.env)
 
 module Constants
-  SLA = 2.0
-  BUSINESS_HOURS_IN_DAY = 8.0
-  SECONDS_IN_HOUR = 3600.0
+  SLA = 2
+  BUSINESS_HOURS_IN_DAY = 8
+  SECONDS_IN_HOUR = 3600
 end
 
 module IcfOnRails

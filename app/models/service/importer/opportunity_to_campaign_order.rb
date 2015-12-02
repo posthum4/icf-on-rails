@@ -21,7 +21,15 @@ module Service
         @co.budget_cents                            = @co.amount * Money::Currency.find(@co.budget_currency).subunit_to_unit
         @co.campaign_start_date                     = Chronic::parse(@oppt['Campaign_Start_Date__c'])
         @co.campaign_end_date                       = Chronic::parse(@oppt['Campaign_End_Date__c'])
-        @co.scheduled_date                          = self.class.calculate_internal_due_date(DateTime.now, @co.campaign_start_date)
+        
+
+        #@co.scheduled_date                          = self.class.calculate_internal_due_date(DateTime.now, @co.campaign_start_date)
+        @co.scheduled_date                          = self.class.calculate_internal_due_date(Time.now, @co.campaign_start_date)
+        
+
+
+
+
         @co.opp_type_new                            = @oppt['Opp_Type_New__c']
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
@@ -97,8 +105,6 @@ module Service
         Rails.logger.info "Imported #{@co.line_items.size} Line Items"
       end
 
-
-
       # Calculates the internal due date for a campaign launch
       #
       # If we have enough time (as measured by SLA) to launch a campaign by the requested start date (meaning the campaign
@@ -108,20 +114,18 @@ module Service
       # we will complete it according to our SLA (i.e. internal_due_date = SLA + received_date)
       #
       # Args:
-      #     received_date (DateTime):
+      #     received_date (Time):
       #     campaign_start_date (Date):
       #
       # Returns:
-      #     DateTime object
+      #     Time object
       #
       # Raises:
       #     CampaignStartDateUnexpectedValue
       #     ReceivedDateUnexpectedValue
       #
-      def self.calculate_internal_due_date(received_date_with_tz, campaign_start_date)
-
-        received_date=received_date_with_tz.utc
-        binding.pry
+      def self.calculate_internal_due_date(received_date, campaign_start_date)
+        
         #catch unepected inputs
         if campaign_start_date.nil?
           fail Exceptions::CampaignStartDateUnexpectedValue, campaign_start_date
@@ -129,9 +133,19 @@ module Service
           fail Exceptions::CampaignStartDateUnexpectedValue, campaign_start_date
         elsif received_date.nil?
           fail Exceptions::ReceivedDateUnexpectedValue, received_date
-        elsif !received_date.is_a?(DateTime)
-          fail Exceptions::ReceivedDateUnexpectedValue, received_date
+        elsif !received_date.is_a?(Time)
+            fail Exceptions::ReceivedDateUnexpectedValue, received_date
         end
+
+        puts "received date: #{received_date}"
+        puts "campaign start date: #{campaign_start_date}"
+
+        #save time zone offset
+        utc_offset = received_date.utc_offset
+
+        #convert inputs to Time objects in UTC standard time
+        received_date = received_date.utc
+        campaign_start_date = Time.new(campaign_start_date.year,campaign_start_date.month,campaign_start_date.day,0,0,0, "-00:00").utc
 
         #classify US holidays as non-business days
         #TODO this should be configured to Rocket Fuel holidays (https://docs.google.com/a/rocketfuelinc.com/file/d/0B-QY7UOcFIl3WWc2ZnMzZXlGLXM/edit)
@@ -140,32 +154,28 @@ module Service
         #TODO once configured to Rocket Fuel holidays, reconfigure 'holiday' tests in opportunity_to_campaign_order_spec.rb to appropriate values
         Holidays.between(Date.today, 2.years.from_now, :us, :observed).map{|holiday| BusinessTime::Config.holidays << holiday[:date]}
 
-        #convert campaign_start_date, which is a Date in our system to a DateTime
-        campaign_start_date = campaign_start_date.to_time.utc.to_datetime
+        # we'd like to complete the launch by 5pm the business day before the campaign starts. 
+        requested_complete_by = custom_timezone(0.business_hour.before(campaign_start_date), "-00:00")
 
-        # we'd like to complete the launch by 5pm the business day before the campaign starts.
-        requested_complete_by = self.business_time_output_to_expected_datetime(0.business_hour.before(campaign_start_date))
-        business_hours_till_due = (received_date.business_time_until(requested_complete_by.to_time)) / Constants::SECONDS_IN_HOUR
+        business_hours_till_due = (received_date.business_time_until(requested_complete_by)) / Constants::SECONDS_IN_HOUR
 
         time_needed = Constants::SLA * Constants::BUSINESS_HOURS_IN_DAY
 
         if (business_hours_till_due >= time_needed)
-          # we'll have enough time to launch as expected
-          internal_due_date = requested_complete_by
+            # we'll have enough time to launch as expected
+            internal_due_date = requested_complete_by
         else
-          # we don't have enough time... we'll launch according to SLA
-          internal_due_date = self.business_time_output_to_expected_datetime((time_needed.business_hours.after(received_date.to_time)).to_datetime)
+            # we don't have enough time... we'll launch according to SLA
+            #internal_due_date = self.business_time_output_to_expected_datetime((time_needed.business_hours.after(received_date.to_time)).to_datetime)
+            internal_due_date = custom_timezone(time_needed.business_hours.after(received_date), "-00:00")
         end
 
-        Rails.logger.debug "received date: #{received_date}"
-        Rails.logger.debug "campaign start date: #{campaign_start_date}"
-        Rails.logger.debug "internal_due_date: #{internal_due_date}"
+        internal_due_date = custom_timezone(internal_due_date, "%03d:00" % (utc_offset/Constants::SECONDS_IN_HOUR))
+        puts "internal_due_date: #{internal_due_date}"
 
         return internal_due_date
 
       end
-
-
 
 
       # business_time gem has difficulty working w/ Rails configured timezones.
@@ -185,6 +195,13 @@ module Service
         return DateTime.new(aso.year, aso.month, aso.day, aso.hour, aso.minute, aso.second, Time.now.strftime("%z"))
       end
 
+      def self.business_to_utc_time(aso)
+          return Time.new(aso.year, aso.month, aso.day, aso.hour, aso.min, aso.sec, "-00:00")
+      end
+
+      def self.custom_timezone(aso, zone)
+          return Time.new(aso.year, aso.month, aso.day, aso.hour, aso.min, aso.sec, zone)
+      end
 
     end
   end
