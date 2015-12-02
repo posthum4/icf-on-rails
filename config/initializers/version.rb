@@ -1,8 +1,7 @@
-VERSION = '3.1.9'
+VERSION = '3.2.0'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-10-26): Updated ICF Champions
-- Attachment names now sanitized and should be uploaded properly (unicode chars, slashes, etc. removed)
+- ICF v#{VERSION} (2015-10-30): Supporting migration of delivery plan fields to Opportunity
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
