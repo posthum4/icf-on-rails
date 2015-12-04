@@ -1,8 +1,7 @@
-VERSION = '3.1.9'
+VERSION = '3.1.10'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-10-26): Updated ICF Champions
-- Attachment names now sanitized and should be uploaded properly (unicode chars, slashes, etc. removed)
+- ICF v#{VERSION} (2015-12-03): Scheduled Date (AKA internal due date) now implemented.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
@@ -16,7 +15,7 @@ CHAMPIONS=<<-EOC
 
 # Account Managers:
 
-- East: Kristy Bendetti
+- East: Zarin Tewarson
 - Central/Canada: Kelsey Julius
 - West: Youna Kim
 - EMEA: Andrew Hammond, Robert Marshall

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001145755) do
+ActiveRecord::Schema.define(version: 20151007150017) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "sfdcid",            limit: 255
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20151001145755) do
     t.text     "opportunity_transcript",                  limit: 65535
     t.text     "delivery_plan_transcript",                limit: 65535
     t.string   "sf_account_id",                           limit: 255
+    t.datetime "scheduled_date"
   end
 
   create_table "employees", force: :cascade do |t|
