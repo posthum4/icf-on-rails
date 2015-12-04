@@ -21,15 +21,7 @@ module Service
         @co.budget_cents                            = @co.amount * Money::Currency.find(@co.budget_currency).subunit_to_unit
         @co.campaign_start_date                     = Chronic::parse(@oppt['Campaign_Start_Date__c'])
         @co.campaign_end_date                       = Chronic::parse(@oppt['Campaign_End_Date__c'])
-        
-
-        #@co.scheduled_date                          = self.class.calculate_internal_due_date(DateTime.now, @co.campaign_start_date)
         @co.scheduled_date                          = self.class.calculate_internal_due_date(Time.now, @co.campaign_start_date)
-        
-
-
-
-
         @co.opp_type_new                            = @oppt['Opp_Type_New__c']
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
@@ -166,7 +158,6 @@ module Service
             internal_due_date = requested_complete_by
         else
             # we don't have enough time... we'll launch according to SLA
-            #internal_due_date = self.business_time_output_to_expected_datetime((time_needed.business_hours.after(received_date.to_time)).to_datetime)
             internal_due_date = custom_timezone(time_needed.business_hours.after(received_date), "-00:00")
         end
 
