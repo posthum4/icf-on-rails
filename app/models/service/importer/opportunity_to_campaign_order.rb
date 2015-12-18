@@ -21,7 +21,7 @@ module Service
         @co.budget_cents                            = @co.amount * Money::Currency.find(@co.budget_currency).subunit_to_unit
         @co.campaign_start_date                     = Chronic::parse(@oppt['Campaign_Start_Date__c'])
         @co.campaign_end_date                       = Chronic::parse(@oppt['Campaign_End_Date__c'])
-        @co.scheduled_date                          = self.class.calculate_internal_due_date(Time.now, @co.campaign_start_date)
+        @co.scheduled_date                          = Chronic::parse(self.class.calculate_internal_due_date(Time.now, @co.campaign_start_date).to_s)
         @co.opp_type_new                            = @oppt['Opp_Type_New__c']
         @co.original_opportunity                    = @oppt['Original_Opportunity__c']
         @co.stagename                               = @oppt['StageName']
@@ -117,7 +117,6 @@ module Service
       #     ReceivedDateUnexpectedValue
       #
       def self.calculate_internal_due_date(received_date, campaign_start_date)
-        
         #catch unepected inputs
         if campaign_start_date.nil?
           fail Exceptions::CampaignStartDateUnexpectedValue, campaign_start_date
