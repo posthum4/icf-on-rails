@@ -12,6 +12,8 @@ module Exceptions
   class ReceivedCaseIDbutNeedOpportunityIDstartingWith006 < StandardError ; end
   class ReceivedAttachmentIDbutNeedOpportunityIDstartingWith006 < StandardError ; end
   class DealDeskCaseMissing_NeedToSubmitForApprovalBeforeICFCanImport < StandardError ; end
+  class CampaignStartDateUnexpectedValue < StandardError ; end
+  class ReceivedDateUnexpectedValue < StandardError ; end
 
   class StandardError
     def to_s

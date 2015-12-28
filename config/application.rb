@@ -6,6 +6,12 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+module Constants
+  SLA = 2
+  BUSINESS_HOURS_IN_DAY = 8
+  SECONDS_IN_HOUR = 3600
+end
+
 module IcfOnRails
   class Application < Rails::Application
     config.assets.initialize_on_precompile = false

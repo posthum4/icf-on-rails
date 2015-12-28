@@ -1,7 +1,7 @@
-VERSION = '3.2.0'
+VERSION = '3.2.1'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-10-30): Supporting migration of delivery plan fields to Opportunity
+- ICF v#{VERSION} (2015-12-03): Scheduled Date (AKA internal due date) now implemented.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
@@ -15,7 +15,7 @@ CHAMPIONS=<<-EOC
 
 # Account Managers:
 
-- East: Kristy Bendetti
+- East: Zarin Tewarson
 - Central/Canada: Kelsey Julius
 - West: Youna Kim
 - EMEA: Andrew Hammond, Robert Marshall
