@@ -50,7 +50,7 @@ module Service
         Rails.logger.info "AM = #{@co.account_manager}"
 
         @co.campaign_objectives                     = dplan.Delivery_Objectives__c
-        @co.insights_package                        = dplan.Insights_Package__c
+        @co.insights_package                        = @oppt['Insights_Package__c']
 
         @co.primary_audience_am                     = @oppt['Primary_Audience_AM__c']
         @co.secondary_audience_am                   = @oppt['Secondary_Audience_AM__c']
@@ -79,7 +79,18 @@ module Service
         @co.who_is_paying_for_viewability           = @oppt['Who_is_Paying_for_Viewability__c']
         @co.customer_tier                           = SalesForce::Account.find(@oppt.Advertiser__c).Customer_Tier__c
         @co.opportunity_transcript                  = @oppt.attributes.compact.to_yaml
-        @co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
+        @co.add_on_products                         = @oppt['Add_On_Products__c']
+        @co.add_on_product_details                  = @oppt['Add_On_Product_Details__c']
+        @co.who_is_paying_for_perf_monitor_survey   = @oppt['Who_is_Paying_for_Perf_Monitor_Survey__c']
+        @co.performance_monitoring_survey_vendor    = @oppt['Performance_Monitoring_Survey_Vendor__c']
+        @co.other_vendor                            = @oppt['Other_Vendor__c']
+        @co.mobile_sdk_vendor                       = @oppt['Mobile_SDK_Vendor__c']
+        @co.who_is_paying_for_rich_media_display    = @oppt['Who_is_Paying_for_Rich_Media_Display__c']
+        @co.who_is_rich_media_vendor_display        = @oppt['Who_is_Rich_Media_Vendor_Display__c']
+        @co.who_is_paying_for_rich_media_mobile     = @oppt['Who_is_Paying_for_Rich_Media_Mobile__c']
+        @co.who_is_rich_media_vendor_mobile         = @oppt['Who_is_Rich_Media_Vendor_Mobile__c']
+        # Taking out delivery plan transcript as @aschneider saying it's not being used 2016-01-07 
+        #@co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
         @co.save!
       end
 
