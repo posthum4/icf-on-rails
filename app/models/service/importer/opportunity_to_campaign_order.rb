@@ -91,6 +91,7 @@ module Service
         @co.who_is_rich_media_vendor_mobile         = @oppt['Who_is_Rich_Media_Vendor_Mobile__c']
         # Taking out delivery plan transcript as @aschneider saying it's not being used 2016-01-07 
         #@co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
+        @co.delivery_plan_transcript                = nil
         @co.save!
       end
 
