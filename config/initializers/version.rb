@@ -1,7 +1,7 @@
-VERSION = '3.2.1'
+VERSION = '3.2.2'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-12-28): Scheduled Date and new delivery plan fields debugged.
+- ICF v#{VERSION} (2016-01-07): Added new Opportunity fields, removed DP transcript
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
