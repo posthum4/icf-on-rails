@@ -15,6 +15,7 @@ module Service
       end
 
       def import
+        dplan                                       = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c)
         @co.name                                    = @oppt['Name']
         @co.budget_currency                         = @oppt['CurrencyIsoCode']
         @co.amount                                  = @oppt['Amount'].to_f
@@ -31,11 +32,11 @@ module Service
         @co.brand                                   = @oppt['Brand__c']
         @co.vertical                                = @oppt['Vertical__c']
         @co.advertiser                              = SalesForce::Account.find(@oppt.Advertiser__c).Name
-        @co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
+        #@co.account                                 = SalesForce::Account.find(@oppt.AccountId).Name
+        @co.account                                 = SalesForce::Account.find(dplan.Account__c).Name
         @co.sf_account_id                           = @oppt.AccountId
         @co.agency                                  = SalesForce::Account.find(@oppt.Agency__c).Name || SalesForce::Account.find(@oppt.AccountId).Name
         @co.sales_region                            = @oppt['Sales_Region__c']
-        dplan                                       = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c)
         # Note that the salesforce username (part before @rocketfuel.com) is equal to the JIRA user name (part before @rocketfuelinc.com)
         # The only exception found so far is Edith Wu who is "ewu" in SalesForce and "edithwu" in JIRA. Need a manual correction for that... :(
         # found another one: jlilly in salesforce equals jguzman in JIRA. Mike launched QI-1203 for this change and a request with IT for a more fundamental process
