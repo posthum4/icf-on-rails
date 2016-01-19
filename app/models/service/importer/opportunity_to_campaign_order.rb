@@ -93,6 +93,11 @@ module Service
         # Taking out delivery plan transcript as @aschneider saying it's not being used 2016-01-07 
         #@co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
         @co.delivery_plan_transcript                = nil
+        # Adding these lines for segmentation roll out 2016-01-18 
+        @co.primary_account_segment                 = SalesForce::Account.find(@oppt.AccountId).Segment__c || 'Unspecified' 
+        @co.advertiser_segment                      = @oppt['Advertiser_Segment__c'] || 'Unspecified' 
+        @co.service_level                           = @oppt['Service_Team__c'] || 'Unspecified' 
+
         @co.save!
       end
 
