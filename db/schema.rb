@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160107224422) do
+ActiveRecord::Schema.define(version: 20160118220256) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "sfdcid",            limit: 255
@@ -103,6 +103,9 @@ ActiveRecord::Schema.define(version: 20160107224422) do
     t.string   "who_is_rich_media_vendor_display",        limit: 255
     t.string   "who_is_paying_for_rich_media_mobile",     limit: 255
     t.string   "who_is_rich_media_vendor_mobile",         limit: 255
+    t.string   "service_level",                           limit: 255
+    t.string   "advertiser_segment",                      limit: 255
+    t.string   "primary_account_segment",                 limit: 255
   end
 
   create_table "employees", force: :cascade do |t|

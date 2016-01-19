@@ -78,7 +78,8 @@ module Service
       @jira.set_field("description", ViewModel::Description.new(@co).to_s)
       @jira.set_field("customfield_12274", ViewModel::LineItemTable.new(@co).to_s)
       @jira.set_field("customfield_13360", ViewModel::TacticsTable.new(@co).to_s)
-      @jira.set_field("customfield_12269", :id => Value::CustomerTier.jira_id(@co.customer_tier))
+      # Taking the customer_tier field out because it's superseded by the new customer segmentation
+      #@jira.set_field("customfield_12269", :id => Value::CustomerTier.jira_id(@co.customer_tier))
       @jira.save
     end
 
