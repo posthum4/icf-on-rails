@@ -1,7 +1,7 @@
-VERSION = '3.2.2'
+VERSION = '3.2.3'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2016-01-07): Added new Opportunity fields, removed DP transcript
+- ICF v#{VERSION} (2016-01-18): Added Service team and Segmentation fields
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
@@ -18,7 +18,7 @@ CHAMPIONS=<<-EOC
 - East: Zarin Tewarson
 - Central/Canada: Kelsey Julius
 - West: Youna Kim
-- EMEA: Andrew Hammond, Robert Marshall
+- EMEA: Andrew Hammond
 - Champion-in-chief: Amanda Schneider
 
 # Other functions:
