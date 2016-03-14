@@ -41,6 +41,7 @@ module ViewModel
         s << "\n\n||Bonus Line Item||Value||"
         s << "\n|Fractional Bonus:| #{number_to_percentage(@li.fractional_bonus)}|"
         s << "\n|Min/max CPM:| Autobonus |"
+        s << "\n|Regulus Target:| _set_target_here_ |"
 #        s << "\n|Min CPM:| #{ENV['MINCPM']}|"
 #        s << "\n|Max CPM:| #{ENV['MAXCPM']}|"
         s << "\n\n||Bonus Tactic || Segment/Target || Budget Allocation ||"

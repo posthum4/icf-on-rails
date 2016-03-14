@@ -1,7 +1,8 @@
-VERSION = '3.2.3'
+VERSION = '3.2.4'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2016-01-18): Added Service team and Segmentation fields
+- ICF v#{VERSION} (2016-03-14): Added regulus target for bonus lines.
+- Added Service team and Segmentation fields
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
 EOP
