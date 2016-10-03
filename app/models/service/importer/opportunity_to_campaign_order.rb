@@ -16,6 +16,7 @@ module Service
 
       def import
         dplan                                       = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c)
+        @co.delivery_plan_id                        = @oppt['Delivery_Plan_Id__c']
         @co.name                                    = @oppt['Name']
         @co.budget_currency                         = @oppt['CurrencyIsoCode']
         @co.amount                                  = @oppt['Amount'].to_f
@@ -90,14 +91,20 @@ module Service
         @co.who_is_rich_media_vendor_display        = @oppt['Who_is_Rich_Media_Vendor_Display__c']
         @co.who_is_paying_for_rich_media_mobile     = @oppt['Who_is_Paying_for_Rich_Media_Mobile__c']
         @co.who_is_rich_media_vendor_mobile         = @oppt['Who_is_Rich_Media_Vendor_Mobile__c']
-        # Taking out delivery plan transcript as @aschneider saying it's not being used 2016-01-07 
+        # Taking out delivery plan transcript as @aschneider saying it's not being used 2016-01-07
         #@co.delivery_plan_transcript                = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c).attributes.compact.to_yaml
         @co.delivery_plan_transcript                = nil
-        # Adding these lines for segmentation roll out 2016-01-18 
-        @co.primary_account_segment                 = SalesForce::Account.find(@oppt.AccountId).Segment__c || 'Unspecified' 
-        @co.advertiser_segment                      = @oppt['Advertiser_Segment__c'] || 'Unspecified' 
-        @co.service_level                           = @oppt['Service_Team__c'] || 'Unspecified' 
+        # Adding these lines for segmentation roll out 2016-01-18
+        # Modified to include International Segment 2016-10-01
+        if((@co.sales_region == 'EMEA') || (@co.sales_region == 'APAC') || (@co.sales_region == 'LATAM'))
+          @co.primary_account_segment                 = SalesForce::Account.find(@oppt.AccountId).Segment_International__c || 'Unspecified'
+          @co.advertiser_segment                      = SalesForce::Account.find(@oppt.Advertiser__c).Segment_International__c || 'Unspecified'
+          else
+          @co.primary_account_segment                 = SalesForce::Account.find(@oppt.AccountId).Segment__c || 'Unspecified'
+          @co.advertiser_segment                      = @oppt['Advertiser_Segment__c'] || 'Unspecified'
+        end
 
+        @co.service_level                           = @oppt['Service_Team__c'] || 'Unspecified'
         @co.save!
       end
 
@@ -163,7 +170,7 @@ module Service
         #TODO once configured to Rocket Fuel holidays, reconfigure 'holiday' tests in opportunity_to_campaign_order_spec.rb to appropriate values
         Holidays.between(Date.today, 2.years.from_now, :us, :observed).map{|holiday| BusinessTime::Config.holidays << holiday[:date]}
 
-        # we'd like to complete the launch by 5pm the business day before the campaign starts. 
+        # we'd like to complete the launch by 5pm the business day before the campaign starts.
         requested_complete_by = custom_timezone(0.business_hour.before(campaign_start_date), "-00:00")
 
         business_hours_till_due = (received_date.business_time_until(requested_complete_by)) / Constants::SECONDS_IN_HOUR
