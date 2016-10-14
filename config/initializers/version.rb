@@ -1,10 +1,15 @@
-VERSION = '3.2.5'
+VERSION = '3.2.6'
 
 DESCR_PREFIX=<<-EOP
+- ICF v#{VERSION} (2016-10-13): Added Inventory Type to the Line Item table.
+- If inventory type is Open Exchanged - IAS Verified Pre-Roll Jira will display a row for targeting in the tactics panel.
+
+From v 3.2.5
 - ICF v#{VERSION} (2016-10-04): Added Delivery Plan ID to the setup table.
 - Accounted for Sales Region "EMEA/APAC/LATAM" when setting Segment fields on setup table.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
+
 EOP
 
 DESCR_SUFFIX=<<-EOS
