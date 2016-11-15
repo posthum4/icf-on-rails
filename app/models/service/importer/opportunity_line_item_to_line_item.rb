@@ -32,6 +32,7 @@ module Service
         li.media_channel               = @oli['Media_Channel__c']
         li.ad_format                   = @oli['Ad_Format__c']
         li.add_on                      = @oli['Add_On_Product_Detail__c'].to_s
+        li.inventory_type              = @oli['Inventory_Type__c']
 
         # instructions
         li.flight_instructions         = @oli['Flight_Instructions__c']
@@ -48,7 +49,7 @@ module Service
           nn = MAP[n]
           if nonzero?(@oppt,nn)
             Rails.logger.info "Line item #{n} (ex-#{nn}) is non zero."
-            
+
             import_individual_fields(_line_item, n.to_s, nn)
             _line_item.save!
             any_non_zero = true

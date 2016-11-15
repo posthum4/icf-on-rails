@@ -12,7 +12,12 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'simple_form'
 gem 'slim-rails'
-gem 'mysql2', '~> 0.3.20'
+gem 'business_time'
+gem 'holidays'
+gem 'pry-rails'
+gem 'pry-byebug'
+#gem 'mysql2', '~> 0.3.20'
+gem 'mysql2', '~> 0.3.18'
 
 # Added by Roland
 gem 'figaro', '>= 1.0'
@@ -41,8 +46,6 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
-  gem 'pry-rails'
-  gem 'pry-byebug'
 end
 group :development, :test do
   gem 'factory_girl_rails' , "~> 4.0"

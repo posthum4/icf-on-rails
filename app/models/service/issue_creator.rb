@@ -57,7 +57,15 @@ module Service
       matched_fields.each do |a|
         internal_field, jira_field = a
         begin
-          @jira.set_field(jira_field, eval("@co.#{internal_field}"))
+          #convert any ActiveSupport::TimeWithZone fields to ISO 8601 format, which will allow JIRA to parse properly
+          curr_value = eval("@co.#{internal_field}")
+          if curr_value.is_a?(ActiveSupport::TimeWithZone)
+            #https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis/jira-rest-api-tutorials/jira-rest-api-example-create-issue
+            #according to JIRA API, DateTime format should be: ISO 8601: YYYY-MM-DDThh:mm:ss.sTZD
+            @jira.set_field(jira_field, curr_value.strftime('%Y-%m-%dT%H:%M:%S.%L%z'))
+          else
+            @jira.set_field(jira_field, curr_value)
+          end
           @jira.save
         rescue Exception => e
           Rails.logger.error "Error on importing field #{internal_field}=>#{jira_field}: #{e}"
@@ -70,7 +78,8 @@ module Service
       @jira.set_field("description", ViewModel::Description.new(@co).to_s)
       @jira.set_field("customfield_12274", ViewModel::LineItemTable.new(@co).to_s)
       @jira.set_field("customfield_13360", ViewModel::TacticsTable.new(@co).to_s)
-      @jira.set_field("customfield_12269", :id => Value::CustomerTier.jira_id(@co.customer_tier))
+      # Taking the customer_tier field out because it's superseded by the new customer segmentation
+      #@jira.set_field("customfield_12269", :id => Value::CustomerTier.jira_id(@co.customer_tier))
       @jira.save
     end
 

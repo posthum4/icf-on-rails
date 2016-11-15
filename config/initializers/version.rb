@@ -1,34 +1,39 @@
-VERSION = '3.1.9a'
+VERSION = '3.2.6'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2015-10-12): Migrated ICF to new server with higher reliability/fewer outages!
-- Attachment names now sanitized and should be uploaded properly (unicode chars, slashes, etc. removed)
+- ICF v#{VERSION} (2016-10-13): Added Inventory Type to the Line Item table.
+- If inventory type is Open Exchanged - IAS Verified Pre-Roll Jira will display a row for targeting in the tactics panel.
+
+From v 3.2.5
+- ICF v#{VERSION} (2016-10-04): Added Delivery Plan ID to the setup table.
+- Accounted for Sales Region "EMEA/APAC/LATAM" when setting Segment fields on setup table.
 - Remember always to convert Renewals and Revisions to "IO Change" subtasks before
   working on them!
+
 EOP
 
 DESCR_SUFFIX=<<-EOS
 - See all your ICF campaigns on the Kanban board: <http://is.gd/awF7Cc>
-- See the ICF user group for docs and any questions: <http://is.gd/cbVtcu>
 EOS
 
 CHAMPIONS=<<-EOC
 
 # Account Managers:
 
-- East: Kristy Bendetti
+- East: Zarin Tewarson
 - Central/Canada: Kelsey Julius
-- West: Youna Kim
-- EMEA: Andrew Hammond, Robert Marshall
-- Champion-in-chief: Amanda Schneider
+- West: Sundara Sim
+- EMEA: Hana Tuhami
+- Champion-in-chief: Bryn Hastings
 
 # Other functions:
 
-- (Lean) Campaign Managers: Jennifer Lin
+- (Lean) Campaign Managers: Mark Dickhart
 - Ops: Elaina Remin
 - Analytics: Therese-Heather Belen
 - Reporting: Steve Sammonds
-- ICF import bugs: Dan Kras
+- ICF import bugs: Ryan Posthumus
 - Sales: your account manager
 
+# For any updates to the Champions please contact Ryan Posthumus.
 EOC
