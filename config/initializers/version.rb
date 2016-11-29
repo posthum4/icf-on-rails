@@ -20,7 +20,7 @@ CHAMPIONS=<<-EOC
 - Central/Canada: Kelsey Julius
 - West: Youna Kim
 - EMEA: Andrew Hammond
-- Champion-in-chief: Amanda Schneider
+- Champion-in-chief: Amanda Schneider (or New Champion)
 
 # Other functions:
 
