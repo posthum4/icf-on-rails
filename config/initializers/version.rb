@@ -1,14 +1,7 @@
-VERSION = '3.2.6'
+VERSION = '3.2.7'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2016-10-13): Added Inventory Type to the Line Item table.
-- If inventory type is Open Exchanged - IAS Verified Pre-Roll Jira will display a row for targeting in the tactics panel.
-
-From v 3.2.5
-- ICF v#{VERSION} (2016-10-04): Added Delivery Plan ID to the setup table.
-- Accounted for Sales Region "EMEA/APAC/LATAM" when setting Segment fields on setup table.
-- Remember always to convert Renewals and Revisions to "IO Change" subtasks before
-  working on them!
+- ICF v#{VERSION} (2016-10-13): Updated AM Champions.
 
 EOP
 
@@ -21,10 +14,10 @@ CHAMPIONS=<<-EOC
 # Account Managers:
 
 - East: Zarin Tewarson
-- Central/Canada: Kelsey Julius
+- Central/Canada: Jack McNeill
 - West: Sundara Sim
 - EMEA: Hana Tuhami
-- Champion-in-chief: Bryn Hastings
+- Champion-in-chief: Kelsey Julius
 
 # Other functions:
 
