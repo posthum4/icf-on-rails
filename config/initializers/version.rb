@@ -1,7 +1,7 @@
-VERSION = '3.2.7'
+VERSION = '3.2.8'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2016-10-13): Updated AM Champions.
+- ICF v#{VERSION} (2016-11-30): Change source of AM field to Opportunity from Delivery Plan
 
 EOP
 
