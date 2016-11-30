@@ -48,7 +48,7 @@ module Service
         Rails.logger.info "AE1 = #{@co.account_executive}"
         @co.account_executive_2                     = Policy::SplitOwners.new(@co.sfdcid).splits.sort_by {|_key, value| value}.reverse![1][0].sub('ewu','edithwu').sub('jlilly','jguzman') rescue nil
         Rails.logger.info "AE2 = #{@co.account_executive_2}"
-        @co.account_manager                         = ( SalesForce::User.find(dplan.Account_Manager__c).Email.split('@').first rescue ENV['JIRA_DEFAULT_USER'] )
+        @co.account_manager                         = ( SalesForce::User.find(@oppt['Account_Manager__c']).Email.split('@').first rescue ENV['JIRA_DEFAULT_USER'] )
         Rails.logger.info "AM = #{@co.account_manager}"
 
         @co.campaign_objectives                     = dplan.Delivery_Objectives__c
