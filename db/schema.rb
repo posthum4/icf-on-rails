@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118220256) do
+ActiveRecord::Schema.define(version: 20170111175410) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "sfdcid",            limit: 255
@@ -106,6 +106,9 @@ ActiveRecord::Schema.define(version: 20160118220256) do
     t.string   "service_level",                           limit: 255
     t.string   "advertiser_segment",                      limit: 255
     t.string   "primary_account_segment",                 limit: 255
+    t.string   "delivery_plan_id",                        limit: 255
+    t.string   "emp_package",                             limit: 255
+    t.string   "emp_packages",                            limit: 255
   end
 
   create_table "employees", force: :cascade do |t|
@@ -140,6 +143,7 @@ ActiveRecord::Schema.define(version: 20160118220256) do
     t.integer  "price_cents",                 limit: 4
     t.string   "shortname",                   limit: 255
     t.string   "ad_format",                   limit: 255
+    t.string   "inventory_type",              limit: 255
   end
 
   add_index "line_items", ["campaign_order_id"], name: "index_line_items_on_campaign_order_id", using: :btree

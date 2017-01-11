@@ -16,6 +16,7 @@ module Service
 
       def import
         dplan                                       = SalesForce::DeliveryPlan.find(@oppt.Delivery_Plan__c)
+        @co.emp_packages                            = @oppt['EMP_Packages_ICF_Value__c']
         @co.delivery_plan_id                        = @oppt['Delivery_Plan_Id__c']
         @co.name                                    = @oppt['Name']
         @co.budget_currency                         = @oppt['CurrencyIsoCode']
@@ -105,7 +106,9 @@ module Service
         end
 
         @co.service_level                           = @oppt['Service_Team__c'] || 'Unspecified'
+
         @co.save!
+        # binding.pry
       end
 
       def import_line_items(co)
