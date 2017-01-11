@@ -65,6 +65,7 @@ module Jira
         @jira_ref.fields.set(jirafield, v.to_usd_f.to_f)
       else
         @jira_ref.fields.set(jirafield, value)
+        binding.pry if set_type == "test"
       end
       @jira_ref.save
     end

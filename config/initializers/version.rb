@@ -1,7 +1,7 @@
-VERSION = '3.2.8'
+VERSION = '3.2.9'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2016-11-30): Change source of AM field to Opportunity from Delivery Plan
+- ICF v#{VERSION} (2017-1-11): Add EMP Packages to ICF so AMs can see during campaign setup
 
 EOP
 
