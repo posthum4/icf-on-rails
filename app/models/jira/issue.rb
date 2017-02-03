@@ -60,6 +60,9 @@ module Jira
         end
       when 'decimal'
         @jira_ref.fields.set(jirafield, value.to_f)
+      when 'link'
+        v = "https://internal.rocketfuel.com/dsp/insertion_orders?search=#{value}"
+        @jira_ref.fields.set(jirafield, v)
       when 'amount'
         v=ViewModel::Amount.new(value)
         @jira_ref.fields.set(jirafield, v.to_usd_f.to_f)
