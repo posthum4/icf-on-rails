@@ -1,7 +1,7 @@
-VERSION = '3.2.9'
+VERSION = '3.2.10'
 
 DESCR_PREFIX=<<-EOP
-- ICF v#{VERSION} (2017-1-11): Add EMP Packages to ICF so AMs can see during campaign setup
+- ICF v#{VERSION} (2017-2-3): Add IO Link to overview section of all JIRAs
 
 EOP
 
